@@ -1,813 +1,965 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" style="scroll-behavior: smooth">
   <head>
     <meta charset="UTF-8" />
+    <!-- TODO: add more description -->
+    <meta name="description" content="Тренажёр грузинского алфавита" />
+    <!-- TODO: add more keywords -->
+    <meta name="keywords" content="грузинский алфавит, тренажёр, грузинский" />
+    <meta name="author" content="Aleksei Smirnov aka Sibusky" />
+    <meta name="robots" content="index, follow" />
+    <!-- <meta name="theme-color" content="#221d11" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="./images/favicon.png" type="image/png" />
-    <link rel="stylesheet" href="./styles/index.css" />
-    <title class="title">Грузинский алфавит</title>
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-      (function (m, e, t, r, i, k, a) {
-        m[i] =
-          m[i] ||
-          function () {
-            (m[i].a = m[i].a || []).push(arguments);
-          };
-        m[i].l = 1 * new Date();
-        for (var j = 0; j < document.scripts.length; j++) {
-          if (document.scripts[j].src === r) {
-            return;
-          }
-        }
-        (k = e.createElement(t)),
-          (a = e.getElementsByTagName(t)[0]),
-          (k.async = 1),
-          (k.src = r),
-          a.parentNode.insertBefore(k, a);
-      })(
-        window,
-        document,
-        'script',
-        'https://mc.yandex.ru/metrika/tag.js',
-        'ym'
-      );
+    <!-- TODO: Remove this link if it's not needed -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" /> -->
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Manrope%3Awght%40400%3B500%3B700%3B800&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
 
-      ym(92125198, 'init', {
-        clickmap: true,
-        trackLinks: true,
-        accurateTrackBounce: true,
-      });
-    </script>
-    <noscript
-      ><div>
-        <img
-          src="https://mc.yandex.ru/watch/92125198"
-          style="position: absolute; left: -9999px"
-          alt=""
-        /></div
-    ></noscript>
-    <!-- /Yandex.Metrika counter -->
+    <title>Тренажёр грузинского алфавита</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   </head>
-
   <body>
-    <div class="page">
-      <div class="page__container">
-        <!-- <header class="header"></header> -->
-
-        <main class="content">
-          <section class="lead">
-            <h1 class="lead__title">Тренажёр грузинского алфавита</h1>
-            <p class="lead__text">
-              Грузинские буквы алфавита очень необычные и сложные на первый
-              взгляд, но есть и положительный момент - почти все буквы читаются
-              как русские аналоги, что делает изучение алфавита с помощью замен
-              в тексте русских букв грузинскими лёгким и продуктивным.
+    <div
+      class="page group/design-root relative flex size-full min-h-screen flex-col bg-[#221d11] dark overflow-x-hidden transition-all duration-300"
+      style="
+        --checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(34,29,17)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');
+        font-family: Manrope, 'Noto Sans', sans-serif;
+      "
+    >
+      <div class="relative layout-container flex h-full grow flex-col">
+        <header
+          class="fixed w-full top-0 z-10 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#483e23] px-10 py-3 bg-[#221d11] transition-all duration-300"
+        >
+          <div class="flex items-center gap-4 text-white">
+            <div class="size-4">
+              <svg
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </div>
+            <p
+              class="text-white text-lg font-bold leading-tight tracking-[-0.015em]"
+            >
+              Тренажёр грузинского алфавита
             </p>
-            <p class="lead__text">
-              Выберите буквы грузинского алфавита, которые хотите потренировать.
-              Затем напишите или вставьте текст в поле ниже. Если лень
-              выдумывать или неоткуда копировать, то воспользуйтесь
-              рандомайзером текста и нажмите кнопку "Транслитерация". За
-              генерацию случайных текстов спасибо сервису
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex items-center gap-9">
+              <!-- <a class="text-white text-sm font-medium leading-normal" href="#"
+                >Наверх</a
+              > -->
               <a
-                class="lead__text-link link"
-                href="https://fish-text.ru"
-                target="_blank"
-                >fish-text</a
-              >.
+                class="text-white text-sm font-medium leading-normal"
+                href="#methodology"
+                >Методика</a
+              >
+              <a
+                class="text-white text-sm font-medium leading-normal"
+                href="#start-training"
+                >Начать тренировку</a
+              >
+              <a
+                class="text-white text-sm font-medium leading-normal"
+                href="#contacts"
+                >Контакты</a
+              >
+            </div>
+            <div class="flex gap-2">
+              <button
+                class="theme-toggle-btn flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#483e23] text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+              >
+                <div
+                  class="theme-toggle-btn-icon text-white"
+                  data-icon="Moon"
+                  data-size="20px"
+                  data-weight="regular"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20px"
+                    height="20px"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"
+                    ></path>
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5 mt-16">
+          <div
+            class="layout-content-container flex flex-col max-w-[960px] flex-1"
+          >
+            <div class="@container">
+              <div class="@[480px]:p-4">
+                <div
+                  class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-lg items-center justify-center p-4"
+                  style="
+                    background-image: linear-gradient(
+                        rgba(0, 0, 0, 0.1) 0%,
+                        rgba(0, 0, 0, 0.4) 100%
+                      ),
+                      url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKwIMlTe5RTqt6btSTHI1aDjaoqyqDrZw-qn9JBPVjFkCSf6-RhVAPF8GrvyizCkEWDDA6Mm4cnH6JJNTUUCnpFkIkJpc4Ex7bAPRWwQk4HUd-38Y9ma2DTOIumWoGAQRAlV-O7aywnhwX5iAGQH2MyachcKtsiQdrrlB6MViTJ5cO84lIVRd88veWSwVkbsJ0gRkFZfRQktSzShp6W9JI8E4xpywxo_NZtzTmlKrDbX3lgR557nE1uF6Fw6tQWONJJrcEUpSGN0k');
+                  "
+                >
+                  <div class="flex flex-col gap-2 text-center">
+                    <h1
+                      class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]"
+                    >
+                      Тренажёр грузинского алфавита
+                    </h1>
+                    <h2
+                      class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
+                    >
+                      По данной методике вы выучите грузинский алфавит за неделю
+                    </h2>
+                  </div>
+                  <a
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#f4c653] text-[#221d11] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]"
+                    href="#start-training"
+                  >
+                    Начать
+                  </a>
+                </div>
+              </div>
+            </div>
+            <h3
+              class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
+              id="methodology"
+            >
+              Методика
+            </h3>
+            <p
+              class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4"
+            >
+              Грузинский алфавит очень необычный и сложный на первый взгляд, но
+              есть и положительный момент - почти все буквы читаются как русские
+              аналоги, что делает изучение алфавита с помощью замены букв лёгким
+              и продуктивным.
             </p>
-            <p class="lead__text">
-              Рекомендую начать с замены одной буквы, потом добавить ещё одну,
-              потом ещё, и так далее пока вы не запомните все буквы.
+            <p
+              class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4"
+            >
+              Выберите буквы грузинского алфавита, которые хотите выучить. Затем
+              напишите или вставьте текст в поле ниже. Если лень выдумывать или
+              неоткуда копировать, то воспользуйтесь рандомайзером текста и
+              нажмите кнопку "Транслитерировать".
             </p>
-            <p class="lead__text">
+            <p
+              class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4"
+            >
+              Продуктивнее всего начать с замены одной буквы, потом добавить ещё
+              одну, потом ещё, и так далее пока вы не запомните все буквы.
+            </p>
+            <p
+              class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4"
+            >
               Конечно, не все буквы грузинского алфавита имеют аналоги в
-              русском. Поэтому транслитерация некоторых букв приблизительная и у
-              нескольких букв она одинакова. Например, в грузинском языке есть
-              три разновидности буквы "к" по твёрдости произношения.
+              русском. Поэтому транслитерация некоторых из них приблизительная.
+              Например, в грузинском языке есть три "разновидности" буквы "к" по
+              твёрдости произношения.
             </p>
-            <p class="lead__text">
+            <p
+              class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4"
+            >
               Если выбрать похожие буквы ('ყ', 'კ', 'ქ', например) одновременно,
               то при транслитерации на грузинский эти буквы будут выбраны в
               случайном порядке. У таких букв есть подсказки. Чтобы их увидеть,
               нужно нажать на знак вопроса у соответствующего чекбокса.
             </p>
-          </section>
-
-          <section class="alphabet">
-            <fieldset class="alphabet__characters">
-              <legend class="alphabet__legend">
-                Выберите буквы для тренировки:
-              </legend>
-
-              <button
-                class="alphabet__button-check-all alphabet__button button"
-              >
-                Выбрать все
-              </button>
-              <button
-                class="alphabet__button-check-none alphabet__button button"
-              >
-                Снять выделение
-              </button>
-
-              <div class="alphabet__character-checkbox">
+            <h3
+              class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
+            >
+              Тут могла быть ваша реклама
+            </h3>
+            <p
+              class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4"
+            >
+              Ищете более структурированный подход к обучению? Рассмотрите
+              возможность записаться в нашу школу грузинского языка. Мы
+              предлагаем комплексные курсы для всех уровней под руководством
+              опытных преподавателей. Наша программа охватывает все аспекты
+              языка: от базовой грамматики до продвинутых разговорных навыков.
+            </p>
+            <div
+              class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden"
+            >
+              <div class="flex items-stretch p-4 gap-3">
+                <div
+                  class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60"
+                >
+                  <div
+                    class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex flex-col"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsQzdzUP-bOOaLDutnanXAjg5JqDMP7smNuKRfFuTzoB2mh67j43lR9uXBGyCNAyfXJmKyJqerCKaceoIRC-8HHnuOjdUSLrl00rwNsiZ5BxWe9-SmCgZ5eILxs2duwmjEMftPFR_J9ecgbd9D9rLZUKjpdsuUEEZ-vGlRBt2oWOXsIasPcgCzmLQIFI5ffjwEcfeWFx3R-nu2yucjbh83uqaff3JNC68bz6M1REj3BbyrXZbOMueN_nOuDg_gI6PmTFPicPpcmsI');
+                    "
+                  ></div>
+                  <p class="text-white text-base font-medium leading-normal">
+                    Учи грузинский с нами
+                  </p>
+                </div>
+                <div
+                  class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60"
+                >
+                  <div
+                    class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex flex-col"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAizVnAZHqyOWWbZNia6bJadlQmTGfWWDZOY7IeYZ4irVntf-JhOJOW_WY-A7b34asLOLpBuze5c7gc_Xdf2m2ly0Fgx-jAdfWj49VMOPYwvmgWmbiJVj5uxdfT0pjUwbxFXGzIE3v4SSffy6JNXhHuyGP_z0e_miYWnDtlBQ3-N3YT8rk-GQ-eccYj5pOicoAu1vcXH7OzbB_QHyaFmSVeXu9V3FUQuT4_E2g7LlV35V-wmwjV3VRd3IMBAIAKBHkuInCCs8IQJns');
+                    "
+                  ></div>
+                  <p class="text-white text-base font-medium leading-normal">
+                    Опытные преподаватели
+                  </p>
+                </div>
+                <div
+                  class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60"
+                >
+                  <div
+                    class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex flex-col"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAWd90Ewy5m1z_EXZiS7hSf1J0IrvvJ0GfU0juCKkr0FkOgr7Mt3uY2awzf2wdXbxp-3DVgGYmqcf12_2oiwf_WrBVE_Ld20UsmOCr1lypqChr71MdDRfh8FuYsxwjk9LoUnG-BWl6tB8zOja_gGwAWkh9NNiYN6K5xK5L4i_3bpPFtCAv6aD8Lj7TbzDmum6aTRKsJ--aHVvcXg6-xUECYgYADpChmvpQeXAC-p6kwtDobJoAObswOHCBOM2BRkBbkbzQUh3O63ng');
+                    "
+                  ></div>
+                  <p class="text-white text-base font-medium leading-normal">
+                    Интерактивные уроки
+                  </p>
+                </div>
+              </div>
+            </div>
+            <h3
+              class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
+              id="start-training"
+            >
+              Выберите буквы для тренировки:
+            </h3>
+            <div class="grid grid-cols-2 gap-4 px-4">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ა"
                   name="ა"
                   value="а"
                 />
-                <label class="alphabet__character-checkbox-label" for="ა"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ა"
                   >ა = а</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ბ"
                   value="б"
                   name="ბ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ბ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ბ"
                   >ბ = б</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="გ"
                   value="г"
                   name="გ"
                 />
-                <label class="alphabet__character-checkbox-label" for="გ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="გ"
                   >გ = г</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'გ'. Произносится как русская 'г'. Если выбрать 'ღ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'г' произойдёт случайным образом исходя из этих двух вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="დ"
                   value="д"
                   name="დ"
                 />
-                <label class="alphabet__character-checkbox-label" for="დ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="დ"
                   >დ = д</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ე"
                   value="е"
                   name="ე"
                 />
-                <label class="alphabet__character-checkbox-label" for="ე"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ე"
                   >ე = е, э</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ვ"
                   value="в"
                   name="ვ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ვ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ვ"
                   >ვ = в</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ზ"
                   value="з"
                   name="ზ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ზ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ზ"
                   >ზ = з</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="თ"
                   value="т"
                   name="თ"
                 />
-                <label class="alphabet__character-checkbox-label" for="თ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="თ"
                   >თ = т придыхательный</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'თ'. Произносится мягче, чем русская 'т'. Если выбрать 'ტ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'т' произойдёт случайным образом исходя из этих двух вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ი"
                   value="и"
                   name="ი"
                 />
-                <label class="alphabet__character-checkbox-label" for="ი"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ი"
                   >ი = и</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="კ"
                   value="к"
                   name="კ"
                 />
-                <label class="alphabet__character-checkbox-label" for="კ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="კ"
                   >კ = к резкий</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'კ'. Произносится резче, чем русская 'к'. Если выбрать 'ქ' и 'ყ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ლ"
                   value="л"
                   name="ლ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ლ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ლ"
                   >ლ = л</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="მ"
                   value="м"
                   name="მ"
                 />
-                <label class="alphabet__character-checkbox-label" for="მ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="მ"
                   >მ = м</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ნ"
                   value="н"
                   name="ნ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ნ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ნ"
                   >ნ = н</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ო"
                   value="о"
                   name="ო"
                 />
-                <label class="alphabet__character-checkbox-label" for="ო"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ო"
                   >ო = о</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="პ"
                   value="п"
                   name="პ"
                 />
-                <label class="alphabet__character-checkbox-label" for="პ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="პ"
                   >პ = п резкий</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'პ'. Произносится резче, чем русская 'п'. Если выбрать 'ფ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'п' произойдёт случайным образом исходя из этих двух вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ჟ"
                   value="ж"
                   name="ჟ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ჟ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ჟ"
                   >ჟ = ж</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="რ"
                   value="р"
                   name="რ"
                 />
-                <label class="alphabet__character-checkbox-label" for="რ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="რ"
                   >რ = р</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ს"
                   value="с"
                   name="ს"
                 />
-                <label class="alphabet__character-checkbox-label" for="ს"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ს"
                   >ს = с</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ტ"
                   value="т"
                   name="ტ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ტ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ტ"
                   >ტ = т резкий</label
                 >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ტ'. Произносится резче, чем русская 'т'. Если выбрать 'თ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'т' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="უ"
                   value="у"
                   name="უ"
                 />
-                <label class="alphabet__character-checkbox-label" for="უ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="უ"
                   >უ = у</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ფ"
                   value="п"
                   name="ფ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ფ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ფ"
                   >ფ = п придыхательный</label
                 >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ფ'. Произносится с бóльшим придыханием, чем русская 'п'. Если выбрать 'პ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'п' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ქ"
                   value="к"
                   name="ქ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ქ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ქ"
                   >ქ = к придыхательный</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'ქ'. Произносится с бóльшим придыханием, чем русская 'к'. Если выбрать 'კ' и 'ყ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ღ"
                   value="г"
                   name="ღ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ღ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ღ"
                   >ღ = г звонкий щелевой</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'ღ'. Нет аналогов в русском языке. Произношение похоже на украинскую 'г' в словосочетании 'Гарна дівчина'. Если выбрать 'გ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'г' произойдёт случайным образом исходя из этих двух вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ყ"
                   value="к"
                   name="ყ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ყ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ყ"
                   >ყ = к глотальный резкий щелевой</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'ყ'. Произносится как резкое 'к', затягивая зык в сторону глотки. Если выбрать 'კ' и 'ქ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов"
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="შ"
                   value="ш"
                   name="შ"
                 />
-                <label class="alphabet__character-checkbox-label" for="შ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="შ"
                   >შ = ш</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ჩ"
                   value="ч"
                   name="ჩ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ჩ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ჩ"
                   >ჩ = ч</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'ჩ'. Произносится как русская 'ч'. Если выбрать 'ჭ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ч' произойдёт случайным образом исходя из этих двух вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ც"
                   value="ц"
                   name="ც"
                 />
-                <label class="alphabet__character-checkbox-label" for="ც"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ც"
                   >ც = ц</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'ც'. Произносится как русская 'ц'. Если выбрать 'წ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ц' произойдёт случайным образом исходя из этих двух вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ძ"
                   value="дз"
                   name="ძ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ძ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ძ"
                   >ძ = дз звонкий смычной (сложный)</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="წ"
                   value="ц"
                   name="წ"
                 />
-                <label class="alphabet__character-checkbox-label" for="წ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="წ"
                   >წ = ц резкий</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'წ'. Произносится резче, чем русская 'ц'. Если выбрать 'ც' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ц' произойдёт случайным образом исходя из этих двух вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ჭ"
                   value="ч"
                   name="ჭ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ჭ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ჭ"
                   >ჭ = ч резкий</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'ჭ'. Произносится резче, чем русская 'ч'. Если выбрать 'ჩ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ч' произойдёт случайным образом исходя из этих двух вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ხ"
                   value="х"
                   name="ხ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ხ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ხ"
                   >ხ = х</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'ხ'. Произносится как русская буква 'х'. Если выбрать 'ჰ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'х' произойдёт случайным образом исходя из этих двух вариантов."
                 >
                   ?
                 </button>
               </div>
-              <div
-                class="alphabet__character-checkbox"
-                data-title="Произносится как слияние звуков букв 'д' и 'ж'"
-              >
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ჯ"
                   value="дж"
                   name="ჯ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ჯ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ჯ"
                   >ჯ = дж звонкий смычной (сложный)</label
                 >
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="flex items-center gap-2 cursor-pointer">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none cursor-pointer"
                   type="checkbox"
                   id="ჰ"
                   value="х"
                   name="ჰ"
                 />
-                <label class="alphabet__character-checkbox-label" for="ჰ"
+                <label
+                  class="text-white text-base font-normal leading-normal cursor-pointer"
+                  for="ჰ"
                   >ჰ = х гортанный придыхательный щелевой</label
                 >
                 <button
-                  class="alphabet__character-button button"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] hover:bg-[#675832] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
                   data-title="Буква 'ჰ'. Звучит мягче, чем русская буква 'х'. Произношение похоже на немецкую 'h'. Если выбрать 'ხ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'х' произойдёт случайным образом исходя из этих двух вариантов."
                 >
                   ?
                 </button>
               </div>
-            </fieldset>
-          </section>
-
-          <section class="options">
-            <fieldset class="options__fieldset">
-              <legend class="options__fieldset-legend">
-                Дополнительные опции:
-              </legend>
-              <div class="options__fieldset-buttons-and-text">
-                <h4 class="options__fieldset-buttons-title">
-                  Рандомайзеры текста:
-                </h4>
-                <div class="options__fieldset-buttons">
-                  <button
-                    class="options__fieldset-button-random-text options__fieldset-button button"
-                    type="button"
-                    aria-label="Случайный текст"
-                  >
-                    Случайный текст
-                  </button>
-                  <button
-                    class="options__fieldset-button-georgian-fact options__fieldset-button button"
-                    type="button"
-                    aria-label="Факт о Грузии"
-                  >
-                    Факт о Грузии
-                  </button>
-                  <button
-                    class="options__fieldset-button-onegin options__fieldset-button button"
-                    type="button"
-                    aria-label="Евгений Онегин"
-                  >
-                    Евгений Онегин
-                  </button>
-                </div>
-              </div>
-              <div class="options__fieldset-checkbox">
-                <input
-                  class="options__fieldset-checkbox-input"
-                  type="checkbox"
-                  id="ь"
-                  value="ь"
-                  name="ь"
-                />
-                <label class="options__fieldset-checkbox-label" for="ь"
-                  >Удалять 'ъ' и 'ь'</label
-                >
+            </div>
+            <div class="flex justify-stretch">
+              <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-start">
                 <button
-                  class="options__fieldset-checkbox-button button"
-                  data-title="Если поставить галочку, то в итоговом тексте не будет букв 'ъ' и 'ь'"
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#483e23] text-white text-sm font-bold leading-normal tracking-[0.015em]"
                 >
-                  ?
+                  <span class="truncate">Выбрать все</span>
+                </button>
+                <button
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#483e23] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+                >
+                  <span class="truncate">Очистить</span>
                 </button>
               </div>
-            </fieldset>
-          </section>
-
-          <section class="transliteration">
-            <form class="transliteration__form">
-              <div class="transliteration__text">
-                <label
-                  class="transliteration__caption text"
-                  for="transliteration__text-before"
-                  >Вставьте русский текст сюда:</label
+            </div>
+            <h3
+              class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
+            >
+              Дополнительные опции
+            </h3>
+            <div class="flex justify-stretch">
+              <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-start">
+                <button
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#483e23] text-white text-sm font-bold leading-normal tracking-[0.015em]"
                 >
-                <textarea
-                  class="transliteration__text-before transliteration__textarea"
-                  rows="20"
-                  cols="30"
-                  placeholder="Ваш текст"
-                ></textarea>
-                <div class="transliteration__buttons-text-size">
-                  <button
-                    class="transliteration__button-text-before-size-up transliteration__button-text-size"
-                    type="button"
-                    aria-label="Увеличить шрифт"
-                    data-title="Увеличить шрифт textBefore"
-                  >
-                    +
-                  </button>
-                  <button
-                    class="transliteration__button-text-before-size-down transliteration__button-text-size"
-                    type="button"
-                    aria-label="Уменьшить шрифт"
-                    data-title="Уменьшить шрифт textBefore"
-                  >
-                    -
-                  </button>
-                </div>
-              </div>
-              <div class="transliteration__buttons">
-                <div class="transliteration__buttons-trans-and-reset">
-                  <button
-                    class="transliteration__button-transliteration transliteration__button button"
-                    type="submit"
-                    aria-label="Транслитерация"
-                    data-title="Для начала выберите буквы для тренировки и напишите что-нибудь в поле для русского текста"
-                  >
-                    Транслитерация
-                  </button>
-                  <button
-                    class="transliteration__button-reset transliteration__button button"
-                    type="button"
-                    aria-label="Очистить"
-                  >
-                    Очистить
-                  </button>
-                </div>
-              </div>
-              <div class="transliteration__text">
-                <label
-                  class="transliteration__caption text"
-                  for="transliteration__text-after text"
-                  >Текст после транслитерации:</label
+                  <span class="truncate">Случайный текст</span>
+                </button>
+                <button
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#483e23] text-white text-sm font-bold leading-normal tracking-[0.015em]"
                 >
+                  <span class="truncate">Факты о Грузии</span>
+                </button>
+              </div>
+            </div>
+            <div class="px-4">
+              <label class="flex gap-x-3 py-3 flex-row">
+                <input
+                  type="checkbox"
+                  class="h-5 w-5 rounded border-[#675832] border-2 bg-transparent text-[#f4c653] checked:bg-[#f4c653] checked:border-[#f4c653] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#675832] focus:outline-none"
+                />
+                <p class="text-white text-base font-normal leading-normal">
+                  Убрать 'ъ' и 'ь' из результата транслитерации
+                </p>
+              </label>
+            </div>
+            <h3
+              class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5"
+            ></h3>
+            <div class="flex flex-col gap-4 px-4 py-3">
+              <label
+                class="text-white text-base font-medium leading-normal pb-2"
+              >
+                Вставьте русский текст сюда:
+              </label>
+              <textarea
+                placeholder="Ваш текст"
+                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#675832] bg-[#342c19] focus:border-[#675832] min-h-36 placeholder:text-[#caba91] p-[15px] text-base font-normal leading-normal"
+              ></textarea>
+            </div>
+            <div class="flex flex-col gap-4 px-4 py-3">
+              <label
+                class="text-white text-base font-medium leading-normal pb-2"
+              >
+                Итоговый текст:
                 <textarea
-                  class="transliteration__text-after transliteration__textarea"
-                  rows="20"
-                  cols="30"
-                  placeholder="Транслитерация появится здесь"
-                  readonly
+                  placeholder="Результат"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#675832] bg-[#342c19] focus:border-[#675832] min-h-36 placeholder:text-[#caba91] p-[15px] text-base font-normal leading-normal"
                 ></textarea>
-                <div class="transliteration__buttons-text-size">
-                  <button
-                    class="transliteration__button-text-after-size-up transliteration__button-text-size"
-                    type="button"
-                    aria-label="Увеличить шрифт"
-                    data-title="Увеличить шрифт textAfter"
+              </label>
+            </div>
+            <div class="flex justify-stretch">
+              <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-start">
+                <button
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4c653] text-[#221d11] text-sm font-bold leading-normal tracking-[0.015em]"
+                >
+                  <span class="truncate">Транслитерировать</span>
+                </button>
+                <button
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#483e23] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+                >
+                  <span class="truncate">Очистить</span>
+                </button>
+              </div>
+            </div>
+            <div class="@container">
+              <div
+                class="relative flex w-full flex-col items-start justify-between gap-3 p-4 @[480px]:flex-row @[480px]:items-center"
+              >
+                <div
+                  class="flex w-full shrink-[3] items-center justify-between"
+                >
+                  <p class="text-white text-base font-medium leading-normal">
+                    Размер текста
+                  </p>
+                  <p
+                    class="text-white text-sm font-normal leading-normal @[480px]:hidden"
                   >
-                    +
-                  </button>
-                  <button
-                    class="transliteration__button-text-after-size-down transliteration__button-text-size"
-                    type="button"
-                    aria-label="Уменьшить шрифт"
-                    data-title="Уменьшить шрифт textAfter"
+                    16
+                  </p>
+                </div>
+                <div class="flex h-4 w-full items-center gap-4">
+                  <div class="flex h-1 flex-1 rounded-sm bg-[#675832]">
+                    <div class="h-full w-[32%] rounded-sm bg-[#f4c653]"></div>
+                    <div class="relative">
+                      <div
+                        class="absolute -left-2 -top-1.5 size-4 rounded-full bg-[#f4c653]"
+                      ></div>
+                    </div>
+                  </div>
+                  <p
+                    class="text-white text-sm font-normal leading-normal hidden @[480px]:block"
                   >
-                    -
-                  </button>
+                    16
+                  </p>
                 </div>
               </div>
-            </form>
-          </section>
-
-          <section class="feedback">
-            <p class="feedback__text text">
-              Заметили ошибку или есть идея как улучшить тренажёр? Напишите
-              сообщение мне в соцсети, указанные в правом нижнем углу страницы.
-            </p>
-          </section>
-        </main>
-
-        <footer class="footer">
-          <p class="footer__copyright text">
-            &copy; 2022 - 2023 Алексей Смирнов
-          </p>
-          <div class="footer__contacts">
-            <nav>
-              <ul class="footer__contacts-list">
-                <li class="footer__contacts-list-item link">
-                  <a
-                    class="footer__social-network-link text"
-                    href="https://t.me/sibusky"
-                    target="_blank"
-                    >Телеграм<img
-                      class="footer__social-network-logo"
-                      src="./images/telegram_logo.png"
-                      class=""
-                  /></a>
-                </li>
-                <li class="footer__contacts-list-item link">
-                  <a
-                    class="footer__social-network-link text"
-                    href="https://vk.com/sibusky"
-                    target="_blank"
-                    >ВК<img
-                      class="footer__social-network-logo"
-                      src="./images/vk_logo.png"
-                      class=""
-                  /></a>
-                </li>
-                <li class="footer__contacts-list-item link">
-                  <!-- <a
-                    class="footer__social-network-link text"
-                    href="https://www.instagram.com/electrician_smirnov/"
-                    target="_blank"
-                    >Инстаграм<img
-                      class="footer__social-network-logo"
-                      src="./images/insta_logo.png"
-                      class=""
-                    /></a
-                  > -->
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </footer>
-        <div class="tooltip">
-          <div class="tooltip__container">
-            <button class="tooltip__close-btn button"></button>
-            <p class="tooltip__text">Подсказка</p>
+            </div>
+            <footer
+              class="flex flex-col gap-6 px-5 py-10 text-center @container"
+              id="contacts"
+            >
+              <div class="flex flex-wrap justify-center gap-4">
+                <a href="#">
+                  <div
+                    class="text-[#caba91]"
+                    data-icon="TelegramLogo"
+                    data-size="24px"
+                    data-weight="regular"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24px"
+                      height="24px"
+                      fill="currentColor"
+                      viewBox="0 0 256 256"
+                    >
+                      <path
+                        d="M236.88,26.19a9,9,0,0,0-9.16-1.57L25.06,103.93a14.22,14.22,0,0,0,2.43,27.21L80,141.45V200a15.92,15.92,0,0,0,10,14.83,15.91,15.91,0,0,0,17.51-3.73l25.32-26.26L173,220a15.88,15.88,0,0,0,10.51,4,16.3,16.3,0,0,0,5-.79,15.85,15.85,0,0,0,10.67-11.63L239.77,35A9,9,0,0,0,236.88,26.19Zm-61.14,36L86.15,126.35l-49.6-9.73ZM96,200V152.52l24.79,21.74Zm87.53,8L100.85,135.5l119-85.29Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </a>
+                <a href="#">
+                  <div
+                    class="text-[#caba91]"
+                    data-icon="TiktokLogo"
+                    data-size="24px"
+                    data-weight="regular"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24px"
+                      height="24px"
+                      fill="currentColor"
+                      viewBox="0 0 256 256"
+                    >
+                      <path
+                        d="M224,72a48.05,48.05,0,0,1-48-48,8,8,0,0,0-8-8H128a8,8,0,0,0-8,8V156a20,20,0,1,1-28.57-18.08A8,8,0,0,0,96,130.69V88a8,8,0,0,0-9.4-7.88C50.91,86.48,24,119.1,24,156a76,76,0,0,0,152,0V116.29A103.25,103.25,0,0,0,224,128a8,8,0,0,0,8-8V80A8,8,0,0,0,224,72Zm-8,39.64a87.19,87.19,0,0,1-43.33-16.15A8,8,0,0,0,160,102v54a60,60,0,0,1-120,0c0-25.9,16.64-49.13,40-57.6v27.67A36,36,0,1,0,136,156V32h24.5A64.14,64.14,0,0,0,216,87.5Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </a>
+              </div>
+              <p class="text-[#caba91] text-base font-normal leading-normal">
+                © 2022 – 2025 Алексей Смирнов. Тренажёр грузинского алфавита.
+              </p>
+            </footer>
           </div>
         </div>
       </div>
     </div>
-    <script src="./georgianFacts.js"></script>
-    <script src="./onegin.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>

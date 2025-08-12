@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="./styles/index.css" />
+    <title class="title">Грузинский алфавит</title>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+      (function (m, e, t, r, i, k, a) {
+        m[i] =
+          m[i] ||
+          function () {
+            (m[i].a = m[i].a || []).push(arguments);
+          };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j++) {
+          if (document.scripts[j].src === r) {
+            return;
+          }
+        }
+        (k = e.createElement(t)),
+          (a = e.getElementsByTagName(t)[0]),
+          (k.async = 1),
+          (k.src = r),
+          a.parentNode.insertBefore(k, a);
+      })(
+        window,
+        document,
+        'script',
+        'https://mc.yandex.ru/metrika/tag.js',
+        'ym'
+      );
+
+      ym(92125198, 'init', {
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+      });
+    </script>
+    <noscript
+      ><div>
+        <img
+          src="https://mc.yandex.ru/watch/92125198"
+          style="position: absolute; left: -9999px"
+          alt=""
+        /></div
+    ></noscript>
+    <!-- /Yandex.Metrika counter -->
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="page__container">
+        <!-- <header class="header"></header> -->
+
+        <main class="content">
+          <section class="lead">
+            <h1 class="lead__title">Тренажёр грузинского алфавита</h1>
+            <p class="lead__text">
+              Грузинские буквы алфавита очень необычные и сложные на первый
+              взгляд, но есть и положительный момент - почти все буквы читаются
+              как русские аналоги, что делает изучение алфавита с помощью замен
+              в тексте русских букв грузинскими лёгким и продуктивным.
+            </p>
+            <p class="lead__text">
+              Выберите буквы грузинского алфавита, которые хотите потренировать.
+              Затем напишите или вставьте текст в поле ниже. Если лень
+              выдумывать или неоткуда копировать, то воспользуйтесь
+              рандомайзером текста и нажмите кнопку "Транслитерация". За
+              генерацию случайных текстов спасибо сервису
+              <a
+                class="lead__text-link link"
+                href="https://fish-text.ru"
+                target="_blank"
+                >fish-text</a
+              >.
+            </p>
+            <p class="lead__text">
+              Рекомендую начать с замены одной буквы, потом добавить ещё одну,
+              потом ещё, и так далее пока вы не запомните все буквы.
+            </p>
+            <p class="lead__text">
+              Конечно, не все буквы грузинского алфавита имеют аналоги в
+              русском. Поэтому транслитерация некоторых букв приблизительная и у
+              нескольких букв она одинакова. Например, в грузинском языке есть
+              три разновидности буквы "к" по твёрдости произношения.
+            </p>
+            <p class="lead__text">
+              Если выбрать похожие буквы ('ყ', 'კ', 'ქ', например) одновременно,
+              то при транслитерации на грузинский эти буквы будут выбраны в
+              случайном порядке. У таких букв есть подсказки. Чтобы их увидеть,
+              нужно нажать на знак вопроса у соответствующего чекбокса.
+            </p>
+          </section>
+
+          <section class="alphabet">
+            <fieldset class="alphabet__characters">
+              <legend class="alphabet__legend">
+                Выберите буквы для тренировки:
+              </legend>
+
+              <button
+                class="alphabet__button-check-all alphabet__button button"
+              >
+                Выбрать все
+              </button>
+              <button
+                class="alphabet__button-check-none alphabet__button button"
+              >
+                Снять выделение
+              </button>
+
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ა"
+                  name="ა"
+                  value="а"
+                />
+                <label class="alphabet__character-checkbox-label" for="ა"
+                  >ა = а</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ბ"
+                  value="б"
+                  name="ბ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ბ"
+                  >ბ = б</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="გ"
+                  value="г"
+                  name="გ"
+                />
+                <label class="alphabet__character-checkbox-label" for="გ"
+                  >გ = г</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'გ'. Произносится как русская 'г'. Если выбрать 'ღ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'г' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="დ"
+                  value="д"
+                  name="დ"
+                />
+                <label class="alphabet__character-checkbox-label" for="დ"
+                  >დ = д</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ე"
+                  value="е"
+                  name="ე"
+                />
+                <label class="alphabet__character-checkbox-label" for="ე"
+                  >ე = е, э</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ვ"
+                  value="в"
+                  name="ვ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ვ"
+                  >ვ = в</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ზ"
+                  value="з"
+                  name="ზ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ზ"
+                  >ზ = з</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="თ"
+                  value="т"
+                  name="თ"
+                />
+                <label class="alphabet__character-checkbox-label" for="თ"
+                  >თ = т придыхательный</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'თ'. Произносится мягче, чем русская 'т'. Если выбрать 'ტ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'т' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ი"
+                  value="и"
+                  name="ი"
+                />
+                <label class="alphabet__character-checkbox-label" for="ი"
+                  >ი = и</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="კ"
+                  value="к"
+                  name="კ"
+                />
+                <label class="alphabet__character-checkbox-label" for="კ"
+                  >კ = к резкий</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'კ'. Произносится резче, чем русская 'к'. Если выбрать 'ქ' и 'ყ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ლ"
+                  value="л"
+                  name="ლ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ლ"
+                  >ლ = л</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="მ"
+                  value="м"
+                  name="მ"
+                />
+                <label class="alphabet__character-checkbox-label" for="მ"
+                  >მ = м</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ნ"
+                  value="н"
+                  name="ნ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ნ"
+                  >ნ = н</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ო"
+                  value="о"
+                  name="ო"
+                />
+                <label class="alphabet__character-checkbox-label" for="ო"
+                  >ო = о</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="პ"
+                  value="п"
+                  name="პ"
+                />
+                <label class="alphabet__character-checkbox-label" for="პ"
+                  >პ = п резкий</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'პ'. Произносится резче, чем русская 'п'. Если выбрать 'ფ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'п' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ჟ"
+                  value="ж"
+                  name="ჟ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ჟ"
+                  >ჟ = ж</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="რ"
+                  value="р"
+                  name="რ"
+                />
+                <label class="alphabet__character-checkbox-label" for="რ"
+                  >რ = р</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ს"
+                  value="с"
+                  name="ს"
+                />
+                <label class="alphabet__character-checkbox-label" for="ს"
+                  >ს = с</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ტ"
+                  value="т"
+                  name="ტ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ტ"
+                  >ტ = т резкий</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'ტ'. Произносится резче, чем русская 'т'. Если выбрать 'თ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'т' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="უ"
+                  value="у"
+                  name="უ"
+                />
+                <label class="alphabet__character-checkbox-label" for="უ"
+                  >უ = у</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ფ"
+                  value="п"
+                  name="ფ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ფ"
+                  >ფ = п придыхательный</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'ფ'. Произносится с бóльшим придыханием, чем русская 'п'. Если выбрать 'პ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'п' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ქ"
+                  value="к"
+                  name="ქ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ქ"
+                  >ქ = к придыхательный</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'ქ'. Произносится с бóльшим придыханием, чем русская 'к'. Если выбрать 'კ' и 'ყ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ღ"
+                  value="г"
+                  name="ღ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ღ"
+                  >ღ = г звонкий щелевой</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'ღ'. Нет аналогов в русском языке. Произношение похоже на украинскую 'г' в словосочетании 'Гарна дівчина'. Если выбрать 'გ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'г' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ყ"
+                  value="к"
+                  name="ყ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ყ"
+                  >ყ = к глотальный резкий щелевой</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'ყ'. Произносится как резкое 'к', затягивая зык в сторону глотки. Если выбрать 'კ' и 'ქ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов"
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="შ"
+                  value="ш"
+                  name="შ"
+                />
+                <label class="alphabet__character-checkbox-label" for="შ"
+                  >შ = ш</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ჩ"
+                  value="ч"
+                  name="ჩ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ჩ"
+                  >ჩ = ч</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'ჩ'. Произносится как русская 'ч'. Если выбрать 'ჭ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ч' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ც"
+                  value="ц"
+                  name="ც"
+                />
+                <label class="alphabet__character-checkbox-label" for="ც"
+                  >ც = ц</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'ც'. Произносится как русская 'ц'. Если выбрать 'წ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ц' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ძ"
+                  value="дз"
+                  name="ძ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ძ"
+                  >ძ = дз звонкий смычной (сложный)</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="წ"
+                  value="ц"
+                  name="წ"
+                />
+                <label class="alphabet__character-checkbox-label" for="წ"
+                  >წ = ц резкий</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'წ'. Произносится резче, чем русская 'ц'. Если выбрать 'ც' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ц' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ჭ"
+                  value="ч"
+                  name="ჭ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ჭ"
+                  >ჭ = ч резкий</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'ჭ'. Произносится резче, чем русская 'ч'. Если выбрать 'ჩ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ч' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ხ"
+                  value="х"
+                  name="ხ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ხ"
+                  >ხ = х</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'ხ'. Произносится как русская буква 'х'. Если выбрать 'ჰ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'х' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+              <div
+                class="alphabet__character-checkbox"
+                data-title="Произносится как слияние звуков букв 'д' и 'ж'"
+              >
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ჯ"
+                  value="дж"
+                  name="ჯ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ჯ"
+                  >ჯ = дж звонкий смычной (сложный)</label
+                >
+              </div>
+              <div class="alphabet__character-checkbox">
+                <input
+                  class="alphabet__character-checkbox-input"
+                  type="checkbox"
+                  id="ჰ"
+                  value="х"
+                  name="ჰ"
+                />
+                <label class="alphabet__character-checkbox-label" for="ჰ"
+                  >ჰ = х гортанный придыхательный щелевой</label
+                >
+                <button
+                  class="alphabet__character-button button"
+                  data-title="Буква 'ჰ'. Звучит мягче, чем русская буква 'х'. Произношение похоже на немецкую 'h'. Если выбрать 'ხ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'х' произойдёт случайным образом исходя из этих двух вариантов."
+                >
+                  ?
+                </button>
+              </div>
+            </fieldset>
+          </section>
+
+          <section class="options">
+            <fieldset class="options__fieldset">
+              <legend class="options__fieldset-legend">
+                Дополнительные опции:
+              </legend>
+              <div class="options__fieldset-buttons-and-text">
+                <h4 class="options__fieldset-buttons-title">
+                  Рандомайзеры текста:
+                </h4>
+                <div class="options__fieldset-buttons">
+                  <button
+                    class="options__fieldset-button-random-text options__fieldset-button button"
+                    type="button"
+                    aria-label="Случайный текст"
+                  >
+                    Случайный текст
+                  </button>
+                  <button
+                    class="options__fieldset-button-georgian-fact options__fieldset-button button"
+                    type="button"
+                    aria-label="Факт о Грузии"
+                  >
+                    Факт о Грузии
+                  </button>
+                  <button
+                    class="options__fieldset-button-onegin options__fieldset-button button"
+                    type="button"
+                    aria-label="Евгений Онегин"
+                  >
+                    Евгений Онегин
+                  </button>
+                </div>
+              </div>
+              <div class="options__fieldset-checkbox">
+                <input
+                  class="options__fieldset-checkbox-input"
+                  type="checkbox"
+                  id="ь"
+                  value="ь"
+                  name="ь"
+                />
+                <label class="options__fieldset-checkbox-label" for="ь"
+                  >Удалять 'ъ' и 'ь'</label
+                >
+                <button
+                  class="options__fieldset-checkbox-button button"
+                  data-title="Если поставить галочку, то в итоговом тексте не будет букв 'ъ' и 'ь'"
+                >
+                  ?
+                </button>
+              </div>
+            </fieldset>
+          </section>
+
+          <section class="transliteration">
+            <form class="transliteration__form">
+              <div class="transliteration__text">
+                <label
+                  class="transliteration__caption text"
+                  for="transliteration__text-before"
+                  >Вставьте русский текст сюда:</label
+                >
+                <textarea
+                  class="transliteration__text-before transliteration__textarea"
+                  rows="20"
+                  cols="30"
+                  placeholder="Ваш текст"
+                ></textarea>
+                <div class="transliteration__buttons-text-size">
+                  <button
+                    class="transliteration__button-text-before-size-up transliteration__button-text-size"
+                    type="button"
+                    aria-label="Увеличить шрифт"
+                    data-title="Увеличить шрифт textBefore"
+                  >
+                    +
+                  </button>
+                  <button
+                    class="transliteration__button-text-before-size-down transliteration__button-text-size"
+                    type="button"
+                    aria-label="Уменьшить шрифт"
+                    data-title="Уменьшить шрифт textBefore"
+                  >
+                    -
+                  </button>
+                </div>
+              </div>
+              <div class="transliteration__buttons">
+                <div class="transliteration__buttons-trans-and-reset">
+                  <button
+                    class="transliteration__button-transliteration transliteration__button button"
+                    type="submit"
+                    aria-label="Транслитерация"
+                    data-title="Для начала выберите буквы для тренировки и напишите что-нибудь в поле для русского текста"
+                  >
+                    Транслитерация
+                  </button>
+                  <button
+                    class="transliteration__button-reset transliteration__button button"
+                    type="button"
+                    aria-label="Очистить"
+                  >
+                    Очистить
+                  </button>
+                </div>
+              </div>
+              <div class="transliteration__text">
+                <label
+                  class="transliteration__caption text"
+                  for="transliteration__text-after text"
+                  >Текст после транслитерации:</label
+                >
+                <textarea
+                  class="transliteration__text-after transliteration__textarea"
+                  rows="20"
+                  cols="30"
+                  placeholder="Транслитерация появится здесь"
+                  readonly
+                ></textarea>
+                <div class="transliteration__buttons-text-size">
+                  <button
+                    class="transliteration__button-text-after-size-up transliteration__button-text-size"
+                    type="button"
+                    aria-label="Увеличить шрифт"
+                    data-title="Увеличить шрифт textAfter"
+                  >
+                    +
+                  </button>
+                  <button
+                    class="transliteration__button-text-after-size-down transliteration__button-text-size"
+                    type="button"
+                    aria-label="Уменьшить шрифт"
+                    data-title="Уменьшить шрифт textAfter"
+                  >
+                    -
+                  </button>
+                </div>
+              </div>
+            </form>
+          </section>
+
+          <section class="feedback">
+            <p class="feedback__text text">
+              Заметили ошибку или есть идея как улучшить тренажёр? Напишите
+              сообщение мне в соцсети, указанные в правом нижнем углу страницы.
+            </p>
+          </section>
+        </main>
+
+        <footer class="footer">
+          <p class="footer__copyright text">
+            &copy; 2022 - 2023 Алексей Смирнов
+          </p>
+          <div class="footer__contacts">
+            <nav>
+              <ul class="footer__contacts-list">
+                <li class="footer__contacts-list-item link">
+                  <a
+                    class="footer__social-network-link text"
+                    href="https://t.me/sibusky"
+                    target="_blank"
+                    >Телеграм<img
+                      class="footer__social-network-logo"
+                      src="./images/telegram_logo.png"
+                      class=""
+                  /></a>
+                </li>
+                <li class="footer__contacts-list-item link">
+                  <a
+                    class="footer__social-network-link text"
+                    href="https://vk.com/sibusky"
+                    target="_blank"
+                    >ВК<img
+                      class="footer__social-network-logo"
+                      src="./images/vk_logo.png"
+                      class=""
+                  /></a>
+                </li>
+                <li class="footer__contacts-list-item link">
+                  <!-- <a
+                    class="footer__social-network-link text"
+                    href="https://www.instagram.com/electrician_smirnov/"
+                    target="_blank"
+                    >Инстаграм<img
+                      class="footer__social-network-logo"
+                      src="./images/insta_logo.png"
+                      class=""
+                    /></a
+                  > -->
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </footer>
+        <div class="tooltip">
+          <div class="tooltip__container">
+            <button class="tooltip__close-btn button"></button>
+            <p class="tooltip__text">Подсказка</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./georgianFacts.js"></script>
+    <script src="./onegin.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
