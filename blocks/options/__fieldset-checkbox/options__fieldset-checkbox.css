@@ -1,4 +1,8 @@
 .options__fieldset-checkbox {
-  margin: 0 0 0 10px;
-  max-width: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  max-width: 100%;
 }

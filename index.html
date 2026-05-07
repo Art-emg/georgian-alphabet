@@ -58,549 +58,1590 @@
         <main class="content">
           <section class="lead">
             <h1 class="lead__title">Тренажёр грузинского алфавита</h1>
-            <p class="lead__text">
-              Грузинские буквы алфавита очень необычные и сложные на первый
-              взгляд, но есть и положительный момент - почти все буквы читаются
-              как русские аналоги, что делает изучение алфавита с помощью замен
-              в тексте русских букв грузинскими лёгким и продуктивным.
+            <p class="lead__intro text">
+              Подставляйте выбранные грузинские буквы вместо кириллических в любом
+              тексте — так проще запомнить алфавит. Результат подсвечивает
+              грузинские и кириллические символы; исходник на русском открывается
+              ниже блока результата.
             </p>
-            <p class="lead__text">
-              Выберите буквы грузинского алфавита, которые хотите потренировать.
-              Затем напишите или вставьте текст в поле ниже. Если лень
-              выдумывать или неоткуда копировать, то воспользуйтесь
-              рандомайзером текста и нажмите кнопку "Транслитерация". За
-              генерацию случайных текстов спасибо сервису
-              <a
-                class="lead__text-link link"
-                href="https://fish-text.ru"
-                target="_blank"
-                >fish-text</a
-              >.
-            </p>
-            <p class="lead__text">
-              Рекомендую начать с замены одной буквы, потом добавить ещё одну,
-              потом ещё, и так далее пока вы не запомните все буквы.
-            </p>
-            <p class="lead__text">
-              Конечно, не все буквы грузинского алфавита имеют аналоги в
-              русском. Поэтому транслитерация некоторых букв приблизительная и у
-              нескольких букв она одинакова. Например, в грузинском языке есть
-              три разновидности буквы "к" по твёрдости произношения.
-            </p>
-            <p class="lead__text">
-              Если выбрать похожие буквы ('ყ', 'კ', 'ქ', например) одновременно,
-              то при транслитерации на грузинский эти буквы будут выбраны в
-              случайном порядке. У таких букв есть подсказки. Чтобы их увидеть,
-              нужно нажать на знак вопроса у соответствующего чекбокса.
-            </p>
+            <details class="lead__more">
+              <summary class="lead__more-summary text">
+                Подробнее: как пользоваться и откуда материалы
+              </summary>
+              <div class="lead__more-body">
+                <p class="lead__text">
+                  Откройте «Редактировать исходный русский текст», введите
+                  текст или воспользуйтесь рандомайзерами в блоке опций.
+                </p>
+                <p class="lead__text">
+                  Рекомендуется начать с одной-двух букв и постепенно добавлять
+                  остальные. У похожих по звучанию пар (например разные «к»
+                  или «т»), если они отмечены вместе, замена случайная — см.
+                  знак «?» на карточке.
+                </p>
+                <p class="lead__text">
+                  Аудио произношения и картинки почерта для кнопок на карточках
+                  взяты с
+                  <a
+                    class="lead__text-link link"
+                    href="https://geolang.ru/lessons/9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >GeoLang — урок «Грузинский алфавит с произношением»</a
+                  >.
+                </p>
+                <p class="lead__text">
+                  Случайные русские тексты выдаёт сервис
+                  <a
+                    class="lead__text-link link"
+                    href="https://fish-text.ru"
+                    target="_blank"
+                    >fish-text</a
+                  >.
+                </p>
+              </div>
+            </details>
           </section>
 
           <section class="alphabet">
             <fieldset class="alphabet__characters">
               <legend class="alphabet__legend">
-                Выберите буквы для тренировки:
+                Выберите буквы для тренировки
               </legend>
 
-              <button
-                class="alphabet__button-check-all alphabet__button button"
-              >
-                Выбрать все
-              </button>
-              <button
-                class="alphabet__button-check-none alphabet__button button"
-              >
-                Снять выделение
-              </button>
+              <div class="alphabet__characters-actions">
+                <button
+                  type="button"
+                  class="alphabet__button-check-all alphabet__button alphabet__button--compact button"
+                >
+                  Все
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button-check-none alphabet__button alphabet__button--compact button"
+                >
+                  Снять
+                </button>
+              </div>
 
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ა">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ა"
                   name="ა"
                   value="а"
                 />
-                <label class="alphabet__character-checkbox-label" for="ა"
-                  >ა = а</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ა</span>
+                      <span class="alphabet__card-ru">а</span>
+                    </div>
+
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ა"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%90.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ა"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ბ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ბ"
-                  value="б"
                   name="ბ"
+                  value="б"
                 />
-                <label class="alphabet__character-checkbox-label" for="ბ"
-                  >ბ = б</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ბ</span>
+                      <span class="alphabet__card-ru">б</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ბ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%91.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ბ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="გ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="გ"
-                  value="г"
                   name="გ"
+                  value="г"
                 />
-                <label class="alphabet__character-checkbox-label" for="გ"
-                  >გ = г</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'გ'. Произносится как русская 'г'. Если выбрать 'ღ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'г' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">გ</span>
+                      <span class="alphabet__card-ru">г</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве გ" data-title="Буква 'გ'. Произносится как русская 'г'. Если выбрать 'ღ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'г' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта გ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%92.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы გ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="დ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="დ"
-                  value="д"
                   name="დ"
+                  value="д"
                 />
-                <label class="alphabet__character-checkbox-label" for="დ"
-                  >დ = д</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">დ</span>
+                      <span class="alphabet__card-ru">д</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта დ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%93.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы დ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ე">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ე"
-                  value="е"
                   name="ე"
+                  value="е"
                 />
-                <label class="alphabet__character-checkbox-label" for="ე"
-                  >ე = е, э</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ე</span>
+                      <span class="alphabet__card-ru">е, э</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ე"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%94.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ე"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ვ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ვ"
-                  value="в"
                   name="ვ"
+                  value="в"
                 />
-                <label class="alphabet__character-checkbox-label" for="ვ"
-                  >ვ = в</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ვ</span>
+                      <span class="alphabet__card-ru">в</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ვ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%95.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ვ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ზ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ზ"
-                  value="з"
                   name="ზ"
+                  value="з"
                 />
-                <label class="alphabet__character-checkbox-label" for="ზ"
-                  >ზ = з</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ზ</span>
+                      <span class="alphabet__card-ru">з</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ზ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%96.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ზ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="თ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="თ"
-                  value="т"
                   name="თ"
+                  value="т"
                 />
-                <label class="alphabet__character-checkbox-label" for="თ"
-                  >თ = т придыхательный</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'თ'. Произносится мягче, чем русская 'т'. Если выбрать 'ტ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'т' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">თ</span>
+                      <span class="alphabet__card-ru">т (придыхательная)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве თ" data-title="Буква 'თ'. Произносится мягче, чем русская 'т'. Если выбрать 'ტ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'т' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта თ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%97.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы თ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ი">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ი"
-                  value="и"
                   name="ი"
+                  value="и"
                 />
-                <label class="alphabet__character-checkbox-label" for="ი"
-                  >ი = и</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ი</span>
+                      <span class="alphabet__card-ru">и</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ი"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%98.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ი"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="კ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="კ"
-                  value="к"
                   name="კ"
+                  value="к"
                 />
-                <label class="alphabet__character-checkbox-label" for="კ"
-                  >კ = к резкий</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'კ'. Произносится резче, чем русская 'к'. Если выбрать 'ქ' и 'ყ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">კ</span>
+                      <span class="alphabet__card-ru">к (резкая)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве კ" data-title="Буква 'კ'. Произносится резче, чем русская 'к'. Если выбрать 'ქ' и 'ყ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта კ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%99.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы კ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ლ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ლ"
-                  value="л"
                   name="ლ"
+                  value="л"
                 />
-                <label class="alphabet__character-checkbox-label" for="ლ"
-                  >ლ = л</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ლ</span>
+                      <span class="alphabet__card-ru">л</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ლ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%9A.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ლ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="მ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="მ"
-                  value="м"
                   name="მ"
+                  value="м"
                 />
-                <label class="alphabet__character-checkbox-label" for="მ"
-                  >მ = м</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">მ</span>
+                      <span class="alphabet__card-ru">м</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта მ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%9B.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы მ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ნ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ნ"
-                  value="н"
                   name="ნ"
+                  value="н"
                 />
-                <label class="alphabet__character-checkbox-label" for="ნ"
-                  >ნ = н</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ნ</span>
+                      <span class="alphabet__card-ru">н</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ნ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%9C.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ნ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ო">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ო"
-                  value="о"
                   name="ო"
+                  value="о"
                 />
-                <label class="alphabet__character-checkbox-label" for="ო"
-                  >ო = о</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ო</span>
+                      <span class="alphabet__card-ru">о</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ო"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%9D.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ო"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="პ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="პ"
-                  value="п"
                   name="პ"
+                  value="п"
                 />
-                <label class="alphabet__character-checkbox-label" for="პ"
-                  >პ = п резкий</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'პ'. Произносится резче, чем русская 'п'. Если выбрать 'ფ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'п' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">პ</span>
+                      <span class="alphabet__card-ru">п (резкая)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве პ" data-title="Буква 'პ'. Произносится резче, чем русская 'п'. Если выбрать 'ფ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'п' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта პ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%9E.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы პ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ჟ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ჟ"
-                  value="ж"
                   name="ჟ"
+                  value="ж"
                 />
-                <label class="alphabet__character-checkbox-label" for="ჟ"
-                  >ჟ = ж</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ჟ</span>
+                      <span class="alphabet__card-ru">ж</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ჟ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%9F.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ჟ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="რ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="რ"
-                  value="р"
                   name="რ"
+                  value="р"
                 />
-                <label class="alphabet__character-checkbox-label" for="რ"
-                  >რ = р</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">რ</span>
+                      <span class="alphabet__card-ru">р</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта რ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%A0.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы რ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ს">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ს"
-                  value="с"
                   name="ს"
+                  value="с"
                 />
-                <label class="alphabet__character-checkbox-label" for="ს"
-                  >ს = с</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ს</span>
+                      <span class="alphabet__card-ru">с</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ს"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%A1.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ს"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ტ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ტ"
-                  value="т"
                   name="ტ"
+                  value="т"
                 />
-                <label class="alphabet__character-checkbox-label" for="ტ"
-                  >ტ = т резкий</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ტ'. Произносится резче, чем русская 'т'. Если выбрать 'თ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'т' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ტ</span>
+                      <span class="alphabet__card-ru">т (резкая)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ტ" data-title="Буква 'ტ'. Произносится резче, чем русская 'т'. Если выбрать 'თ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'т' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ტ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%A2.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ტ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="უ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="უ"
-                  value="у"
                   name="უ"
+                  value="у"
                 />
-                <label class="alphabet__character-checkbox-label" for="უ"
-                  >უ = у</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">უ</span>
+                      <span class="alphabet__card-ru">у</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта უ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%A3.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы უ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ფ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ფ"
-                  value="п"
                   name="ფ"
+                  value="п"
                 />
-                <label class="alphabet__character-checkbox-label" for="ფ"
-                  >ფ = п придыхательный</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ფ'. Произносится с бóльшим придыханием, чем русская 'п'. Если выбрать 'პ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'п' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ფ</span>
+                      <span class="alphabet__card-ru">п (придыхательная)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ფ" data-title="Буква 'ფ'. Произносится с бóльшим придыханием, чем русская 'п'. Если выбрать 'პ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'п' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ფ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%A4.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ფ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ქ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ქ"
-                  value="к"
                   name="ქ"
+                  value="к"
                 />
-                <label class="alphabet__character-checkbox-label" for="ქ"
-                  >ქ = к придыхательный</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ქ'. Произносится с бóльшим придыханием, чем русская 'к'. Если выбрать 'კ' и 'ყ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ქ</span>
+                      <span class="alphabet__card-ru">к (придыхательная)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ქ" data-title="Буква 'ქ'. Произносится с бóльшим придыханием, чем русская 'к'. Если выбрать 'კ' и 'ყ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ქ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%A5.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ქ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ღ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ღ"
-                  value="г"
                   name="ღ"
+                  value="г"
                 />
-                <label class="alphabet__character-checkbox-label" for="ღ"
-                  >ღ = г звонкий щелевой</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ღ'. Нет аналогов в русском языке. Произношение похоже на украинскую 'г' в словосочетании 'Гарна дівчина'. Если выбрать 'გ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'г' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ღ</span>
+                      <span class="alphabet__card-ru">г (беларуская)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ღ" data-title="Буква 'ღ'. Нет аналогов в русском языке. Произношение похоже на украинскую 'г' в словосочетании 'Гарна дівчина'. Если выбрать 'გ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'г' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ღ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%A6.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ღ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ყ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ყ"
-                  value="к"
                   name="ყ"
+                  value="к"
                 />
-                <label class="alphabet__character-checkbox-label" for="ყ"
-                  >ყ = к глотальный резкий щелевой</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ყ'. Произносится как резкое 'к', затягивая зык в сторону глотки. Если выбрать 'კ' и 'ქ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов"
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ყ</span>
+                      <span class="alphabet__card-ru">к (глоттальная)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ყ" data-title="Буква 'ყ'. Произносится как резкое 'к', затягивая зык в сторону глотки. Если выбрать 'კ' и 'ქ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'к' произойдёт случайным образом исходя из этих трёх вариантов"><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ყ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%A7.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ყ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="შ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="შ"
-                  value="ш"
                   name="შ"
+                  value="ш"
                 />
-                <label class="alphabet__character-checkbox-label" for="შ"
-                  >შ = ш</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">შ</span>
+                      <span class="alphabet__card-ru">ш</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта შ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%A8.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы შ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ჩ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ჩ"
-                  value="ч"
                   name="ჩ"
+                  value="ч"
                 />
-                <label class="alphabet__character-checkbox-label" for="ჩ"
-                  >ჩ = ч</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ჩ'. Произносится как русская 'ч'. Если выбрать 'ჭ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ч' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ჩ</span>
+                      <span class="alphabet__card-ru">ч</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ჩ" data-title="Буква 'ჩ'. Произносится как русская 'ч'. Если выбрать 'ჭ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'ч' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ჩ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%A9.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ჩ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ც">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ც"
-                  value="ц"
                   name="ც"
+                  value="ц"
                 />
-                <label class="alphabet__character-checkbox-label" for="ც"
-                  >ც = ц</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ც'. Произносится как русская 'ц'. Если выбрать 'წ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ц' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ც</span>
+                      <span class="alphabet__card-ru">ц</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ც" data-title="Буква 'ც'. Произносится как русская 'ц'. Если выбрать 'წ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'ц' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ც"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%AA.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ც"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ძ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ძ"
-                  value="дз"
                   name="ძ"
+                  value="дз"
                 />
-                <label class="alphabet__character-checkbox-label" for="ძ"
-                  >ძ = дз звонкий смычной (сложный)</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ძ</span>
+                      <span class="alphabet__card-ru">дз (сложная)</span>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ძ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%AB.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ძ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="წ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="წ"
-                  value="ц"
                   name="წ"
+                  value="ц"
                 />
-                <label class="alphabet__character-checkbox-label" for="წ"
-                  >წ = ц резкий</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'წ'. Произносится резче, чем русская 'ц'. Если выбрать 'ც' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ц' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">წ</span>
+                      <span class="alphabet__card-ru">ц (резкая)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве წ" data-title="Буква 'წ'. Произносится резче, чем русская 'ц'. Если выбрать 'ც' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'ц' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта წ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%AC.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы წ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ჭ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ჭ"
-                  value="ч"
                   name="ჭ"
+                  value="ч"
                 />
-                <label class="alphabet__character-checkbox-label" for="ჭ"
-                  >ჭ = ч резкий</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ჭ'. Произносится резче, чем русская 'ч'. Если выбрать 'ჩ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'ч' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ჭ</span>
+                      <span class="alphabet__card-ru">ч (резкая)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ჭ" data-title="Буква 'ჭ'. Произносится резче, чем русская 'ч'. Если выбрать 'ჩ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'ч' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ჭ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%AD.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ჭ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ხ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ხ"
-                  value="х"
                   name="ხ"
+                  value="х"
                 />
-                <label class="alphabet__character-checkbox-label" for="ხ"
-                  >ხ = х</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ხ'. Произносится как русская буква 'х'. Если выбрать 'ჰ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'х' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ხ</span>
+                      <span class="alphabet__card-ru">х</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ხ" data-title="Буква 'ხ'. Произносится как кириллическая буква 'х'. Если выбрать 'ჰ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'х' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ხ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%AE.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ხ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div
-                class="alphabet__character-checkbox"
-                data-title="Произносится как слияние звуков букв 'д' и 'ж'"
-              >
+              <div class="alphabet__card" data-letter="ჯ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ჯ"
-                  value="дж"
                   name="ჯ"
+                  value="дж"
                 />
-                <label class="alphabet__character-checkbox-label" for="ჯ"
-                  >ჯ = дж звонкий смычной (сложный)</label
-                >
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ჯ</span>
+                      <span class="alphabet__card-ru">дж (сложная)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ჯ" data-title="Произносится как слияние звуков букв 'д' и 'ж'"><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ჯ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%AF.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ჯ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="alphabet__character-checkbox">
+              <div class="alphabet__card" data-letter="ჰ">
                 <input
-                  class="alphabet__character-checkbox-input"
+                  class="alphabet__card-input alphabet__character-checkbox-input"
                   type="checkbox"
                   id="ჰ"
-                  value="х"
                   name="ჰ"
+                  value="х"
                 />
-                <label class="alphabet__character-checkbox-label" for="ჰ"
-                  >ჰ = х гортанный придыхательный щелевой</label
-                >
-                <button
-                  class="alphabet__character-button button"
-                  data-title="Буква 'ჰ'. Звучит мягче, чем русская буква 'х'. Произношение похоже на немецкую 'h'. Если выбрать 'ხ' с этой буквой одновременно, то итоговая транслитерация русской буквы 'х' произойдёт случайным образом исходя из этих двух вариантов."
-                >
-                  ?
-                </button>
+                <div class="alphabet__card-inner">
+                  <div class="alphabet__card-select">
+                    <div class="alphabet__card-main">
+                      <span class="alphabet__card-geo" aria-hidden="true">ჰ</span>
+                      <span class="alphabet__card-ru">х (мягкая / придых.)</span>
+                    </div>
+                    <div class="alphabet__card-hint-row">
+                    <button type="button" class="alphabet__card-hint alphabet__character-button button" aria-label="Подсказка по букве ჰ" data-title="Буква 'ჰ'. Звучит мягче, чем кириллическая буква 'х'. Произношение похоже на немецкую 'h'. Если выбрать 'ხ' с этой буквой одновременно, то итоговая транслитерация кириллической буквы 'х' произойдёт случайным образом исходя из этих двух вариантов."><span class="alphabet__card-hint-mark">?</span></button>
+                  </div>
+                  
+                  </div>
+                  <div class="alphabet__card-toolbar">
+                    <button
+                      type="button"
+                      class="alphabet__card-thumb-btn button"
+                      aria-label="Показать крупнее образец почерта ჰ"
+                      title="Нажмите, чтобы увеличить"
+                    >
+                      <img
+                        class="alphabet__card-thumb-img"
+                        src="https://geolang.ru/images/alphabet/written/%E1%83%B0.jpg"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="alphabet__card-audio button"
+                      aria-label="Прослушать произношение буквы ჰ"
+                      title="Аудио с geolang.ru"
+                    >
+                      <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
+
             </fieldset>
           </section>
 
@@ -624,16 +1665,16 @@
                   <button
                     class="options__fieldset-button-georgian-fact options__fieldset-button button"
                     type="button"
-                    aria-label="Факт о Грузии"
+                    aria-label="Факты о Сакартвелло"
                   >
-                    Факт о Грузии
+                    Факты о Сакартвелло
                   </button>
                   <button
-                    class="options__fieldset-button-onegin options__fieldset-button button"
+                    class="options__fieldset-button-prose options__fieldset-button button"
                     type="button"
-                    aria-label="Евгений Онегин"
+                    aria-label="Проза (заглушка)"
                   >
-                    Евгений Онегин
+                    Проза
                   </button>
                 </div>
               </div>
@@ -650,7 +1691,7 @@
                 >
                 <button
                   class="options__fieldset-checkbox-button button"
-                  data-title="Если поставить галочку, то в итоговом тексте не будет букв 'ъ' и 'ь'"
+                  data-title="Если поставить галочку, то в итоговом тексте не будет кириллических букв 'ъ' и 'ь'"
                 >
                   ?
                 </button>
@@ -659,144 +1700,143 @@
           </section>
 
           <section class="transliteration">
+            <div class="selection-strip">
+              <div
+                class="selection-strip__track"
+                id="selection-strip-track"
+                aria-label="Выбранные буквы для замены"
+              ></div>
+            </div>
+
             <form class="transliteration__form">
-              <div class="transliteration__text">
-                <label
-                  class="transliteration__caption text"
-                  for="transliteration__text-before"
-                  >Вставьте русский текст сюда:</label
-                >
-                <textarea
-                  class="transliteration__text-before transliteration__textarea"
-                  rows="20"
-                  cols="30"
-                  placeholder="Ваш текст"
-                ></textarea>
-                <div class="transliteration__buttons-text-size">
+              <div class="transliteration__text transliteration__text--output">
+                <p class="transliteration__caption text">
+                  Текст с заменёнными кириллическими буквами
+                </p>
+                <p
+                  class="transliteration__hint text"
+                  id="transliteration__hint"
+                  hidden
+                ></p>
+                <div class="transliteration__textarea-wrap">
+                  <div
+                    id="transliteration__output"
+                    class="transliteration__output transliteration__textarea"
+                    role="region"
+                    aria-label="Результат транслитерации"
+                    aria-live="polite"
+                    tabindex="0"
+                  ></div>
                   <button
-                    class="transliteration__button-text-before-size-up transliteration__button-text-size"
+                    class="transliteration__button-copy transliteration__button-copy-icon button"
                     type="button"
-                    aria-label="Увеличить шрифт"
-                    data-title="Увеличить шрифт textBefore"
+                    aria-label="Копировать результат"
+                    title="Копировать"
                   >
-                    +
+                    <svg
+                      class="transliteration__button-copy-svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+                      />
+                    </svg>
                   </button>
-                  <button
-                    class="transliteration__button-text-before-size-down transliteration__button-text-size"
-                    type="button"
-                    aria-label="Уменьшить шрифт"
-                    data-title="Уменьшить шрифт textBefore"
-                  >
-                    -
-                  </button>
+                  <div class="transliteration__buttons-text-size">
+                    <button
+                      class="transliteration__button-text-after-size-up transliteration__button-text-size"
+                      type="button"
+                      aria-label="Увеличить шрифт результата"
+                      data-title="Увеличить шрифт результата"
+                    >
+                      +
+                    </button>
+                    <button
+                      class="transliteration__button-text-after-size-down transliteration__button-text-size"
+                      type="button"
+                      aria-label="Уменьшить шрифт результата"
+                      data-title="Уменьшить шрифт результата"
+                    >
+                      -
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="transliteration__buttons">
-                <div class="transliteration__buttons-trans-and-reset">
-                  <button
-                    class="transliteration__button-transliteration transliteration__button button"
-                    type="submit"
-                    aria-label="Транслитерация"
-                    data-title="Для начала выберите буквы для тренировки и напишите что-нибудь в поле для русского текста"
+              <details
+                class="transliteration__source-details"
+                id="transliteration__source-details"
+              >
+                <summary class="transliteration__source-summary text">
+                  Редактировать исходный русский текст
+                </summary>
+                <div class="transliteration__text transliteration__text--source">
+                  <label
+                    class="transliteration__caption text"
+                    for="transliteration__text-before"
+                    >Исходный русский текст</label
                   >
-                    Транслитерация
-                  </button>
-                  <button
-                    class="transliteration__button-reset transliteration__button button"
-                    type="button"
-                    aria-label="Очистить"
-                  >
-                    Очистить
-                  </button>
+                  <div class="transliteration__textarea-wrap">
+                    <textarea
+                      id="transliteration__text-before"
+                      class="transliteration__text-before transliteration__textarea"
+                      rows="12"
+                      cols="30"
+                      placeholder="Ваш текст"
+                    ></textarea>
+                    <div class="transliteration__buttons-text-size">
+                      <button
+                        class="transliteration__button-text-before-size-up transliteration__button-text-size"
+                        type="button"
+                        aria-label="Увеличить шрифт исходника"
+                        data-title="Увеличить шрифт исходного текста"
+                      >
+                        +
+                      </button>
+                      <button
+                        class="transliteration__button-text-before-size-down transliteration__button-text-size"
+                        type="button"
+                        aria-label="Уменьшить шрифт исходника"
+                        data-title="Уменьшить шрифт исходного текста"
+                      >
+                        -
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="transliteration__text">
-                <label
-                  class="transliteration__caption text"
-                  for="transliteration__text-after text"
-                  >Текст после транслитерации:</label
-                >
-                <textarea
-                  class="transliteration__text-after transliteration__textarea"
-                  rows="20"
-                  cols="30"
-                  placeholder="Транслитерация появится здесь"
-                  readonly
-                ></textarea>
-                <div class="transliteration__buttons-text-size">
-                  <button
-                    class="transliteration__button-text-after-size-up transliteration__button-text-size"
-                    type="button"
-                    aria-label="Увеличить шрифт"
-                    data-title="Увеличить шрифт textAfter"
-                  >
-                    +
-                  </button>
-                  <button
-                    class="transliteration__button-text-after-size-down transliteration__button-text-size"
-                    type="button"
-                    aria-label="Уменьшить шрифт"
-                    data-title="Уменьшить шрифт textAfter"
-                  >
-                    -
-                  </button>
-                </div>
-              </div>
+              </details>
             </form>
           </section>
 
           <section class="feedback">
             <p class="feedback__text text">
-              Заметили ошибку или есть идея как улучшить тренажёр? Напишите
-              сообщение мне в соцсети, указанные в правом нижнем углу страницы.
+              Заметили ошибку или есть идея, как лучше сделать? Напишите в
+              <a
+                class="link"
+                href="https://github.com/Art-emg/georgian-alphabet/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+                >issues на GitHub</a
+              >.
             </p>
           </section>
         </main>
 
         <footer class="footer">
           <p class="footer__copyright text">
-            &copy; 2022 - 2023 Алексей Смирнов
+            Fork from
+            <a
+              class="link"
+              href="https://github.com/Sibusky/georgian-alphabet"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Sibusky</a
+            >
           </p>
-          <div class="footer__contacts">
-            <nav>
-              <ul class="footer__contacts-list">
-                <li class="footer__contacts-list-item link">
-                  <a
-                    class="footer__social-network-link text"
-                    href="https://t.me/sibusky"
-                    target="_blank"
-                    >Телеграм<img
-                      class="footer__social-network-logo"
-                      src="./images/telegram_logo.png"
-                      class=""
-                  /></a>
-                </li>
-                <li class="footer__contacts-list-item link">
-                  <a
-                    class="footer__social-network-link text"
-                    href="https://vk.com/sibusky"
-                    target="_blank"
-                    >ВК<img
-                      class="footer__social-network-logo"
-                      src="./images/vk_logo.png"
-                      class=""
-                  /></a>
-                </li>
-                <li class="footer__contacts-list-item link">
-                  <!-- <a
-                    class="footer__social-network-link text"
-                    href="https://www.instagram.com/electrician_smirnov/"
-                    target="_blank"
-                    >Инстаграм<img
-                      class="footer__social-network-logo"
-                      src="./images/insta_logo.png"
-                      class=""
-                    /></a
-                  > -->
-                </li>
-              </ul>
-            </nav>
-          </div>
         </footer>
         <div class="tooltip">
           <div class="tooltip__container">
@@ -807,7 +1847,6 @@
       </div>
     </div>
     <script src="./georgianFacts.js"></script>
-    <script src="./onegin.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>

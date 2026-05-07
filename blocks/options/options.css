@@ -1,7 +1,8 @@
 .options {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: 80vw;
-  margin: 0 auto 25px;
+  align-items: stretch;
+  max-width: min(780px, 100%);
+  width: 100%;
+  margin: 0 auto 28px;
 }

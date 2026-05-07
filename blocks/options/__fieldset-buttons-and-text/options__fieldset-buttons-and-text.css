@@ -1,7 +1,9 @@
 .options__fieldset-buttons-and-text {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: flex-start;
-  margin: 0 0 20px 0;
+  gap: 12px;
+  margin: 0 0 16px;
   padding: 0;
 }

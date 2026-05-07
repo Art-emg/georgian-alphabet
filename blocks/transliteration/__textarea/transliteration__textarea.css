@@ -1,15 +1,33 @@
 .transliteration__textarea {
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 25px;
   text-rendering: optimizeLegibility;
   text-decoration: none;
-  color: #000;
+  color: var(--color-text);
   letter-spacing: 1px;
   margin: 0;
-  width: 95%;
-  height: 500px;
-  padding: 10px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+textarea.transliteration__textarea {
+  min-height: min(45vh, 360px);
+  max-height: min(55vh, 480px);
+  resize: vertical;
+}
+
+div.transliteration__output.transliteration__textarea {
+  min-height: min(40vh, 280px);
+  max-height: min(58vh, 520px);
+  overflow: auto;
+  resize: none;
 }

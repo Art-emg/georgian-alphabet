@@ -1,9 +1,12 @@
 .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #dedede;
-    max-width: 95vw;
-    margin: 0;
-    padding: 20px 25px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-border);
+  max-width: 100%;
+  margin: 0;
+  padding: 24px clamp(16px, 5vw, 32px);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
 }

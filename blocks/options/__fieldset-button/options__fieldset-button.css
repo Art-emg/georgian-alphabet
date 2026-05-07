@@ -1,57 +1,28 @@
 .options__fieldset-button {
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 16px;
-  text-rendering: optimizeLegibility;
-  text-decoration: none;
-  color: #000;
-  letter-spacing: 0;
-  padding: 0;
-  margin: 0 20px 0 0;
-  width: 140px;
-  height: 30px;
-}
-
-.options__fieldset-button:last-of-type {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.2;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  min-width: min(148px, 100%);
+  min-height: 44px;
+  width: auto;
+  height: auto;
+  padding: 10px 14px;
   margin: 0;
+  cursor: pointer;
+  text-align: center;
+  text-rendering: optimizeLegibility;
+  color: var(--color-text);
+  background: var(--color-surface-muted);
+  border: 2px solid var(--color-border-subtle);
+  border-radius: var(--radius-btn);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-@media screen and (max-width: 830px) {
-  .options__fieldset-button {
-    font-size: 15px;
-    line-height: 15px;
-    margin: 0 10px 0 0;
-
-    width: 130px;
-    height: 25px;
-  }
-}
-
-@media screen and (max-width: 760px) {
-  .options__fieldset-button {
-    font-size: 13px;
-    line-height: 14px;
-    width: 110px;
-  }
-}
-
-@media screen and (max-width: 690px) {
-  .options__fieldset-button {
-    font-size: 16px;
-    line-height: 16px;
-    width: 140px;
-    height: 30px;
-    margin: 0 0 10px 0;
-  }
-}
-
-@media screen and (max-width: 340px) {
-  .options__fieldset-button {
-    font-size: 14.5px;
-    line-height: 15px;
-    width: 125px;
-    height: 25px;
-  }
+.options__fieldset-button:hover {
+  border-color: var(--color-accent-border);
+  background: var(--color-accent-soft);
 }

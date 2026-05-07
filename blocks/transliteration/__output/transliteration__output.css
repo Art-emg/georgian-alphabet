@@ -1,0 +1,135 @@
+.transliteration__text--output .transliteration__caption {
+  font-size: 18px;
+  line-height: 1.3;
+  color: var(--color-text, #1a1a1a);
+}
+
+.transliteration__hint {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-danger-text, #b91c1c);
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-card, 12px);
+  background: var(--color-danger-bg, #fef2f2);
+  border: 1px solid var(--color-danger-border, #fecaca);
+}
+
+.transliteration__output {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  -webkit-overflow-scrolling: touch;
+}
+
+.transliteration__geo {
+  font-weight: 700;
+  color: var(--color-geo, #0f172a);
+  font-size: 1.08em;
+  letter-spacing: 0.02em;
+}
+
+.transliteration__geo--btn {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
+  text-align: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: none;
+}
+
+.transliteration__geo--btn:hover:not(.transliteration__geo--playing) {
+  outline: 1px solid rgba(37, 99, 235, 0.45);
+  outline-offset: 1px;
+}
+
+.transliteration__geo--btn:focus {
+  outline: none;
+}
+
+.transliteration__geo--btn:focus-visible:not(.transliteration__geo--playing) {
+  outline: 2px solid var(--color-accent, #2563eb);
+  outline-offset: 2px;
+}
+
+.transliteration__geo--btn.transliteration__geo--playing {
+  outline: none;
+  box-shadow: none;
+  background: rgba(34, 197, 94, 0.22);
+  border-radius: 2px;
+}
+
+.transliteration__geo--btn.transliteration__geo--playing:hover {
+  outline: none;
+}
+
+.transliteration__ru {
+  font-weight: 400;
+  color: var(--color-ru-left, #64748b);
+  font-size: 0.94em;
+  opacity: 0.88;
+}
+
+.transliteration__source-details {
+  margin: 0;
+  padding: 0;
+  border-radius: var(--radius-card, 12px);
+  border: 1px solid var(--color-border-subtle, #e2e8f0);
+  background: var(--color-surface-muted, #f8fafc);
+  overflow: hidden;
+}
+
+.transliteration__source-summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 18px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text, #1a1a1a);
+  background: var(--color-summary-bg, #eef2ff);
+}
+
+.transliteration__source-summary::-webkit-details-marker {
+  display: none;
+}
+
+.transliteration__source-summary::after {
+  content: "";
+  float: right;
+  width: 10px;
+  height: 10px;
+  margin-top: 6px;
+  margin-left: 12px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.transliteration__source-details[open] .transliteration__source-summary::after {
+  transform: rotate(-135deg);
+  margin-top: 10px;
+}
+
+.transliteration__text--source {
+  padding: 12px 14px 18px;
+}
+
+.transliteration__text--source .transliteration__textarea {
+  min-height: min(35vh, 280px);
+  max-height: min(50vh, 400px);
+}

@@ -1,4 +1,11 @@
 .lead__text-link {
-    text-decoration: none;
-    color: #7a7a7a;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  color: var(--color-accent-text);
+  font-weight: 500;
+}
+
+.lead__text-link:hover {
+  color: var(--color-accent);
 }

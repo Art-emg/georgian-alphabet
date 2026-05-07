@@ -1,4 +1,16 @@
 .feedback {
-    max-width: 90vw;
-    margin: 0 auto 25px;
+  max-width: 90vw;
+  margin: 0 auto 28px;
+  padding: 16px 20px;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-card);
+}
+
+.feedback .feedback__text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--color-text);
 }

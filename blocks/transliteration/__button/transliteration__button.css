@@ -1,19 +1,31 @@
 .transliteration__button {
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 16px;
-  line-height: 16px;
-  text-rendering: optimizeLegibility;
-  text-decoration: none;
-  color: #000;
+  line-height: 1.2;
   letter-spacing: 0;
-  padding: 0;
-  margin: 0 0 20px;
-  width: 140px;
-  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  width: 100%;
+  padding: 10px 16px;
+  margin: 0 0 12px;
+  cursor: pointer;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-subtle);
+  border-radius: var(--radius-btn);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.transliteration__button:last-of-type {
-  margin: 0;
+.transliteration__button:hover {
+  border-color: var(--color-accent-border);
+  background: var(--color-accent-soft);
+}
+
+.transliteration__button:last-child {
+  margin-bottom: 0;
 }
