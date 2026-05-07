@@ -41,6 +41,45 @@ const buttonTextBeforeSizeDown = document.querySelector(
 );
 
 const CHECKBOX_STORAGE_KEY = 'georgian-alphabet-checkbox-selection';
+const THEME_STORAGE_KEY = 'georgian-alphabet-theme';
+const FONT_TRANSLITERATION_SOURCE_KEY =
+  'georgian-alphabet-font-transliteration-source';
+const FONT_TRANSLITERATION_OUTPUT_KEY =
+  'georgian-alphabet-font-transliteration-output';
+
+function syncThemeToggleButton() {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+  btn.setAttribute(
+    'aria-label',
+    dark ? 'Включить светлую тему' : 'Включить тёмную тему'
+  );
+  btn.title = dark ? 'Светлая тема' : 'Тёмная тема';
+}
+
+function applyTheme(mode) {
+  const theme = mode === 'dark' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch (_) {}
+  syncThemeToggleButton();
+}
+
+function initThemeToggle() {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  syncThemeToggleButton();
+  btn.addEventListener('click', () => {
+    applyTheme(
+      document.documentElement.getAttribute('data-theme') === 'dark'
+        ? 'light'
+        : 'dark'
+    );
+  });
+}
 
 const ALPHABET_LEVEL_GROUPS = [
   ['ა', 'ვ', 'დ', 'ი', 'რ', 'ს'],
@@ -53,6 +92,89 @@ const ALPHABET_LEVEL_GROUPS = [
 
 const PRESET_MY_STORAGE_KEY = 'georgian-alphabet-preset-my';
 const SELECTION_META_KEY = 'georgian-alphabet-selection-meta';
+/** Должен совпадать с letter-quiz.js (окно и пороги как у бейджей на карточках) */
+const QUIZ_LETTER_STATS_STORAGE_KEY = 'georgian-alphabet-quiz-letter-stats';
+const QUIZ_STAT_MIN_ATTEMPTS = 5;
+const QUIZ_STAT_WINDOW = 15;
+
+function normalizeQuizLetterForStats(letter) {
+  const ch = letter && [...String(letter).trim()][0];
+  if (!ch) return null;
+  const cp = ch.codePointAt(0);
+  if (cp < 0x10a0 || cp > 0x10ff) return null;
+  return ch;
+}
+
+function loadQuizLetterStatsMapForQuick() {
+  try {
+    const raw = localStorage.getItem(QUIZ_LETTER_STATS_STORAGE_KEY);
+    if (!raw) return {};
+    const o = JSON.parse(raw);
+    if (!o || typeof o !== 'object') return {};
+    return o;
+  } catch (_) {
+    return {};
+  }
+}
+
+/** Как бейджи: красный <30%, жёлтый 30–60% (не менее 6 ответов в окне). */
+function lettersMatchingQuizStatSeverity(severity) {
+  const map = loadQuizLetterStatsMapForQuick();
+  const out = new Set();
+  for (const [k, v] of Object.entries(map)) {
+    const key = normalizeQuizLetterForStats(k);
+    if (!key || !Array.isArray(v)) continue;
+    const arr = v
+      .filter((x) => x === true || x === false)
+      .slice(-QUIZ_STAT_WINDOW);
+    const n = arr.length;
+    if (n <= QUIZ_STAT_MIN_ATTEMPTS) continue;
+    const correct = arr.filter(Boolean).length;
+    const rate = correct / n;
+    if (severity === 'bad' && rate < 0.3) out.add(key);
+    else if (severity === 'warn' && rate >= 0.3 && rate < 0.6) out.add(key);
+  }
+  return out;
+}
+
+function clearQuizSeverityQuickToggles() {
+  document.querySelectorAll('[data-quick-quiz]').forEach((b) => {
+    b.setAttribute('aria-pressed', 'false');
+  });
+}
+
+function applyQuizSeverityMetaToButtons(qs) {
+  const bag = qs && typeof qs === 'object' ? qs : {};
+  const badBtn = document.querySelector('[data-quick-quiz="bad"]');
+  const warnBtn = document.querySelector('[data-quick-quiz="warn"]');
+  if (badBtn) badBtn.setAttribute('aria-pressed', bag.bad ? 'true' : 'false');
+  if (warnBtn) warnBtn.setAttribute('aria-pressed', bag.warn ? 'true' : 'false');
+}
+
+function computeAlphabetQuickSelectionUnion() {
+  const union = new Set();
+  document.querySelectorAll('[data-quick-level]').forEach((b) => {
+    if (b.getAttribute('aria-pressed') !== 'true') return;
+    const levelNum = parseInt(b.getAttribute('data-quick-level'), 10);
+    const i = levelNum - 1;
+    if (i < 0 || i >= ALPHABET_LEVEL_GROUPS.length) return;
+    ALPHABET_LEVEL_GROUPS[i].forEach((ch) => union.add(ch));
+  });
+  document.querySelectorAll('[data-quick-quiz]').forEach((b) => {
+    if (b.getAttribute('aria-pressed') !== 'true') return;
+    const sev = b.getAttribute('data-quick-quiz');
+    if (sev === 'bad') {
+      lettersMatchingQuizStatSeverity('bad').forEach((ch) => union.add(ch));
+    } else if (sev === 'warn') {
+      lettersMatchingQuizStatSeverity('warn').forEach((ch) => union.add(ch));
+    }
+  });
+  return union;
+}
+
+function applyCombinedQuickSelection() {
+  applyLetterSelectionSet(computeAlphabetQuickSelectionUnion());
+}
 
 function persistSelectionMeta(meta) {
   try {
@@ -119,6 +241,7 @@ function restoreSelectionUIMeta() {
 
   const clearLevels = () => {
     levelBtns.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    clearQuizSeverityQuickToggles();
   };
 
   setMyPresetButtonPressed(false);
@@ -142,13 +265,26 @@ function restoreSelectionUIMeta() {
     const nums = meta.levels
       .map((n) => Number(n))
       .filter((n) => n >= 1 && n <= ALPHABET_LEVEL_GROUPS.length);
+    const qsRaw = meta.quizSeverity;
+    const qs = {
+      bad: !!(qsRaw && qsRaw.bad),
+      warn: !!(qsRaw && qsRaw.warn),
+    };
     const expected = lettersFromLevelNumbers(nums);
+    if (qs.bad) {
+      lettersMatchingQuizStatSeverity('bad').forEach((ch) => expected.add(ch));
+    }
+    if (qs.warn) {
+      lettersMatchingQuizStatSeverity('warn').forEach((ch) => expected.add(ch));
+    }
     if (lettersEqualSets(expected, cur)) {
-      clearLevels();
+      levelBtns.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      clearQuizSeverityQuickToggles();
       nums.forEach((n) => {
         const el = document.querySelector(`[data-quick-level="${n}"]`);
         if (el) el.setAttribute('aria-pressed', 'true');
       });
+      applyQuizSeverityMetaToButtons(qs);
       return;
     }
     syncQuickLevelToggleVisuals();
@@ -167,14 +303,37 @@ function restoreSelectionUIMeta() {
   syncQuickLevelToggleVisuals();
 }
 
-function persistLevelsFromPressedButtons() {
+function persistAlphabetQuickMeta() {
   const pressed = [...document.querySelectorAll('[data-quick-level]')]
     .filter((b) => b.getAttribute('aria-pressed') === 'true')
     .map((b) => parseInt(b.getAttribute('data-quick-level'), 10))
     .filter((n) => !Number.isNaN(n))
     .sort((a, b) => a - b);
-  if (pressed.length === 0) persistSelectionMeta({ mode: 'none' });
-  else persistSelectionMeta({ mode: 'levels', levels: pressed });
+  const qsBad =
+    document
+      .querySelector('[data-quick-quiz="bad"]')
+      ?.getAttribute('aria-pressed') === 'true';
+  const qsWarn =
+    document
+      .querySelector('[data-quick-quiz="warn"]')
+      ?.getAttribute('aria-pressed') === 'true';
+  const hasQuiz = !!(qsBad || qsWarn);
+
+  if (pressed.length === 0 && !hasQuiz) {
+    persistSelectionMeta({
+      mode: 'none',
+      quizSeverity: { bad: false, warn: false },
+    });
+    return;
+  }
+  persistSelectionMeta({
+    mode: 'levels',
+    levels: pressed,
+    quizSeverity: {
+      bad: qsBad,
+      warn: qsWarn,
+    },
+  });
 }
 
 function applyLetterSelectionSet(allowedSet) {
@@ -199,6 +358,7 @@ function syncQuickLevelToggleVisuals() {
       b.setAttribute('aria-pressed', 'false');
     }
   });
+  clearQuizSeverityQuickToggles();
 }
 
 function initAlphabetQuickLevels() {
@@ -211,17 +371,19 @@ function initAlphabetQuickLevels() {
       const nowPressed = !wasPressed;
       btn.setAttribute('aria-pressed', String(nowPressed));
 
-      const union = new Set();
-      document.querySelectorAll('[data-quick-level]').forEach((b) => {
-        if (b.getAttribute('aria-pressed') !== 'true') return;
-        const levelNum = parseInt(b.getAttribute('data-quick-level'), 10);
-        const i = levelNum - 1;
-        if (i < 0 || i >= ALPHABET_LEVEL_GROUPS.length) return;
-        ALPHABET_LEVEL_GROUPS[i].forEach((ch) => union.add(ch));
-      });
-      applyLetterSelectionSet(union);
+      applyCombinedQuickSelection();
       setMyPresetButtonPressed(false);
-      persistLevelsFromPressedButtons();
+      persistAlphabetQuickMeta();
+    });
+  });
+
+  document.querySelectorAll('[data-quick-quiz]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const wasPressed = btn.getAttribute('aria-pressed') === 'true';
+      btn.setAttribute('aria-pressed', wasPressed ? 'false' : 'true');
+      applyCombinedQuickSelection();
+      setMyPresetButtonPressed(false);
+      persistAlphabetQuickMeta();
     });
   });
 
@@ -235,6 +397,7 @@ function initAlphabetQuickLevels() {
       document.querySelectorAll('[data-quick-level]').forEach((b) => {
         b.setAttribute('aria-pressed', 'false');
       });
+      clearQuizSeverityQuickToggles();
       applyLetterSelectionSet(new Set(names));
       persistSelectionMeta({ mode: 'my' });
       setMyPresetButtonPressed(true);
@@ -334,20 +497,65 @@ function isCyrillicCodePoint(cp) {
   );
 }
 
-function buildHighlightedHtml(str) {
-  let out = '';
-  for (const ch of str) {
+function buildHighlightedHtmlFragment(fragment) {
+  const chars = [...fragment];
+  const parts = [];
+  let i = 0;
+  while (i < chars.length) {
+    const ch = chars[i];
     const cp = ch.codePointAt(0);
-    const esc = escapeHtml(ch);
+
     if (cp >= 0x10a0 && cp <= 0x10ff) {
-      out += `<button type="button" class="transliteration__geo transliteration__geo--btn" data-letter="${escapeAttr(ch)}" aria-label="Воспроизвести ${esc}">${esc}</button>`;
-    } else if (isCyrillicCodePoint(cp)) {
-      out += `<span class="transliteration__ru">${esc}</span>`;
-    } else {
-      out += esc;
+      const esc = escapeHtml(ch);
+      parts.push(
+        `<button type="button" class="transliteration__geo transliteration__geo--btn" data-letter="${escapeAttr(ch)}" aria-label="Воспроизвести ${esc}">${esc}</button>`
+      );
+      i += 1;
+      continue;
     }
+
+    if (isCyrillicCodePoint(cp)) {
+      let j = i + 1;
+      while (
+        j < chars.length &&
+        isCyrillicCodePoint(chars[j].codePointAt(0))
+      ) {
+        j += 1;
+      }
+      const slice = chars.slice(i, j).join('');
+      parts.push(`<span class="transliteration__ru">${escapeHtml(slice)}</span>`);
+      i = j;
+      continue;
+    }
+
+    parts.push(escapeHtml(ch));
+    i += 1;
   }
-  return out;
+  return parts.join('');
+}
+
+/** Пробелы/переносы режут текст; каждое слово без пробелов — целиком, без разрыва посередине (в т.ч. кириллица + грузинские кнопки). */
+function buildHighlightedHtml(str) {
+  const chars = [...str];
+  const segments = [];
+  let i = 0;
+  while (i < chars.length) {
+    if (/\s/u.test(chars[i])) {
+      let j = i;
+      while (j < chars.length && /\s/u.test(chars[j])) j += 1;
+      segments.push(escapeHtml(chars.slice(i, j).join('')));
+      i = j;
+      continue;
+    }
+    let j = i;
+    while (j < chars.length && !/\s/u.test(chars[j])) j += 1;
+    const token = chars.slice(i, j).join('');
+    segments.push(
+      `<span class="transliteration__word">${buildHighlightedHtmlFragment(token)}</span>`
+    );
+    i = j;
+  }
+  return segments.join('');
 }
 
 function saveCheckboxSelection() {
@@ -770,28 +978,62 @@ function getRandomText() {
   });
 }
 
-function increaseTextSize(el) {
-  let currentTextSize = getComputedStyle(el).fontSize.split('px').join('');
-  let currentLineHeight = getComputedStyle(el)
-    .lineHeight.split('px')
-    .join('');
-
-  if (currentTextSize < 50) {
-    el.style.fontSize = `${+currentTextSize + 2}px`;
-    el.style.lineHeight = `${+currentLineHeight + 2}px`;
-  }
+function transliterationCssPx(value) {
+  if (value == null || value === '' || value === 'normal') return NaN;
+  const n = parseFloat(String(value));
+  return Number.isFinite(n) ? n : NaN;
 }
 
-function decreaseTextSize(el) {
-  let currentTextSize = getComputedStyle(el).fontSize.split('px').join('');
-  let currentLineHeight = getComputedStyle(el)
-    .lineHeight.split('px')
-    .join('');
+function saveTransliterationFont(el, storageKey) {
+  try {
+    const fs = el?.style?.fontSize;
+    if (!fs || !String(fs).trim()) {
+      localStorage.removeItem(storageKey);
+      return;
+    }
+    const lh =
+      el.style.lineHeight && el.style.lineHeight !== 'normal'
+        ? el.style.lineHeight
+        : '';
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({ fontSize: fs, lineHeight: lh })
+    );
+  } catch (_) {}
+}
 
-  if (currentTextSize > 10) {
-    el.style.fontSize = `${+currentTextSize - 2}px`;
-    el.style.lineHeight = `${+currentLineHeight - 2}px`;
-  }
+function restoreTransliterationFont(el, storageKey) {
+  try {
+    const raw = localStorage.getItem(storageKey);
+    if (!raw || !el) return;
+    const o = JSON.parse(raw);
+    if (!o || typeof o.fontSize !== 'string') return;
+    el.style.fontSize = o.fontSize;
+    if (typeof o.lineHeight === 'string' && o.lineHeight) {
+      el.style.lineHeight = o.lineHeight;
+    }
+  } catch (_) {}
+}
+
+function restoreTransliterationFontsFromStorage() {
+  restoreTransliterationFont(textBefore, FONT_TRANSLITERATION_SOURCE_KEY);
+  restoreTransliterationFont(textOutput, FONT_TRANSLITERATION_OUTPUT_KEY);
+}
+
+function bumpTransliterationFontSize(el, deltaPx, storageKey) {
+  if (!el || !storageKey) return;
+  const cs = getComputedStyle(el);
+  let fs = transliterationCssPx(cs.fontSize);
+  let lh = transliterationCssPx(cs.lineHeight);
+  if (!Number.isFinite(fs)) return;
+  if (!Number.isFinite(lh)) lh = Math.round(fs * 1.25);
+
+  const nextFs = fs + deltaPx;
+  if (nextFs > 50 || nextFs < 10) return;
+
+  el.style.fontSize = `${nextFs}px`;
+  el.style.lineHeight = `${lh + deltaPx}px`;
+  saveTransliterationFont(el, storageKey);
 }
 
 buttonCheckAll.addEventListener('click', () => {
@@ -879,19 +1121,19 @@ proseButton?.addEventListener('click', () => {
 });
 
 buttonTextBeforeSizeUp.addEventListener('click', () => {
-  increaseTextSize(textBefore);
+  bumpTransliterationFontSize(textBefore, 2, FONT_TRANSLITERATION_SOURCE_KEY);
 });
 
 buttonTextBeforeSizeDown.addEventListener('click', () => {
-  decreaseTextSize(textBefore);
+  bumpTransliterationFontSize(textBefore, -2, FONT_TRANSLITERATION_SOURCE_KEY);
 });
 
 buttonTextAfterSizeUp.addEventListener('click', () => {
-  increaseTextSize(textOutput);
+  bumpTransliterationFontSize(textOutput, 2, FONT_TRANSLITERATION_OUTPUT_KEY);
 });
 
 buttonTextAfterSizeDown.addEventListener('click', () => {
-  decreaseTextSize(textOutput);
+  bumpTransliterationFontSize(textOutput, -2, FONT_TRANSLITERATION_OUTPUT_KEY);
 });
 
 textBefore.addEventListener('input', refreshTransliteration);
@@ -922,6 +1164,8 @@ initAlphabetCards();
 initAlphabetQuickLevels();
 restoreCheckboxSelection();
 restoreSelectionUIMeta();
+restoreTransliterationFontsFromStorage();
+initThemeToggle();
 
 if (
   textBefore &&

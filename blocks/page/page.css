@@ -1,32 +1,126 @@
 :root {
-  --color-page-bg: #f1f5f9;
+  --color-page-bg: #f0f7fb;
+
   --color-surface: #ffffff;
-  --color-surface-muted: #f8fafc;
-  --color-summary-bg: #eef2ff;
-  --color-text: #1e293b;
-  --color-text-muted: #64748b;
-  --color-border: #e2e8f0;
-  --color-border-subtle: #e2e8f0;
+  --color-surface-muted: #f6fafd;
+  --color-summary-bg: #ecf4f9;
+
+  --color-text: #152532;
+  --color-text-muted: #5c6f80;
+
+  --color-border: #d2e5f0;
+  --color-border-subtle: #e4eef6;
+
+  /* Синий — вкладки, фокус, ссылки, кнопки инструментов */
   --color-accent: #2563eb;
-  --color-accent-border: #2563eb;
-  --color-accent-text: #1d4ed8;
+  --color-accent-border: #3b82f6;
+  --color-accent-text: #1e40af;
   --color-accent-soft: #eff6ff;
   --color-accent-soft-hover: #dbeafe;
-  --color-geo: #0f172a;
-  --color-ru-left: #64748b;
+  --color-accent-faint: rgb(37 99 235 / 0.28);
+  --color-accent-faint-inset: rgb(37 99 235 / 0.16);
+  --color-accent-output-line: rgb(37 99 235 / 0.38);
+
+  /* Зелёный — выбор букв, уровни, линия лида */
+  --color-accent-green: #10b981;
+  --color-accent-green-border: #34d399;
+  --color-accent-green-text: #047857;
+  --color-accent-green-soft: #f0fdf4;
+  --color-accent-green-soft-hover: #d1fae5;
+  --color-accent-green-line: rgb(16 185 129 / 0.24);
+
+  /* Буквы — максимально тёмные (грузинский / кириллица в карточках и выводе) */
+  --color-geo: #0a0a0a;
+  --color-glyph-secondary: #1c1c1c;
+  --color-ru-left: #141414;
+
   --color-danger-text: #b91c1c;
   --color-danger-bg: #fef2f2;
   --color-danger-border: #fecaca;
+
   --radius-card: 12px;
   --radius-btn: 10px;
-  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.08),
-    0 4px 14px rgba(15, 23, 42, 0.06);
+
+  --shadow-card: 0 1px 3px rgb(37 99 235 / 0.06),
+    0 6px 22px rgb(18 52 76 / 0.05);
+
+  --color-peek-backdrop: rgb(15 23 42 / 0.52);
+  --color-stat-badge-bg: rgb(255 255 255 / 0.94);
+  --color-stat-badge-border: rgb(148 163 184 / 0.45);
+  --color-stat-badge-shadow: rgb(15 23 42 / 0.08);
+
+  --content-shell-max-width: 100%;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-page-bg: #0f172a;
+
+  --color-surface: #1e293b;
+  --color-surface-muted: #273549;
+  --color-summary-bg: #253448;
+
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+
+  --color-border: #334155;
+  --color-border-subtle: #2b3d52;
+
+  --color-accent: #60a5fa;
+  --color-accent-border: #3b82f6;
+  --color-accent-text: #93c5fd;
+  --color-accent-soft: rgb(59 130 246 / 0.2);
+  --color-accent-soft-hover: rgb(59 130 246 / 0.32);
+  --color-accent-faint: rgb(96 165 250 / 0.38);
+  --color-accent-faint-inset: rgb(96 165 250 / 0.24);
+  --color-accent-output-line: rgb(96 165 250 / 0.48);
+
+  --color-accent-green: #34d399;
+  --color-accent-green-border: #10b981;
+  --color-accent-green-text: #a7f3d0;
+  --color-accent-green-soft: rgb(16 185 129 / 0.2);
+  --color-accent-green-soft-hover: rgb(16 185 129 / 0.34);
+  --color-accent-green-line: rgb(52 211 153 / 0.38);
+
+  --color-geo: #fafafa;
+  --color-glyph-secondary: #cbd5e1;
+  --color-ru-left: #e2e8f0;
+
+  --color-danger-text: #fca5a5;
+  --color-danger-bg: rgb(127 29 29 / 0.28);
+  --color-danger-border: rgb(248 113 113 / 0.5);
+
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 0.38),
+    0 8px 28px rgb(0 0 0 / 0.26);
+
+  --color-peek-backdrop: rgb(0 0 0 / 0.72);
+  --color-stat-badge-bg: rgb(30 41 59 / 0.96);
+  --color-stat-badge-border: rgb(71 85 105 / 0.65);
+  --color-stat-badge-shadow: rgb(0 0 0 / 0.35);
 }
 
 .page {
-  background-color: var(--color-page-bg);
+  background: linear-gradient(
+    158deg,
+    #fcfeff 0%,
+    #f4f9fd 42%,
+    #f4fbf9 74%,
+    #f9fbfc 100%
+  );
   margin: 0;
   min-height: 100vh;
+  color: var(--color-text);
+}
+
+:root[data-theme="dark"] .page {
+  background: linear-gradient(
+    158deg,
+    #0f172a 0%,
+    #111f30 44%,
+    #0f2228 76%,
+    #0a101f 100%
+  );
 }
 
 .content {

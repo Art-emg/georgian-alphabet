@@ -7,10 +7,11 @@
 }
 
 .lead__more-summary {
+  display: flow-root;
   cursor: pointer;
   list-style: none;
-  padding: 12px 16px;
-  font-size: 15px;
+  padding: 14px 18px;
+  font-size: clamp(15px, 2.1vw, 17px);
   font-weight: 600;
   line-height: 1.35;
   color: var(--color-text);
@@ -39,7 +40,7 @@
 }
 
 .lead__more-body {
-  padding: 0 16px 14px;
+  padding: 0 18px 16px;
   border-top: 1px solid var(--color-border-subtle);
 }
 
@@ -48,8 +49,8 @@
 }
 
 .lead__intro {
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: clamp(16px, 2.2vw, 18px);
+  line-height: 1.58;
   color: var(--color-text);
   margin: 0 0 8px;
 }

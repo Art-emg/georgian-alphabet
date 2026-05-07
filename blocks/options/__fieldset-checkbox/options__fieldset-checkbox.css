@@ -2,9 +2,20 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  justify-content: flex-start;
+  column-gap: 8px;
+  row-gap: 6px;
   margin: 0;
   max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
+}
+
+.options__fieldset-checkbox-input {
+  flex: 0 0 auto;
+  width: 1.12em;
+  height: 1.12em;
+  margin: 0;
+  vertical-align: middle;
+  accent-color: var(--color-accent);
 }

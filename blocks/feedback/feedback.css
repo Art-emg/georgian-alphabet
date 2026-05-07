@@ -1,5 +1,7 @@
 .feedback {
-  max-width: 90vw;
+  box-sizing: border-box;
+  max-width: var(--content-shell-max-width);
+  width: 100%;
   margin: 0 auto 28px;
   padding: 16px 20px;
   border-radius: var(--radius-card);
@@ -13,4 +15,6 @@
   font-size: 16px;
   line-height: 1.55;
   color: var(--color-text);
+  overflow-wrap: anywhere;
+  text-align: center;
 }

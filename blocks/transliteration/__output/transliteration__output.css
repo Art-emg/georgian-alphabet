@@ -54,13 +54,21 @@
   min-width: 0;
   overflow: auto;
   white-space: pre-wrap;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: normal;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Одно слово (в т.ч. смесь кириллицы и грузинских кнопок) не рвём пополам — перенос только между «словами» по пробелам */
+.transliteration__word {
+  white-space: nowrap;
+  display: inline;
+  vertical-align: baseline;
 }
 
 .transliteration__geo {
   font-weight: 700;
-  color: var(--color-geo, #0f172a);
+  color: var(--color-geo, #0a0a0a);
   font-size: 1.08em;
   letter-spacing: 0.02em;
 }
@@ -85,7 +93,7 @@
 }
 
 .transliteration__geo--btn:hover:not(.transliteration__geo--playing) {
-  outline: 1px solid rgba(37, 99, 235, 0.45);
+  outline: 1px solid var(--color-accent-output-line);
   outline-offset: 1px;
 }
 
@@ -111,7 +119,7 @@
 
 .transliteration__ru {
   font-weight: 400;
-  color: var(--color-ru-left, #64748b);
+  color: var(--color-ru-left, #141414);
   font-size: 0.94em;
   opacity: 0.88;
 }

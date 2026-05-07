@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
+    <script>
+      (function () {
+        try {
+          document.documentElement.setAttribute(
+            'data-theme',
+            localStorage.getItem('georgian-alphabet-theme') === 'dark'
+              ? 'dark'
+              : 'light'
+          );
+        } catch (_) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="./images/favicon.png" type="image/png" />
@@ -57,7 +71,73 @@
 
         <main class="content">
           <section class="lead">
-            <h1 class="lead__title">Тренажёр грузинского алфавита</h1>
+            <div class="lead__head">
+              <h1 class="lead__title">
+                Тренажёр грузинского алфавита
+              </h1>
+              <button
+                type="button"
+                class="theme-toggle"
+                id="theme-toggle"
+                aria-pressed="false"
+                aria-label="Включить тёмную тему"
+                title="Тёмная тема"
+              >
+                <span class="theme-toggle__icons" aria-hidden="true">
+                  <svg
+                    class="theme-toggle__icon theme-toggle__icon--moon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    fill="none"
+                  >
+                    <path
+                      d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <svg
+                    class="theme-toggle__icon theme-toggle__icon--sun"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    fill="none"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="4"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+              </button>
+              <script>
+                try {
+                  var _tb = document.getElementById('theme-toggle');
+                  if (
+                    _tb &&
+                    localStorage.getItem('georgian-alphabet-theme') === 'dark'
+                  ) {
+                    _tb.setAttribute('aria-pressed', 'true');
+                    _tb.setAttribute('aria-label', 'Включить светлую тему');
+                    _tb.title = 'Светлая тема';
+                  }
+                } catch (_) {}
+              </script>
+            </div>
             <p class="lead__intro text">
               Подставляйте выбранные грузинские буквы вместо кириллических в любом
               тексте — так проще запомнить алфавит. Результат подсвечивает
@@ -115,7 +195,7 @@
                   class="alphabet__button alphabet__button--compact button alphabet__quiz-stats-toggle"
                   id="alphabet-quiz-stats-toggle"
                   aria-pressed="false"
-                  title="Показывать на карточках верные ответы из последних попыток теста (до 40 на букву)"
+                  title="Показывать на карточках верные ответы из последних попыток теста (до 15 на букву, считается только первый выбор в вопросе)"
                 >
                   Показать счёт теста на буквах
                 </button>
@@ -221,6 +301,44 @@
                     <span class="alphabet__level-quick-n" aria-hidden="true">6</span>
                     <span class="alphabet__level-quick-letters"
                       >ჟ·ჯ·ჰ·წ·ჭ</span
+                    >
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact alphabet__level-quick alphabet__quiz-severity-quick button"
+                  data-quick-quiz="warn"
+                  aria-pressed="false"
+                  aria-label="Добавить к выбору буквы с жёлтой отметкой счёта теста (доля верных ниже 60%, не менее 6 последних ответов)"
+                  title="Счёт теста: верно ниже 60% — как жёлтая отметка на карточке. Суммируется с отмеченными уровнями 1–6."
+                >
+                  <span class="alphabet__level-quick-line">
+                    <span
+                      class="alphabet__level-quick-n alphabet__level-quick-n--quiz-warn"
+                      aria-hidden="true"
+                      >●</span
+                    >
+                    <span class="alphabet__level-quick-letters"
+                      >Тест &lt;60&nbsp;%</span
+                    >
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact alphabet__level-quick alphabet__quiz-severity-quick button"
+                  data-quick-quiz="bad"
+                  aria-pressed="false"
+                  aria-label="Добавить к выбору буквы с красной отметкой счёта теста (доля верных ниже 30%, не менее 6 последних ответов)"
+                  title="Счёт теста: верно ниже 30% — как красная отметка на карточке. Суммируется с отмеченными уровнями 1–6."
+                >
+                  <span class="alphabet__level-quick-line">
+                    <span
+                      class="alphabet__level-quick-n alphabet__level-quick-n--quiz-bad"
+                      aria-hidden="true"
+                      >●</span
+                    >
+                    <span class="alphabet__level-quick-letters"
+                      >Тест &lt;30&nbsp;%</span
                     >
                   </span>
                 </button>

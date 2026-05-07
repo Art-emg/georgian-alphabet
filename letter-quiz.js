@@ -1,7 +1,7 @@
 const LETTER_QUIZ_FEEDBACK_MS = 1000;
 
 const QUIZ_LETTER_STATS_KEY = 'georgian-alphabet-quiz-letter-stats';
-const QUIZ_LETTER_STATS_WINDOW = 40;
+const QUIZ_LETTER_STATS_WINDOW = 15;
 const QUIZ_BADGES_PIN_KEY = 'georgian-alphabet-quiz-badges-pinned';
 
 function loadQuizBadgesPinned() {
@@ -92,11 +92,24 @@ function refreshQuizLetterStatBadges() {
       el.hidden = true;
       el.textContent = '';
       el.removeAttribute('title');
+      el.classList.remove(
+        'alphabet__card-quiz-stat--warn',
+        'alphabet__card-quiz-stat--bad'
+      );
       return;
     }
+    el.classList.remove(
+      'alphabet__card-quiz-stat--warn',
+      'alphabet__card-quiz-stat--bad'
+    );
     const correct = arr.filter(Boolean).length;
-    el.textContent = `${correct} из ${n}`;
-    el.title = `Верных ${correct} из ${n} последних ответов в тесте (учитываются до ${QUIZ_LETTER_STATS_WINDOW})`;
+    el.textContent = `${correct}/${n}`;
+    el.title = `Верно за последние ${n} попыток на букве: ${correct}/${n} (учитываются последние ${QUIZ_LETTER_STATS_WINDOW} ответов, оценивается только первый выбор в каждом вопросе)`;
+    if (n > 5) {
+      const rate = correct / n;
+      if (rate < 0.3) el.classList.add('alphabet__card-quiz-stat--bad');
+      else if (rate < 0.6) el.classList.add('alphabet__card-quiz-stat--warn');
+    }
     el.hidden = false;
   });
 }
@@ -310,6 +323,7 @@ function initLetterQuiz() {
   let qIndex = 0;
   let optionCount = 4;
   let solved = false;
+  let firstChoiceRecorded = false;
   let wrongAttempts = 0;
   let correctAnswers = 0;
   let feedbackTimer = null;
@@ -410,7 +424,7 @@ function initLetterQuiz() {
 
       const ariaBase =
         (opt.ruParen ? `${opt.ruMain} (${opt.ruParen})` : opt.ruMain) +
-        (dupSuffix ? ` · ${dupSuffix}` : '');
+        (dupSuffix ? ` ${dupSuffix}` : '');
 
       const btn = document.createElement('button');
       btn.type = 'button';
@@ -436,7 +450,7 @@ function initLetterQuiz() {
       if (dupSuffix) {
         const dSpan = document.createElement('span');
         dSpan.className = 'letter-quiz__choice-dup';
-        dSpan.textContent = ` · ${dupSuffix}`;
+        dSpan.textContent = `\u00a0${dupSuffix}`;
         btn.appendChild(dSpan);
       }
 
@@ -445,7 +459,8 @@ function initLetterQuiz() {
     });
 
     solved = false;
-    progressEl.textContent = `Вопрос ${qIndex + 1} из ${queue.length}`;
+    firstChoiceRecorded = false;
+    progressEl.textContent = `Вопрос ${qIndex + 1}/${queue.length}`;
   }
 
   function onChoice(btn, correctGeo) {
@@ -456,12 +471,18 @@ function initLetterQuiz() {
     if (solved) return;
 
     const isCorrect = geo === correctGeo;
+
+    if (!firstChoiceRecorded) {
+      firstChoiceRecorded = true;
+      recordLetterQuizAttempt(correctGeo, isCorrect);
+      if (isCorrect) correctAnswers += 1;
+      else wrongAttempts += 1;
+    }
+
     if (isCorrect) {
-      recordLetterQuizAttempt(correctGeo, true);
       clearFeedbackTimer();
       btn.classList.add('letter-quiz__choice--correct');
       solved = true;
-      correctAnswers += 1;
       choicesEl.querySelectorAll('.letter-quiz__choice').forEach((b) => {
         b.disabled = true;
       });
@@ -475,8 +496,6 @@ function initLetterQuiz() {
         }
       }, LETTER_QUIZ_FEEDBACK_MS);
     } else {
-      recordLetterQuizAttempt(correctGeo, false);
-      wrongAttempts += 1;
       btn.classList.add('letter-quiz__choice--wrong');
       btn.disabled = true;
       window.setTimeout(() => {

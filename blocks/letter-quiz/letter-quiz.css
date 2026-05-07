@@ -1,7 +1,7 @@
 .main-tabs {
   margin: 0 auto 28px;
   width: 100%;
-  max-width: min(1200px, 100%);
+  max-width: var(--content-shell-max-width);
   min-width: 0;
   box-sizing: border-box;
 }
@@ -55,7 +55,7 @@
 .main-tabs__tab:hover {
   color: var(--color-text);
   background: var(--color-surface);
-  border-color: rgba(37, 99, 235, 0.22);
+  border-color: var(--color-accent-faint);
 }
 
 .main-tabs__tab:focus-visible {
@@ -69,7 +69,7 @@
   color: var(--color-accent-text);
   box-shadow:
     0 1px 2px rgba(15, 23, 42, 0.06),
-    0 0 0 1px rgba(37, 99, 235, 0.12) inset;
+    0 0 0 1px var(--color-accent-faint-inset) inset;
 }
 
 .main-tabs__tab[aria-selected='false'] {

@@ -42,8 +42,8 @@
 }
 
 .alphabet__quiz-stats-toggle[aria-pressed='true'] {
-  border-color: var(--color-accent-border);
-  background: var(--color-accent-soft);
+  border-color: var(--color-accent-green-border);
+  background: var(--color-accent-green-soft);
 }
 
 .alphabet__characters .alphabet__legend {

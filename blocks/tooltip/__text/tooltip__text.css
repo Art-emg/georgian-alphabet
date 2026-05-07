@@ -6,7 +6,7 @@
   line-height: 23px;
   text-rendering: optimizeLegibility;
   text-decoration: none;
-  color: #000;
+  color: var(--color-text);
   letter-spacing: 0;
   padding: 30px 10px 30px 10px;
   margin: 0 auto;

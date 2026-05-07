@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  background-color: var(--color-surface);
   width: 350px;
   position: absolute;
   transition: transform 0.7s;
