@@ -27,6 +27,7 @@
 @import url(../blocks/options/__fieldset-checkbox-label/options__fieldset-checkbox-label.css);
 @import url(../blocks/options/__fieldset-checkbox-button/options__fieldset-checkbox-button.css);
 @import url(../blocks/selection-strip/selection-strip.css);
+@import url(../blocks/letter-quiz/letter-quiz.css);
 @import url(../blocks/button/button.css);
 @import url(../blocks/transliteration/transliteration.css);
 @import url(../blocks/transliteration/__form/transliteration__form.css);

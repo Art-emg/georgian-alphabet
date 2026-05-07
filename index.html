@@ -1645,7 +1645,45 @@
             </fieldset>
           </section>
 
-          <section class="options">
+          <section
+            class="main-tabs"
+            aria-label="Режимы работы с выбранными буквами"
+          >
+            <div
+              class="main-tabs__headers"
+              data-main-tabs-tablist
+              role="tablist"
+              aria-label="Выбор режима"
+            >
+              <button
+                type="button"
+                class="main-tabs__tab"
+                id="main-tab-text"
+                role="tab"
+                aria-selected="true"
+                aria-controls="main-tab-panel-text"
+              >
+                Текст и транслитерация
+              </button>
+              <button
+                type="button"
+                class="main-tabs__tab"
+                id="main-tab-quiz"
+                role="tab"
+                aria-selected="false"
+                aria-controls="main-tab-panel-quiz"
+                tabindex="-1"
+              >
+                Тест букв
+              </button>
+            </div>
+            <div
+              class="main-tabs__panel"
+              id="main-tab-panel-text"
+              role="tabpanel"
+              aria-labelledby="main-tab-text"
+            >
+              <section class="options">
             <fieldset class="options__fieldset">
               <legend class="options__fieldset-legend">
                 Дополнительные опции:
@@ -1814,6 +1852,126 @@
               </details>
             </form>
           </section>
+            </div>
+            <div
+              class="main-tabs__panel"
+              id="main-tab-panel-quiz"
+              role="tabpanel"
+              aria-labelledby="main-tab-quiz"
+              hidden
+            >
+              <section class="letter-quiz" aria-label="Тест по грузинским буквам">
+                <h2 class="letter-quiz__title text">Тест букв</h2>
+                <p class="letter-quiz__lead text">
+                  Берётся только то, что отмечено галочками в алфавите выше.
+                  Перед вами грузинская буква (и образец почерта, если есть);
+                  выберите подходящее русское соответствие.
+                </p>
+                <div id="letter-quiz-setup">
+                  <p
+                    id="letter-quiz-error"
+                    class="letter-quiz__error text"
+                    role="alert"
+                  ></p>
+                  <div class="letter-quiz__settings">
+                    <div class="letter-quiz__field">
+                      <label class="letter-quiz__label" for="letter-quiz-count"
+                        >Число вопросов</label
+                      >
+                      <input
+                        class="letter-quiz__input"
+                        id="letter-quiz-count"
+                        type="number"
+                        min="1"
+                        max="500"
+                        value="10"
+                        inputmode="numeric"
+                      />
+                    </div>
+                    <div class="letter-quiz__field">
+                      <label class="letter-quiz__label" for="letter-quiz-options"
+                        >Вариантов ответа</label
+                      >
+                      <input
+                        class="letter-quiz__input"
+                        id="letter-quiz-options"
+                        type="number"
+                        min="4"
+                        max="10"
+                        value="4"
+                        inputmode="numeric"
+                      />
+                    </div>
+                    <div class="letter-quiz__settings-actions">
+                      <button
+                        type="button"
+                        class="letter-quiz__start button"
+                        id="letter-quiz-start"
+                      >
+                        Начать тест
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div id="letter-quiz-play" hidden>
+                  <div class="letter-quiz__play-head">
+                    <p
+                      class="letter-quiz__progress text"
+                      id="letter-quiz-progress"
+                    ></p>
+                    <button
+                      type="button"
+                      class="letter-quiz__reset button"
+                      id="letter-quiz-reset"
+                    >
+                      Сбросить тест
+                    </button>
+                  </div>
+                  <div class="letter-quiz__question">
+                    <div class="letter-quiz__prompt">
+                      <div class="letter-quiz__prompt-inner">
+                        <p
+                          class="letter-quiz__geo text"
+                          id="letter-quiz-geo"
+                          aria-live="polite"
+                        ></p>
+                        <img
+                          id="letter-quiz-img"
+                          class="letter-quiz__thumb letter-quiz__thumb--hidden"
+                          width="180"
+                          height="180"
+                          alt=""
+                          decoding="async"
+                        />
+                      </div>
+                    </div>
+                    <p class="letter-quiz__hint text">
+                      Нажмите вариант — услышите произношение той грузинской буквы,
+                      которой он соответствует; нужно указать русский вариант для
+                      буквы слева.
+                    </p>
+                    <div
+                      class="letter-quiz__choices"
+                      id="letter-quiz-choices"
+                      role="group"
+                      aria-label="Варианты ответа"
+                    ></div>
+                  </div>
+                </div>
+                <div id="letter-quiz-done" class="letter-quiz__done" hidden>
+                  <p class="letter-quiz__stats text" id="letter-quiz-stats"></p>
+                  <p class="text" id="letter-quiz-done-text"></p>
+                  <button
+                    type="button"
+                    class="letter-quiz__replay button"
+                    id="letter-quiz-replay"
+                  >
+                    Назад к настройкам
+                  </button>
+                </div>
+              </section>
+            </div>
+          </section>
 
           <section class="feedback">
             <p class="feedback__text text">
@@ -1839,6 +1997,14 @@
               rel="noopener noreferrer"
               >Sibusky</a
             >
+            · current version and additions:
+            <a
+              class="link"
+              href="https://github.com/Art-emg/georgian-alphabet"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Art-emg</a
+            >
           </p>
         </footer>
         <div class="tooltip">
@@ -1851,5 +2017,6 @@
     </div>
     <script src="./georgianFacts.js"></script>
     <script src="./script.js"></script>
+    <script src="./letter-quiz.js"></script>
   </body>
 </html>
