@@ -32,8 +32,18 @@
 }
 
 .alphabet__characters .alphabet__legend,
+.alphabet__quiz-stats-banner,
 .alphabet__characters-actions {
   grid-column: 1 / -1;
+}
+
+.alphabet__quiz-stats-banner {
+  margin: 0 0 6px;
+}
+
+.alphabet__quiz-stats-toggle[aria-pressed='true'] {
+  border-color: var(--color-accent-border);
+  background: var(--color-accent-soft);
 }
 
 .alphabet__characters .alphabet__legend {
@@ -47,11 +57,12 @@
 .alphabet__characters-actions {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
+  align-content: flex-start;
   gap: 8px;
   margin: 0 0 10px;
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
 }
 

@@ -109,6 +109,18 @@
                 Выберите буквы для тренировки
               </legend>
 
+              <div class="alphabet__quiz-stats-banner">
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact button alphabet__quiz-stats-toggle"
+                  id="alphabet-quiz-stats-toggle"
+                  aria-pressed="false"
+                  title="Показывать на карточках верные ответы из последних попыток теста (до 40 на букву)"
+                >
+                  Показать счёт теста на буквах
+                </button>
+              </div>
+
               <div class="alphabet__characters-actions">
                 <button
                   type="button"
@@ -121,6 +133,113 @@
                   class="alphabet__button-check-none alphabet__button alphabet__button--compact button"
                 >
                   Снять
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact alphabet__level-quick button"
+                  data-quick-level="1"
+                  aria-pressed="false"
+                  aria-label="Уровень 1: включить или убрать ряд букв ა ვ დ ი რ ს"
+                  title="Включает или убирает ряд из выбора (можно несколько уровней)"
+                >
+                  <span class="alphabet__level-quick-line">
+                    <span class="alphabet__level-quick-n" aria-hidden="true">1</span>
+                    <span class="alphabet__level-quick-letters"
+                      >ა·ვ·დ·ი·რ·ს</span
+                    >
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact alphabet__level-quick button"
+                  data-quick-level="2"
+                  aria-pressed="false"
+                  aria-label="Уровень 2: включить или убрать ряд букв ე თ ტ მ ნ ო"
+                  title="Включает или убирает ряд из выбора (можно несколько уровней)"
+                >
+                  <span class="alphabet__level-quick-line">
+                    <span class="alphabet__level-quick-n" aria-hidden="true">2</span>
+                    <span class="alphabet__level-quick-letters"
+                      >ე·თ·ტ·მ·ნ·ო</span
+                    >
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact alphabet__level-quick button"
+                  data-quick-level="3"
+                  aria-pressed="false"
+                  aria-label="Уровень 3: включить или убрать ряд букв ბ გ ლ უ ღ"
+                  title="Включает или убирает ряд из выбора (можно несколько уровней)"
+                >
+                  <span class="alphabet__level-quick-line">
+                    <span class="alphabet__level-quick-n" aria-hidden="true">3</span>
+                    <span class="alphabet__level-quick-letters"
+                      >ბ·გ·ლ·უ·ღ</span
+                    >
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact alphabet__level-quick button"
+                  data-quick-level="4"
+                  aria-pressed="false"
+                  aria-label="Уровень 4: включить или убрать ряд букв ქ შ ჩ ც ხ"
+                  title="Включает или убирает ряд из выбора (можно несколько уровней)"
+                >
+                  <span class="alphabet__level-quick-line">
+                    <span class="alphabet__level-quick-n" aria-hidden="true">4</span>
+                    <span class="alphabet__level-quick-letters"
+                      >ქ·შ·ჩ·ც·ხ</span
+                    >
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact alphabet__level-quick button"
+                  data-quick-level="5"
+                  aria-pressed="false"
+                  aria-label="Уровень 5: включить или убрать ряд букв კ ზ ძ პ ფ ყ"
+                  title="Включает или убирает ряд из выбора (можно несколько уровней)"
+                >
+                  <span class="alphabet__level-quick-line">
+                    <span class="alphabet__level-quick-n" aria-hidden="true">5</span>
+                    <span class="alphabet__level-quick-letters"
+                      >კ·ზ·ძ·პ·ფ·ყ</span
+                    >
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact alphabet__level-quick button"
+                  data-quick-level="6"
+                  aria-pressed="false"
+                  aria-label="Уровень 6: включить или убрать ряд букв ჟ ჯ ჰ წ ჭ"
+                  title="Включает или убирает ряд из выбора (можно несколько уровней)"
+                >
+                  <span class="alphabet__level-quick-line">
+                    <span class="alphabet__level-quick-n" aria-hidden="true">6</span>
+                    <span class="alphabet__level-quick-letters"
+                      >ჟ·ჯ·ჰ·წ·ჭ</span
+                    >
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact button"
+                  id="alphabet-quick-my"
+                  aria-pressed="false"
+                  title="Подставить сохранённый набор («Мой выбор»)"
+                >
+                  Мой выбор
+                </button>
+                <button
+                  type="button"
+                  class="alphabet__button alphabet__button--compact button"
+                  id="alphabet-save-my"
+                  title="Сохранить текущее выделение для «Мой выбор»"
+                >
+                  Запомнить
                 </button>
               </div>
 
@@ -1862,11 +1981,6 @@
             >
               <section class="letter-quiz" aria-label="Тест по грузинским буквам">
                 <h2 class="letter-quiz__title text">Тест букв</h2>
-                <p class="letter-quiz__lead text">
-                  Берётся только то, что отмечено галочками в алфавите выше.
-                  Перед вами грузинская буква (и образец почерта, если есть);
-                  выберите подходящее русское соответствие.
-                </p>
                 <div id="letter-quiz-setup">
                   <p
                     id="letter-quiz-error"
@@ -1945,11 +2059,6 @@
                         />
                       </div>
                     </div>
-                    <p class="letter-quiz__hint text">
-                      Нажмите вариант — услышите произношение той грузинской буквы,
-                      которой он соответствует; нужно указать русский вариант для
-                      буквы слева.
-                    </p>
                     <div
                       class="letter-quiz__choices"
                       id="letter-quiz-choices"

@@ -1,0 +1,51 @@
+/* Кнопки быстрого выбора уровня внутри `.alphabet__characters-actions` */
+
+.alphabet__level-quick {
+  padding: 8px 10px !important;
+  max-width: 100%;
+}
+
+.alphabet__level-quick-line {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.alphabet__level-quick-n {
+  flex: 0 0 auto;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.alphabet__level-quick-letters {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(12px, 2.8vw, 14px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-geo);
+  line-height: 1.15;
+}
+
+.alphabet__level-quick[aria-pressed='true'] {
+  border-color: var(--color-accent-border);
+  background: var(--color-accent-soft);
+}
+
+.alphabet__level-quick[aria-pressed='true'] .alphabet__level-quick-n {
+  color: var(--color-text);
+}
+
+.alphabet__level-quick[aria-pressed='true'] .alphabet__level-quick-letters {
+  color: var(--color-geo);
+}
+
+#alphabet-quick-my[aria-pressed='true'] {
+  border-color: var(--color-accent-border);
+  background: var(--color-accent-soft);
+}

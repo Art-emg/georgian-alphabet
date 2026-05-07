@@ -42,9 +42,222 @@ const buttonTextBeforeSizeDown = document.querySelector(
 
 const CHECKBOX_STORAGE_KEY = 'georgian-alphabet-checkbox-selection';
 
+const ALPHABET_LEVEL_GROUPS = [
+  ['ა', 'ვ', 'დ', 'ი', 'რ', 'ს'],
+  ['ე', 'თ', 'ტ', 'მ', 'ნ', 'ო'],
+  ['ბ', 'გ', 'ლ', 'უ', 'ღ'],
+  ['ქ', 'შ', 'ჩ', 'ც', 'ხ'],
+  ['კ', 'ზ', 'ძ', 'პ', 'ფ', 'ყ'],
+  ['ჟ', 'ჯ', 'ჰ', 'წ', 'ჭ'],
+];
+
+const PRESET_MY_STORAGE_KEY = 'georgian-alphabet-preset-my';
+const SELECTION_META_KEY = 'georgian-alphabet-selection-meta';
+
+function persistSelectionMeta(meta) {
+  try {
+    localStorage.setItem(SELECTION_META_KEY, JSON.stringify(meta));
+  } catch (_) {}
+}
+
+function getCheckedLettersSet() {
+  const s = new Set();
+  checkboxInputs.forEach((i) => {
+    if (i.checked) s.add(i.name);
+  });
+  return s;
+}
+
+function lettersEqualSets(a, b) {
+  if (a.size !== b.size) return false;
+  for (const x of a) if (!b.has(x)) return false;
+  return true;
+}
+
+function lettersFromLevelNumbers(levelNums) {
+  const u = new Set();
+  for (const n of levelNums) {
+    const i = Number(n) - 1;
+    if (i < 0 || i >= ALPHABET_LEVEL_GROUPS.length) continue;
+    ALPHABET_LEVEL_GROUPS[i].forEach((ch) => u.add(ch));
+  }
+  return u;
+}
+
+function readSavedMyPresetLetters() {
+  try {
+    const raw = localStorage.getItem(PRESET_MY_STORAGE_KEY);
+    if (!raw) return null;
+    const names = JSON.parse(raw);
+    if (!Array.isArray(names)) return null;
+    return new Set(names);
+  } catch (_) {
+    return null;
+  }
+}
+
+function setMyPresetButtonPressed(on) {
+  const myBtn = document.getElementById('alphabet-quick-my');
+  if (!myBtn) return;
+  myBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+}
+
+function restoreSelectionUIMeta() {
+  const levelBtns = document.querySelectorAll('[data-quick-level]');
+  if (!levelBtns.length) return;
+
+  let meta = null;
+  try {
+    const raw = localStorage.getItem(SELECTION_META_KEY);
+    if (raw) meta = JSON.parse(raw);
+  } catch (_) {}
+
+  const cur = getCheckedLettersSet();
+  const allChecked =
+    checkboxInputs.length > 0 && [...checkboxInputs].every((c) => c.checked);
+  const noneChecked = [...checkboxInputs].every((c) => !c.checked);
+
+  const clearLevels = () => {
+    levelBtns.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+  };
+
+  setMyPresetButtonPressed(false);
+
+  if (!meta || typeof meta !== 'object' || !meta.mode) {
+    syncQuickLevelToggleVisuals();
+    return;
+  }
+
+  if (meta.mode === 'all' && allChecked) {
+    syncQuickLevelToggleVisuals();
+    return;
+  }
+
+  if (meta.mode === 'none' && noneChecked) {
+    clearLevels();
+    return;
+  }
+
+  if (meta.mode === 'levels' && Array.isArray(meta.levels)) {
+    const nums = meta.levels
+      .map((n) => Number(n))
+      .filter((n) => n >= 1 && n <= ALPHABET_LEVEL_GROUPS.length);
+    const expected = lettersFromLevelNumbers(nums);
+    if (lettersEqualSets(expected, cur)) {
+      clearLevels();
+      nums.forEach((n) => {
+        const el = document.querySelector(`[data-quick-level="${n}"]`);
+        if (el) el.setAttribute('aria-pressed', 'true');
+      });
+      return;
+    }
+    syncQuickLevelToggleVisuals();
+    return;
+  }
+
+  if (meta.mode === 'my') {
+    const preset = readSavedMyPresetLetters();
+    if (preset && lettersEqualSets(preset, cur)) {
+      clearLevels();
+      setMyPresetButtonPressed(true);
+      return;
+    }
+  }
+
+  syncQuickLevelToggleVisuals();
+}
+
+function persistLevelsFromPressedButtons() {
+  const pressed = [...document.querySelectorAll('[data-quick-level]')]
+    .filter((b) => b.getAttribute('aria-pressed') === 'true')
+    .map((b) => parseInt(b.getAttribute('data-quick-level'), 10))
+    .filter((n) => !Number.isNaN(n))
+    .sort((a, b) => a - b);
+  if (pressed.length === 0) persistSelectionMeta({ mode: 'none' });
+  else persistSelectionMeta({ mode: 'levels', levels: pressed });
+}
+
+function applyLetterSelectionSet(allowedSet) {
+  checkboxInputs.forEach((input) => {
+    input.checked = allowedSet.has(input.name);
+  });
+  saveCheckboxSelection();
+  refreshTransliteration();
+  refreshSelectionStrip();
+}
+
+function syncQuickLevelToggleVisuals() {
+  const levelBtns = document.querySelectorAll('[data-quick-level]');
+  if (!levelBtns.length) return;
+  const allChecked =
+    checkboxInputs.length > 0 &&
+    [...checkboxInputs].every((c) => c.checked);
+  levelBtns.forEach((b) => {
+    if (allChecked) {
+      b.setAttribute('aria-pressed', 'true');
+    } else {
+      b.setAttribute('aria-pressed', 'false');
+    }
+  });
+}
+
+function initAlphabetQuickLevels() {
+  document.querySelectorAll('[data-quick-level]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const n = parseInt(btn.getAttribute('data-quick-level'), 10);
+      const idx = n - 1;
+      if (idx < 0 || idx >= ALPHABET_LEVEL_GROUPS.length) return;
+      const wasPressed = btn.getAttribute('aria-pressed') === 'true';
+      const nowPressed = !wasPressed;
+      btn.setAttribute('aria-pressed', String(nowPressed));
+
+      const union = new Set();
+      document.querySelectorAll('[data-quick-level]').forEach((b) => {
+        if (b.getAttribute('aria-pressed') !== 'true') return;
+        const levelNum = parseInt(b.getAttribute('data-quick-level'), 10);
+        const i = levelNum - 1;
+        if (i < 0 || i >= ALPHABET_LEVEL_GROUPS.length) return;
+        ALPHABET_LEVEL_GROUPS[i].forEach((ch) => union.add(ch));
+      });
+      applyLetterSelectionSet(union);
+      setMyPresetButtonPressed(false);
+      persistLevelsFromPressedButtons();
+    });
+  });
+
+  const myBtn = document.getElementById('alphabet-quick-my');
+  myBtn?.addEventListener('click', () => {
+    try {
+      const raw = localStorage.getItem(PRESET_MY_STORAGE_KEY);
+      if (!raw) return;
+      const names = JSON.parse(raw);
+      if (!Array.isArray(names)) return;
+      document.querySelectorAll('[data-quick-level]').forEach((b) => {
+        b.setAttribute('aria-pressed', 'false');
+      });
+      applyLetterSelectionSet(new Set(names));
+      persistSelectionMeta({ mode: 'my' });
+      setMyPresetButtonPressed(true);
+    } catch (_) {
+      /* ignore */
+    }
+  });
+
+  const saveBtn = document.getElementById('alphabet-save-my');
+  saveBtn?.addEventListener('click', () => {
+    try {
+      const names = [...checkboxInputs]
+        .filter((c) => c.checked)
+        .map((c) => c.name);
+      localStorage.setItem(PRESET_MY_STORAGE_KEY, JSON.stringify(names));
+    } catch (_) {
+      /* ignore */
+    }
+  });
+}
+
 const selectionStripTrack = document.querySelector('#selection-strip-track');
 
-/** Полоса «выбранные буквы» под опциями: грузинская + кириллица из value, тап — звук */
 function refreshSelectionStrip() {
   if (!selectionStripTrack) return;
   selectionStripTrack.replaceChildren();
@@ -97,7 +310,6 @@ textOutput?.addEventListener('click', (e) => {
   playGeorgianLetterSound(btn.dataset.letter);
 });
 
-/** Те же URL, что у плеера на https://geolang.ru/lessons/9 */
 const GEOLANG_AUDIO_LETTER_MP3 = 'https://geolang.ru/audio/mp3/letter/';
 let geolangLetterAudio = null;
 
@@ -109,7 +321,6 @@ function escapeHtml(ch) {
     .replace(/"/g, '&quot;');
 }
 
-/** Значение HTML-атрибута data-* (грузинские буквы обычно без спецсимволов). */
 function escapeAttr(s) {
   return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 }
@@ -164,8 +375,26 @@ function restoreCheckboxSelection() {
   }
 }
 
-function openSourceDetails() {
-  if (sourceDetails) sourceDetails.open = true;
+let sourceDetailsProgrammatic = false;
+let sourceDetailsPinnedByUser = false;
+
+function setSourceDetailsOpen(open) {
+  if (!sourceDetails) return;
+  sourceDetailsProgrammatic = true;
+  sourceDetails.open = open;
+  queueMicrotask(() => {
+    sourceDetailsProgrammatic = false;
+  });
+}
+
+sourceDetails?.addEventListener('toggle', () => {
+  if (sourceDetailsProgrammatic) return;
+  sourceDetailsPinnedByUser = !!sourceDetails.open;
+});
+
+function collapseSourceDetailsAfterRandomizer() {
+  if (!sourceDetails || sourceDetailsPinnedByUser) return;
+  setSourceDetailsOpen(false);
 }
 
 function getGeorgianSoundChar(letter) {
@@ -229,7 +458,6 @@ function playGeorgianLetterSound(letter) {
   void geolangLetterAudio.play().catch(finish);
 }
 
-/** Кириллица: строка кириллицы + (?); текст в скобках в том же блоке строки — на десктопе ниже (absolute от line1), на мобиле в один ряд. */
 function layoutAlphabetRuBlocks() {
   document.querySelectorAll('.alphabet__card-inner').forEach((inner) => {
     if (
@@ -312,7 +540,6 @@ function initAlphabetCards() {
       ) {
         return;
       }
-      /* Тап по затемнению (мобильный полноэкранный peek) — только закрыть, не галочку */
       if (card.classList.contains('alphabet__card--peek')) {
         card.classList.remove('alphabet__card--peek');
         return;
@@ -367,7 +594,6 @@ function showErrorHighlight(message) {
   setValidationHint(message);
 }
 
-// Получаю объект из чекнутых грузинских букв
 function getCheckedInputs(nodeList) {
   let res = {};
   let array = [...nodeList];
@@ -387,40 +613,33 @@ function getCheckedInputs(nodeList) {
 }
 
 function findAndReplace(text, nodeList) {
-  // Чекнутые буквы
   let characters = getCheckedInputs(nodeList);
   let georgianCharacters = Object.keys(characters);
   let russianCharacters = Object.values(characters);
 
-  // Чекнутые опции
   let optionMap = getCheckedInputs(optionsCheckboxInputs);
   let optionsKeys = Object.keys(optionMap);
 
-  // Убираю мягкий и твёрдый знаки
   if (optionsKeys.includes('ь')) {
     let regExp = /[^ьъ]/gi;
     text = text.match(regExp) ? text.match(regExp).join('') : text;
   }
 
-  // Если выбраны буквы 'ი' 'ა', то 'я' меняю на 'иа'
   if (georgianCharacters.includes('ი') && georgianCharacters.includes('ა')) {
     let regExp = /я/gi;
     text = text.match(regExp) ? text.replace(regExp, 'иа') : text;
   }
 
-  // Если выбраны буквы 'ი' 'ო', то 'ё' меняю на 'ио'
   if (georgianCharacters.includes('ი') && georgianCharacters.includes('ო')) {
     let regExp = /ё/gi;
     text = text.match(regExp) ? text.replace(regExp, 'ио') : text;
   }
 
-  // Если выбраны буквы 'ი' 'უ', то 'ю' меняю на 'иу'
   if (georgianCharacters.includes('ი') && georgianCharacters.includes('უ')) {
     let regExp = /ю/gi;
     text = text.match(regExp) ? text.replace(regExp, 'иу') : text;
   }
 
-  // Если выбрана буква 'ი', то 'ы' 'й' меняю на 'и'
   if (georgianCharacters.includes('ი')) {
     let regExp1 = /ы/gi;
     let regExp2 = /й/gi;
@@ -428,40 +647,33 @@ function findAndReplace(text, nodeList) {
     text = text.match(regExp2) ? text.replace(regExp2, 'и') : text;
   }
 
-  // Если выбрана буква 'ე', то 'э' меняю на 'е'
   if (georgianCharacters.includes('ე')) {
     let regExp = /э/gi;
     text = text.match(regExp) ? text.replace(regExp, 'е') : text;
   }
 
-  // Если выбрана буква 'შ', то 'щ' меняю на 'ш'
   if (georgianCharacters.includes('შ')) {
     let regExp = /щ/gi;
     text = text.match(regExp) ? text.replace(regExp, 'ш') : text;
   }
 
-  // Если выбрана буква 'ფ', то 'ф' меняю на 'п'
   if (georgianCharacters.includes('ფ')) {
     let regExp = /ф/gi;
     text = text.match(regExp) ? text.replace(regExp, 'п') : text;
   }
 
-  // Сначала транслитерирую 'дз'
   if (russianCharacters.includes('дз')) {
     text = text.replace(/дз/gi, 'ძ');
   }
 
-  // Потом транслитерирую 'дж'
   if (russianCharacters.includes('дж')) {
     text = text.replace(/дж/gi, 'ჯ');
   }
 
-  // Транслитерация
   russianCharacters.map((item, index) => {
     let regExp = new RegExp(`${item}`, 'gi');
 
     function randomizeChar(rusChar, geoChars) {
-      // Проверка того, что все из ряда похожих выбраны
       function checkIfInclude() {
         let counter = 0;
         geoChars.map((item) => {
@@ -479,37 +691,26 @@ function findAndReplace(text, nodeList) {
       }
     }
 
-    // Рандомайзер для букв 'г'
     randomizeChar('г', ['გ', 'ღ']);
 
-    // Рандомайзер для букв 'т'
     randomizeChar('т', ['თ', 'ტ']);
 
-    // Рандомайзер для букв 'к' всех
     randomizeChar('к', ['კ', 'ქ', 'ყ']);
 
-    // Рандомайзер для букв 'к' 1
     randomizeChar('к', ['კ', 'ქ']);
 
-    // Рандомайзер для букв 'к' 2
     randomizeChar('к', ['კ', 'ყ']);
 
-    // Рандомайзер для букв 'к' 3
     randomizeChar('к', ['ქ', 'ყ']);
 
-    // Рандомайзер для букв 'п'
     randomizeChar('п', ['პ', 'ფ']);
 
-    // Рандомайзер для букв 'ч'
     randomizeChar('ч', ['ჩ', 'ჭ']);
 
-    // Рандомайзер для букв 'ц'
     randomizeChar('ц', ['ც', 'წ']);
 
-    // Рандомайзер для букв 'х'
     randomizeChar('х', ['ხ', 'ჰ']);
 
-    // Транслитерация для остальных букв
     text = text.replace(regExp, georgianCharacters[index]);
   });
 
@@ -542,7 +743,6 @@ function refreshTransliteration() {
   textOutput.innerHTML = buildHighlightedHtml(transliteratedText);
 }
 
-// Используя делегирование выбираю кнопку подсказки в алфавите
 alphabet.onclick = function (e) {
   const el = e.target.closest('[data-title]');
   if (!el?.dataset?.title) {
@@ -551,7 +751,6 @@ alphabet.onclick = function (e) {
   showTooltip(el);
 };
 
-// Используя делегирование выбираю кнопку подсказки в опциях
 options.onclick = function (e) {
   const t = e.target.closest('[data-title]');
   if (!t?.dataset?.title) {
@@ -560,20 +759,17 @@ options.onclick = function (e) {
   showTooltip(t);
 };
 
-// Открываю окно подсказки с текстом, соответствующим кнопке
 function showTooltip(button) {
   toolTip.classList.add('tooltip_opened');
   toolTipText.textContent = button.dataset.title;
 }
 
-// Функция получения рандомного текста с сервера
 function getRandomText() {
   return fetch('https://fish-text.ru/get', {}).then((res) => {
     return res.ok ? res.json() : Promise.reject(res.status);
   });
 }
 
-// Увеличиваю шрифт
 function increaseTextSize(el) {
   let currentTextSize = getComputedStyle(el).fontSize.split('px').join('');
   let currentLineHeight = getComputedStyle(el)
@@ -586,7 +782,6 @@ function increaseTextSize(el) {
   }
 }
 
-// Уменьшаю шрифт
 function decreaseTextSize(el) {
   let currentTextSize = getComputedStyle(el).fontSize.split('px').join('');
   let currentLineHeight = getComputedStyle(el)
@@ -599,21 +794,24 @@ function decreaseTextSize(el) {
   }
 }
 
-// Слушатели событий
-// Выбор всех чек боксов
 buttonCheckAll.addEventListener('click', () => {
   checkboxInputs.forEach((item) => (item.checked = true));
   saveCheckboxSelection();
   refreshTransliteration();
   refreshSelectionStrip();
+  setMyPresetButtonPressed(false);
+  persistSelectionMeta({ mode: 'all' });
+  syncQuickLevelToggleVisuals();
 });
 
-// Снять выбор со всех чекбоксов
 buttonCheckNone.addEventListener('click', () => {
   checkboxInputs.forEach((item) => (item.checked = false));
   saveCheckboxSelection();
   refreshTransliteration();
   refreshSelectionStrip();
+  setMyPresetButtonPressed(false);
+  persistSelectionMeta({ mode: 'none' });
+  syncQuickLevelToggleVisuals();
 });
 
 transliteration.addEventListener('submit', (e) => {
@@ -634,40 +832,36 @@ if (buttonCopy) {
   });
 }
 
-// Закрытие тултипа по кнопке
 toolTipCloseButton.addEventListener('click', () => {
   toolTip.classList.remove('tooltip_opened');
 });
 
-// Закрытие тултипа по тёмной области
 toolTip.addEventListener('click', (e) => {
   if (e.target === e.currentTarget) {
     toolTip.classList.remove('tooltip_opened');
   }
 });
 
-// Слушатель событий на кнопку рандомного текста
 randomTextButton.addEventListener('click', () => {
   getRandomText()
     .then((res) => {
       textBefore.value = res.text;
-      openSourceDetails();
+      collapseSourceDetailsAfterRandomizer();
       refreshTransliteration();
     })
     .catch((err) => {
       console.log(err);
       textBefore.value =
         'Упс. При загрузке текста произошла ошибка, повторите позже.';
-      openSourceDetails();
+      collapseSourceDetailsAfterRandomizer();
       refreshTransliteration();
     });
 });
 
-// Слушатель на кнопку «Факты о Сакартвелло»
 georgianFactButton.addEventListener('click', () => {
   textBefore.value =
     georgianFacts[Math.floor(Math.random() * georgianFacts.length)];
-  openSourceDetails();
+  collapseSourceDetailsAfterRandomizer();
   refreshTransliteration();
 });
 
@@ -680,26 +874,22 @@ proseButton?.addEventListener('click', () => {
     PROSE_PLACEHOLDER_SNIPPETS[
       Math.floor(Math.random() * PROSE_PLACEHOLDER_SNIPPETS.length)
     ];
-  openSourceDetails();
+  collapseSourceDetailsAfterRandomizer();
   refreshTransliteration();
 });
 
-// Кнопка увеличения текста до
 buttonTextBeforeSizeUp.addEventListener('click', () => {
   increaseTextSize(textBefore);
 });
 
-// Кнопка уменьшения текста до
 buttonTextBeforeSizeDown.addEventListener('click', () => {
   decreaseTextSize(textBefore);
 });
 
-// Кнопка увеличения текста после
 buttonTextAfterSizeUp.addEventListener('click', () => {
   increaseTextSize(textOutput);
 });
 
-// Кнопка уменьшения текста после
 buttonTextAfterSizeDown.addEventListener('click', () => {
   decreaseTextSize(textOutput);
 });
@@ -715,6 +905,9 @@ alphabet.addEventListener('change', (e) => {
     saveCheckboxSelection();
     refreshTransliteration();
     refreshSelectionStrip();
+    setMyPresetButtonPressed(false);
+    persistSelectionMeta({ mode: 'custom' });
+    syncQuickLevelToggleVisuals();
   }
 });
 
@@ -726,6 +919,17 @@ optionsCheckboxInputs.forEach((input) => {
 
 layoutAlphabetRuBlocks();
 initAlphabetCards();
+initAlphabetQuickLevels();
 restoreCheckboxSelection();
+restoreSelectionUIMeta();
+
+if (
+  textBefore &&
+  sourceDetails &&
+  !String(textBefore.value || '').trim()
+) {
+  setSourceDetailsOpen(true);
+}
+
 refreshTransliteration();
 refreshSelectionStrip();

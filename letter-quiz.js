@@ -1,9 +1,126 @@
-/**
- * Главные вкладки («Текст» / «Тест») и тест по выбранным буквам.
- * Использует глобальную playGeorgianLetterSound из script.js.
- */
-
 const LETTER_QUIZ_FEEDBACK_MS = 1000;
+
+const QUIZ_LETTER_STATS_KEY = 'georgian-alphabet-quiz-letter-stats';
+const QUIZ_LETTER_STATS_WINDOW = 40;
+const QUIZ_BADGES_PIN_KEY = 'georgian-alphabet-quiz-badges-pinned';
+
+function loadQuizBadgesPinned() {
+  try {
+    return localStorage.getItem(QUIZ_BADGES_PIN_KEY) === '1';
+  } catch (_) {
+    return false;
+  }
+}
+
+function saveQuizBadgesPinned(on) {
+  try {
+    if (on) localStorage.setItem(QUIZ_BADGES_PIN_KEY, '1');
+    else localStorage.removeItem(QUIZ_BADGES_PIN_KEY);
+  } catch (_) {}
+}
+
+function shouldShowQuizStatBadges() {
+  return isLetterQuizTabActive() || loadQuizBadgesPinned();
+}
+
+function quizLetterNormalizeKey(letter) {
+  const ch = letter && [...String(letter).trim()][0];
+  if (!ch) return null;
+  const cp = ch.codePointAt(0);
+  if (cp < 0x10a0 || cp > 0x10ff) return null;
+  return ch;
+}
+
+function loadLetterQuizStats() {
+  try {
+    const raw = localStorage.getItem(QUIZ_LETTER_STATS_KEY);
+    if (!raw) return {};
+    const o = JSON.parse(raw);
+    if (!o || typeof o !== 'object') return {};
+    const out = {};
+    for (const [k, v] of Object.entries(o)) {
+      const key = quizLetterNormalizeKey(k);
+      if (!key || !Array.isArray(v)) continue;
+      const bools = v
+        .filter((x) => x === true || x === false)
+        .slice(-QUIZ_LETTER_STATS_WINDOW);
+      if (bools.length > 0) out[key] = bools;
+    }
+    return out;
+  } catch (_) {
+    return {};
+  }
+}
+
+function saveLetterQuizStats(map) {
+  try {
+    localStorage.setItem(QUIZ_LETTER_STATS_KEY, JSON.stringify(map));
+  } catch (_) {}
+}
+
+function recordLetterQuizAttempt(letter, ok) {
+  const key = quizLetterNormalizeKey(letter);
+  if (!key) return;
+  const map = loadLetterQuizStats();
+  const prev = Array.isArray(map[key]) ? map[key] : [];
+  const next = [...prev, !!ok].slice(-QUIZ_LETTER_STATS_WINDOW);
+  map[key] = next;
+  saveLetterQuizStats(map);
+  refreshQuizLetterStatBadges();
+}
+
+function isLetterQuizTabActive() {
+  const tab = document.getElementById('main-tab-quiz');
+  return tab?.getAttribute('aria-selected') === 'true';
+}
+
+function refreshQuizLetterStatBadges() {
+  const show = shouldShowQuizStatBadges();
+  const map = loadLetterQuizStats();
+  document.querySelectorAll('.alphabet__card[data-letter]').forEach((card) => {
+    let el = card.querySelector('.alphabet__card-quiz-stat');
+    if (!el) {
+      el = document.createElement('span');
+      el.className = 'alphabet__card-quiz-stat';
+      el.setAttribute('aria-hidden', 'true');
+      card.prepend(el);
+    }
+    const letter = card.dataset.letter;
+    const arr = map[letter] || [];
+    const n = arr.length;
+    if (!show || n === 0) {
+      el.hidden = true;
+      el.textContent = '';
+      el.removeAttribute('title');
+      return;
+    }
+    const correct = arr.filter(Boolean).length;
+    el.textContent = `${correct} из ${n}`;
+    el.title = `Верных ${correct} из ${n} последних ответов в тесте (учитываются до ${QUIZ_LETTER_STATS_WINDOW})`;
+    el.hidden = false;
+  });
+}
+
+function syncQuizBadgesToggleButton() {
+  const btn = document.getElementById('alphabet-quiz-stats-toggle');
+  if (!btn) return;
+  const pinned = loadQuizBadgesPinned();
+  btn.setAttribute('aria-pressed', pinned ? 'true' : 'false');
+  btn.textContent = pinned
+    ? 'Скрыть счёт теста на буквах'
+    : 'Показать счёт теста на буквах';
+}
+
+function initQuizBadgesToggleButton() {
+  const btn = document.getElementById('alphabet-quiz-stats-toggle');
+  if (!btn) return;
+  syncQuizBadgesToggleButton();
+  btn.addEventListener('click', () => {
+    saveQuizBadgesPinned(!loadQuizBadgesPinned());
+    syncQuizBadgesToggleButton();
+    refreshQuizLetterStatBadges();
+  });
+}
 
 function initMainTabs() {
   const tablist = document.querySelector('[data-main-tabs-tablist]');
@@ -21,6 +138,7 @@ function initMainTabs() {
       tab.tabIndex = sel ? 0 : -1;
       panels[i].hidden = !sel;
     });
+    refreshQuizLetterStatBadges();
   }
 
   tablist.addEventListener('click', (e) => {
@@ -59,6 +177,41 @@ function shuffleInPlace(arr) {
   return arr;
 }
 
+function getQuizRuParts(card, valueFallback) {
+  const shortEl = card?.querySelector(
+    '.alphabet__card-ru-block .alphabet__card-ru-short'
+  );
+  const parenEl = card?.querySelector(
+    '.alphabet__card-ru-block .alphabet__card-ru-paren'
+  );
+  if (shortEl) {
+    const main = shortEl.textContent.trim();
+    let parenInside = '';
+    if (parenEl) {
+      parenInside = parenEl.textContent
+        .replace(/^\s*\(/, '')
+        .replace(/\)\s*$/, '')
+        .trim();
+    }
+    return { main, parenInside };
+  }
+
+  const legacy = card?.querySelector('.alphabet__card-main .alphabet__card-ru');
+  const raw = (legacy?.textContent || valueFallback || '')
+    .trim()
+    .replace(/\s+/g, ' ')
+    .replace(/\?/g, '');
+  const lm = raw.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
+  if (lm) return { main: lm[1].trim(), parenInside: lm[2].trim() };
+  return { main: raw || '—', parenInside: '' };
+}
+
+function quizRuKey(parts) {
+  return parts.parenInside
+    ? `${parts.main} (${parts.parenInside})`
+    : parts.main;
+}
+
 function getQuizLetterPool() {
   const pool = [];
   document
@@ -67,19 +220,18 @@ function getQuizLetterPool() {
       if (!input.checked) return;
       const card = input.closest('.alphabet__card');
       const img = card?.querySelector('.alphabet__card-thumb-img');
+      const parts = getQuizRuParts(card, input.value);
       pool.push({
         geo: input.name,
-        ru: (input.value || '').trim(),
+        ruMain: parts.main,
+        ruParen: parts.parenInside,
+        ruKey: quizRuKey(parts),
         imgSrc: img?.getAttribute('src') || '',
       });
     });
   return pool;
 }
 
-/**
- * Очередь: сначала по одному разу каждая выбранная буква (перемешано),
- * затем равномерные «волны» перестановок, пока не доберём nQ вопросов.
- */
 function buildQuestionQueue(pool, nQ) {
   const n = pool.length;
   if (nQ <= 0 || n === 0) return [];
@@ -105,7 +257,6 @@ function buildQuestionQueue(pool, nQ) {
   return out;
 }
 
-/** Число колонок сетки вариантов: компактно (4 → 2×2, 6 → 3×2, …). */
 function choiceGridColumns(optionCnt) {
   switch (optionCnt) {
     case 4:
@@ -159,9 +310,7 @@ function initLetterQuiz() {
   let qIndex = 0;
   let optionCount = 4;
   let solved = false;
-  /** Неверные нажатия по вариантам (всего за сессию). */
   let wrongAttempts = 0;
-  /** Совпадения с правильным ответом (вопросов завершено). */
   let correctAnswers = 0;
   let feedbackTimer = null;
 
@@ -231,8 +380,8 @@ function initLetterQuiz() {
     const opts = shuffleInPlace([correct, ...wrong]);
     const ruCounts = {};
     opts.forEach((o) => {
-      const r = o.ru || '—';
-      ruCounts[r] = (ruCounts[r] || 0) + 1;
+      const k = o.ruKey || '—';
+      ruCounts[k] = (ruCounts[k] || 0) + 1;
     });
 
     geoEl.textContent = correct.geo;
@@ -249,18 +398,47 @@ function initLetterQuiz() {
     choicesEl.replaceChildren();
     applyChoicesGrid(opts.length);
 
-    opts.forEach((opt) => {
-      const r = opt.ru || '—';
-      const lbl = ruCounts[r] > 1 ? `${r} (${opt.geo})` : r;
+    opts.forEach((opt, ix) => {
+      const k = opt.ruKey || '—';
+      let dupSuffix = '';
+      if (ruCounts[k] > 1) {
+        const before = opts
+          .slice(0, ix)
+          .filter((x) => (x.ruKey || '—') === k).length;
+        dupSuffix = `${before + 1}/${ruCounts[k]}`;
+      }
+
+      const ariaBase =
+        (opt.ruParen ? `${opt.ruMain} (${opt.ruParen})` : opt.ruMain) +
+        (dupSuffix ? ` · ${dupSuffix}` : '');
+
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'letter-quiz__choice';
       btn.dataset.geo = opt.geo;
       btn.setAttribute(
         'aria-label',
-        `${lbl}: прослушать произношение соответствующей грузинской буквы`
+        `${ariaBase}: прослушать произношение соответствующей грузинской буквы`
       );
-      btn.textContent = lbl;
+
+      const mainSpan = document.createElement('span');
+      mainSpan.className = 'letter-quiz__choice-main';
+      mainSpan.textContent = opt.ruMain || '—';
+      btn.appendChild(mainSpan);
+
+      if (opt.ruParen) {
+        const pSpan = document.createElement('span');
+        pSpan.className = 'letter-quiz__choice-paren';
+        pSpan.textContent = `(${opt.ruParen})`;
+        btn.appendChild(pSpan);
+      }
+
+      if (dupSuffix) {
+        const dSpan = document.createElement('span');
+        dSpan.className = 'letter-quiz__choice-dup';
+        dSpan.textContent = ` · ${dupSuffix}`;
+        btn.appendChild(dSpan);
+      }
 
       btn.addEventListener('click', () => onChoice(btn, correct.geo));
       choicesEl.appendChild(btn);
@@ -279,6 +457,7 @@ function initLetterQuiz() {
 
     const isCorrect = geo === correctGeo;
     if (isCorrect) {
+      recordLetterQuizAttempt(correctGeo, true);
       clearFeedbackTimer();
       btn.classList.add('letter-quiz__choice--correct');
       solved = true;
@@ -296,6 +475,7 @@ function initLetterQuiz() {
         }
       }, LETTER_QUIZ_FEEDBACK_MS);
     } else {
+      recordLetterQuizAttempt(correctGeo, false);
       wrongAttempts += 1;
       btn.classList.add('letter-quiz__choice--wrong');
       btn.disabled = true;
@@ -354,5 +534,7 @@ function initLetterQuiz() {
   btnReplay?.addEventListener('click', showSetup);
 }
 
+initQuizBadgesToggleButton();
 initMainTabs();
+refreshQuizLetterStatBadges();
 initLetterQuiz();

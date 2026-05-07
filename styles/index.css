@@ -10,6 +10,7 @@
 @import url(../blocks/lead/__text-link/lead__text-link.css);
 @import url(../blocks/alphabet/alphabet.css);
 @import url(../blocks/alphabet/__characters/alphabet__characters.css);
+@import url(../blocks/alphabet/__filters/alphabet__filters.css);
 @import url(../blocks/alphabet/__characters/_color/alphabet__characters_color_red.css);
 @import url(../blocks/alphabet/__card/alphabet__card.css);
 @import url(../blocks/alphabet/__buttons/alphabet__buttons.css);
