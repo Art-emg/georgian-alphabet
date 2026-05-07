@@ -1,8 +1,10 @@
 .page__container {
-  min-width: 320px;
+  min-width: 0;
+  width: 100%;
   max-width: 1600px;
   margin: 0 auto;
   padding-left: clamp(12px, 4vw, 28px);
   padding-right: clamp(12px, 4vw, 28px);
   padding-bottom: 32px;
+  box-sizing: border-box;
 }

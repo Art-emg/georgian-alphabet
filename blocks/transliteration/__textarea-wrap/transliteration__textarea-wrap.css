@@ -1,14 +1,17 @@
 .transliteration__textarea-wrap {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .transliteration__textarea-wrap .transliteration__buttons-text-size {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 2;
+  align-self: flex-end;
 }
 
 .transliteration__textarea-wrap .transliteration__button-copy,
@@ -49,12 +52,9 @@
   outline-offset: 1px;
 }
 
-.transliteration__textarea-wrap textarea.transliteration__textarea {
-  padding-right: clamp(76px, 18vw, 108px);
-}
-
+/* Под «копировать» в правом нижнем углу результата */
 .transliteration__textarea-wrap div.transliteration__output.transliteration__textarea {
-  padding-right: clamp(76px, 18vw, 108px);
+  padding-right: clamp(44px, 11vw, 56px);
   padding-bottom: 44px;
 }
 

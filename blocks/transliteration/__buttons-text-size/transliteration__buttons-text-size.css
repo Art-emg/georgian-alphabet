@@ -1,9 +1,7 @@
 .transliteration__buttons-text-size {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: auto;
-  right: auto;
-  gap: 6px;
-  z-index: 2;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }

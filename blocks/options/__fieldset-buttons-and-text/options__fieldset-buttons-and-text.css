@@ -6,4 +6,8 @@
   gap: 12px;
   margin: 0 0 16px;
   padding: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }

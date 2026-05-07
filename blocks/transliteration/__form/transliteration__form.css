@@ -1,23 +1,28 @@
 .transliteration__form {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto;
   align-items: stretch;
   gap: 14px;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .transliteration__text--output {
   order: 1;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
 }
 
 .transliteration__source-details {
   order: 2;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 800px) {

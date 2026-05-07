@@ -4,5 +4,7 @@
   align-items: stretch;
   max-width: min(780px, 100%);
   width: 100%;
+  min-width: 0;
   margin: 0 auto 28px;
+  box-sizing: border-box;
 }

@@ -1710,9 +1710,29 @@
 
             <form class="transliteration__form">
               <div class="transliteration__text transliteration__text--output">
-                <p class="transliteration__caption text">
-                  Текст с заменёнными кириллическими буквами
-                </p>
+                <div class="transliteration__caption-row">
+                  <p class="transliteration__caption text">
+                    Текст с заменёнными кириллическими буквами
+                  </p>
+                  <div class="transliteration__buttons-text-size">
+                    <button
+                      class="transliteration__button-text-after-size-up transliteration__button-text-size"
+                      type="button"
+                      aria-label="Увеличить шрифт результата"
+                      data-title="Увеличить шрифт результата"
+                    >
+                      +
+                    </button>
+                    <button
+                      class="transliteration__button-text-after-size-down transliteration__button-text-size"
+                      type="button"
+                      aria-label="Уменьшить шрифт результата"
+                      data-title="Уменьшить шрифт результата"
+                    >
+                      -
+                    </button>
+                  </div>
+                </div>
                 <p
                   class="transliteration__hint text"
                   id="transliteration__hint"
@@ -1747,24 +1767,6 @@
                       />
                     </svg>
                   </button>
-                  <div class="transliteration__buttons-text-size">
-                    <button
-                      class="transliteration__button-text-after-size-up transliteration__button-text-size"
-                      type="button"
-                      aria-label="Увеличить шрифт результата"
-                      data-title="Увеличить шрифт результата"
-                    >
-                      +
-                    </button>
-                    <button
-                      class="transliteration__button-text-after-size-down transliteration__button-text-size"
-                      type="button"
-                      aria-label="Уменьшить шрифт результата"
-                      data-title="Уменьшить шрифт результата"
-                    >
-                      -
-                    </button>
-                  </div>
                 </div>
               </div>
               <details
@@ -1775,19 +1777,12 @@
                   Редактировать исходный русский текст
                 </summary>
                 <div class="transliteration__text transliteration__text--source">
-                  <label
-                    class="transliteration__caption text"
-                    for="transliteration__text-before"
-                    >Исходный русский текст</label
-                  >
-                  <div class="transliteration__textarea-wrap">
-                    <textarea
-                      id="transliteration__text-before"
-                      class="transliteration__text-before transliteration__textarea"
-                      rows="12"
-                      cols="30"
-                      placeholder="Ваш текст"
-                    ></textarea>
+                  <div class="transliteration__caption-row">
+                    <label
+                      class="transliteration__caption text"
+                      for="transliteration__text-before"
+                      >Исходный русский текст</label
+                    >
                     <div class="transliteration__buttons-text-size">
                       <button
                         class="transliteration__button-text-before-size-up transliteration__button-text-size"
@@ -1806,6 +1801,14 @@
                         -
                       </button>
                     </div>
+                  </div>
+                  <div class="transliteration__textarea-wrap">
+                    <textarea
+                      id="transliteration__text-before"
+                      class="transliteration__text-before transliteration__textarea"
+                      rows="12"
+                      placeholder="Ваш текст"
+                    ></textarea>
                   </div>
                 </div>
               </details>

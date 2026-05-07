@@ -6,7 +6,8 @@
   line-height: 1.2;
   flex: 1 1 auto;
   box-sizing: border-box;
-  min-width: min(148px, 100%);
+  min-width: 0;
+  max-width: 100%;
   min-height: 44px;
   width: auto;
   height: auto;
@@ -14,12 +15,26 @@
   margin: 0;
   cursor: pointer;
   text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
   text-rendering: optimizeLegibility;
   color: var(--color-text);
   background: var(--color-surface-muted);
   border: 2px solid var(--color-border-subtle);
   border-radius: var(--radius-btn);
   transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+@media screen and (max-width: 560px) {
+  .options__fieldset-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .options__fieldset-button {
+    flex: none;
+    width: 100%;
+  }
 }
 
 .options__fieldset-button:hover {
