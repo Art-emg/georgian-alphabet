@@ -227,18 +227,40 @@ function quizRuKey(parts) {
 
 function getQuizLetterPool() {
   const pool = [];
+  const cap =
+    typeof window.getGeorgianAlphabetCaptionMode === 'function'
+      ? window.getGeorgianAlphabetCaptionMode()
+      : 'classic';
   document
     .querySelectorAll('.alphabet__character-checkbox-input')
     .forEach((input) => {
       if (!input.checked) return;
       const card = input.closest('.alphabet__card');
       const img = card?.querySelector('.alphabet__card-thumb-img');
-      const parts = getQuizRuParts(card, input.value);
+
+      let ruMain;
+      let ruParen;
+      let ruKey;
+      if (
+        typeof window.getGeorgianLetterCaptionParts === 'function' &&
+        typeof window.getGeorgianQuizLabelKey === 'function'
+      ) {
+        const pr = window.getGeorgianLetterCaptionParts(input.name, cap);
+        ruMain = pr.main;
+        ruParen = pr.paren || '';
+        ruKey = window.getGeorgianQuizLabelKey(input.name, cap);
+      } else {
+        const parts = getQuizRuParts(card, input.value);
+        ruMain = parts.main;
+        ruParen = parts.parenInside;
+        ruKey = quizRuKey(parts);
+      }
+
       pool.push({
         geo: input.name,
-        ruMain: parts.main,
-        ruParen: parts.parenInside,
-        ruKey: quizRuKey(parts),
+        ruMain,
+        ruParen,
+        ruKey,
         imgSrc: img?.getAttribute('src') || '',
       });
     });
@@ -306,6 +328,8 @@ function initLetterQuiz() {
   const choicesEl = document.getElementById('letter-quiz-choices');
   const doneText = document.getElementById('letter-quiz-done-text');
   const statsEl = document.getElementById('letter-quiz-stats');
+
+  window.refreshLetterQuizIfActive = function refreshLetterQuizIfActiveNoop() {};
 
   if (
     !setup ||
@@ -387,21 +411,36 @@ function initLetterQuiz() {
   function buildQuestion(correct) {
     clearFeedbackTimer();
     const pool = getQuizLetterPool();
-    const others = pool.filter((p) => p.geo !== correct.geo);
+    /** Актуальные подписи из текущего режима и отмеченных букв (очередь теста хранит снимок). */
+    const correctFresh =
+      pool.find((p) => p.geo === correct.geo) ||
+      correct;
+
+    const others = pool.filter((p) => p.geo !== correctFresh.geo);
     shuffleInPlace(others);
     const needWrong = Math.min(optionCount - 1, others.length);
     const wrong = others.slice(0, needWrong);
-    const opts = shuffleInPlace([correct, ...wrong]);
+    const opts = shuffleInPlace([correctFresh, ...wrong]);
     const ruCounts = {};
     opts.forEach((o) => {
       const k = o.ruKey || '—';
       ruCounts[k] = (ruCounts[k] || 0) + 1;
     });
 
-    geoEl.textContent = correct.geo;
-    if (correct.imgSrc && imgEl) {
-      imgEl.src = correct.imgSrc;
-      imgEl.alt = `Образец почерта буквы ${correct.geo}`;
+    if (geoEl) {
+      geoEl.dataset.mkhedruli = correctFresh.geo;
+      geoEl.textContent =
+        typeof window.toDisplayGeorgianGlyph === 'function' &&
+        typeof window.getGeorgianGlyphStyle === 'function'
+          ? window.toDisplayGeorgianGlyph(
+              correctFresh.geo,
+              window.getGeorgianGlyphStyle()
+            )
+          : correctFresh.geo;
+    }
+    if (correctFresh.imgSrc && imgEl) {
+      imgEl.src = correctFresh.imgSrc;
+      imgEl.alt = `Образец почерта буквы ${correctFresh.geo}`;
       imgEl.classList.remove('letter-quiz__thumb--hidden');
     } else if (imgEl) {
       imgEl.removeAttribute('src');
@@ -454,7 +493,7 @@ function initLetterQuiz() {
         btn.appendChild(dSpan);
       }
 
-      btn.addEventListener('click', () => onChoice(btn, correct.geo));
+      btn.addEventListener('click', () => onChoice(btn, correctFresh.geo));
       choicesEl.appendChild(btn);
     });
 
@@ -551,6 +590,17 @@ function initLetterQuiz() {
 
   btnReset?.addEventListener('click', hardReset);
   btnReplay?.addEventListener('click', showSetup);
+
+  /** Перерисовать текущий вопрос под новый «Аналог звука» / чертание без смены прогресса. */
+  function refreshLetterQuizIfActive() {
+    if (!setup.hidden) return;
+    if (!done.hidden) return;
+    if (!queue.length || qIndex >= queue.length) return;
+    if (feedbackTimer != null) return;
+    buildQuestion(queue[qIndex]);
+  }
+
+  window.refreshLetterQuizIfActive = refreshLetterQuizIfActive;
 }
 
 initQuizBadgesToggleButton();

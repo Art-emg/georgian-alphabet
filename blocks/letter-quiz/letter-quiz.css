@@ -257,12 +257,17 @@
 }
 
 .letter-quiz__geo {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-georgian-glyph-active, Arial), Arial, Helvetica,
+    sans-serif;
   font-size: clamp(3rem, 14vw, 5rem);
   font-weight: 700;
   line-height: 1;
   color: var(--color-geo);
   margin: 0;
+}
+
+:root[data-georgian-glyph='mtavruli'] .letter-quiz__geo {
+  letter-spacing: 0.04em;
 }
 
 .letter-quiz__thumb {
@@ -318,6 +323,12 @@
   font-size: clamp(19px, 5.2vw, 25px);
   font-weight: 700;
   line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+:root[data-alphabet-caption-mode='cyrillic_names'] .letter-quiz__choice-main {
+  font-size: clamp(17px, 4.7vw, 22px);
+  font-weight: 600;
 }
 
 .letter-quiz__choice-paren {

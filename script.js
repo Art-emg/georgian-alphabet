@@ -27,6 +27,192 @@ const optionsCheckboxInputs = document.querySelectorAll(
 const options = document.querySelector('.options__fieldset');
 const transliteration = document.querySelector('.transliteration__form');
 
+const GEO_CAPTION_STORAGE_KEY = 'georgian-alphabet-caption-mode';
+const GEO_GLYPH_STORAGE_KEY = 'georgian-alphabet-glyph-style';
+
+function georgianCodePointFromChar(ch) {
+  return ch.codePointAt(0);
+}
+
+function isGeorgianLetterCodePoint(cp) {
+  return (
+    (cp >= 0x10a0 && cp <= 0x10ff) ||
+    (cp >= 0x1c90 && cp <= 0x1cbf)
+  );
+}
+
+function mkhedFromAnyGeorgianGlyph(ch) {
+  if (!ch) return ch;
+  const cp = georgianCodePointFromChar(ch);
+  if (cp >= 0x1c90 && cp <= 0x1cbf) {
+    return String.fromCodePoint(cp - 0x1c90 + 0x10d0);
+  }
+  return ch;
+}
+
+function getGeorgianAlphabetCaptionMode() {
+  try {
+    let v = localStorage.getItem(GEO_CAPTION_STORAGE_KEY);
+    if (v === 'geolang_ru') {
+      v = 'classic';
+    } else if (v === 'short') {
+      v = 'cyrillic_names';
+    }
+    if (
+      v === 'classic' ||
+      v === 'ipa' ||
+      v === 'latin_official' ||
+      v === 'latin_unofficial' ||
+      v === 'cyrillic_names'
+    ) {
+      return v;
+    }
+  } catch (_) {}
+  return 'classic';
+}
+
+function getGeorgianGlyphStyle() {
+  try {
+    const v = localStorage.getItem(GEO_GLYPH_STORAGE_KEY);
+    if (v === 'mtavruli' || v === 'mkhedruli') return v;
+  } catch (_) {}
+  return 'mkhedruli';
+}
+
+function setGeorgianGlyphStyle(style) {
+  try {
+    localStorage.setItem(GEO_GLYPH_STORAGE_KEY, style);
+  } catch (_) {}
+  document.documentElement.setAttribute('data-georgian-glyph', style);
+}
+
+function setGeorgianCaptionMode(mode) {
+  try {
+    localStorage.setItem(GEO_CAPTION_STORAGE_KEY, mode);
+  } catch (_) {}
+  window.__georgianCaptionModeFallback = mode;
+  document.documentElement.setAttribute('data-alphabet-caption-mode', mode);
+}
+
+function applyGeorgianGlyphsEverywhere() {
+  const gs = getGeorgianGlyphStyle();
+  setGeorgianGlyphStyle(gs);
+
+  document.querySelectorAll('.alphabet__card').forEach((card) => {
+    const letter = card.dataset.letter;
+    if (!letter) return;
+    const geoEl = card.querySelector('.alphabet__card-geo');
+    if (!geoEl) return;
+    geoEl.dataset.mkhedruli = letter;
+    geoEl.textContent =
+      typeof toDisplayGeorgianGlyph === 'function'
+        ? toDisplayGeorgianGlyph(letter, gs)
+        : letter;
+  });
+
+  refreshSelectionStrip();
+}
+
+/** Очень длинная строка в карточке — компактный начертание; IPA/латиница в остальном как кириллица. */
+function georgianAlphabetCaptionMainIsDense(mainText) {
+  return typeof mainText === 'string' && mainText.length > 13;
+}
+
+function refreshLetterCaptionLabels() {
+  if (typeof getGeorgianLetterCaptionParts !== 'function') return;
+  const mode = getGeorgianAlphabetCaptionMode();
+
+  document.querySelectorAll('.alphabet__card').forEach((card) => {
+    const letter = card.dataset.letter;
+    if (!letter) return;
+    const block = card.querySelector('.alphabet__card-ru-block');
+    if (!block) return;
+    const pr = getGeorgianLetterCaptionParts(letter, mode);
+    const shortEl = block.querySelector('.alphabet__card-ru-short');
+    const oldParen = block.querySelector('.alphabet__card-ru-paren');
+
+    oldParen?.remove();
+
+    const line1 =
+      shortEl.closest('.alphabet__card-ru-line1') ||
+      block.querySelector('.alphabet__card-ru-line1');
+    if (shortEl) shortEl.textContent = pr.main;
+    const dense = georgianAlphabetCaptionMainIsDense(pr.main);
+    if (shortEl) shortEl.classList.toggle('alphabet__card-ru-short--dense', dense);
+    if (pr.paren && line1) {
+      const paren = document.createElement('span');
+      paren.className = 'alphabet__card-ru-paren';
+      paren.textContent = `(${pr.paren})`;
+      line1.appendChild(paren);
+    }
+  });
+
+  document.documentElement.setAttribute(
+    'data-alphabet-caption-mode',
+    getGeorgianAlphabetCaptionMode()
+  );
+}
+
+function migrateCaptionModeStorageIfStale() {
+  try {
+    const raw = localStorage.getItem(GEO_CAPTION_STORAGE_KEY);
+    let next = raw;
+    if (raw === 'geolang_ru') next = 'classic';
+    else if (raw === 'short') next = 'cyrillic_names';
+    if (next && next !== raw) {
+      localStorage.setItem(GEO_CAPTION_STORAGE_KEY, next);
+    }
+  } catch (_) {}
+  document.documentElement.setAttribute(
+    'data-alphabet-caption-mode',
+    getGeorgianAlphabetCaptionMode()
+  );
+}
+
+function initGeorgianAlphabetDisplayControls() {
+  migrateCaptionModeStorageIfStale();
+  const selCaption = document.getElementById('alphabet-caption-mode');
+  const glyphGroup = document.getElementById('alphabet-glyph-radiogroup');
+  const glyphRadios = glyphGroup
+    ? [...glyphGroup.querySelectorAll('input[type="radio"][name="alphabet-glyph-choice"]')]
+    : [];
+  if (!selCaption && glyphRadios.length === 0) return;
+
+  const cap = getGeorgianAlphabetCaptionMode();
+  window.__georgianCaptionModeFallback = cap;
+  if (selCaption) selCaption.value = cap;
+
+  const gs = getGeorgianGlyphStyle();
+  setGeorgianGlyphStyle(gs);
+  glyphRadios.forEach((r) => {
+    r.checked = r.value === gs;
+  });
+
+  selCaption?.addEventListener('change', () => {
+    const v = selCaption.value;
+    setGeorgianCaptionMode(v);
+    window.__georgianCaptionModeFallback = v;
+    refreshLetterCaptionLabels();
+    refreshSelectionStrip();
+    if (typeof window.refreshLetterQuizIfActive === 'function') {
+      window.refreshLetterQuizIfActive();
+    }
+  });
+
+  glyphGroup?.addEventListener('change', (e) => {
+    const el = e.target;
+    if (!(el instanceof HTMLInputElement) || el.type !== 'radio') return;
+    setGeorgianGlyphStyle(el.value);
+    applyGeorgianGlyphsEverywhere();
+    refreshTransliteration();
+    if (typeof window.refreshLetterQuizIfActive === 'function') {
+      window.refreshLetterQuizIfActive();
+    }
+  });
+}
+
+window.getGeorgianAlphabetCaptionMode = getGeorgianAlphabetCaptionMode;
+
 const buttonTextAfterSizeUp = document.querySelector(
   '.transliteration__button-text-after-size-up'
 );
@@ -437,6 +623,11 @@ function refreshSelectionStrip() {
   for (const input of ordered) {
     const geo = input.name;
     const ruRaw = (input.value || '').trim();
+    const cap = getGeorgianAlphabetCaptionMode();
+    const quizLabel =
+      typeof getGeorgianQuizLabelKey === 'function'
+        ? getGeorgianQuizLabelKey(geo, cap)
+        : ruRaw;
     const chip = document.createElement('button');
     chip.type = 'button';
     chip.className = 'selection-strip__chip';
@@ -444,16 +635,20 @@ function refreshSelectionStrip() {
     chip.setAttribute('role', 'listitem');
     chip.setAttribute(
       'aria-label',
-      `${geo}, кириллический аналог ${ruRaw}, воспроизвести звук`
+      `${geo}, подпись «${quizLabel}», воспроизвести звук`
     );
 
     const geoSpan = document.createElement('span');
     geoSpan.className = 'selection-strip__geo';
-    geoSpan.textContent = geo;
+    geoSpan.dataset.mkhedruli = geo;
+    geoSpan.textContent =
+      typeof toDisplayGeorgianGlyph === 'function'
+        ? toDisplayGeorgianGlyph(geo, getGeorgianGlyphStyle())
+        : geo;
 
     const ruSpan = document.createElement('span');
     ruSpan.className = 'selection-strip__ru';
-    ruSpan.textContent = ruRaw;
+    ruSpan.textContent = quizLabel;
 
     chip.append(geoSpan, ruSpan);
     selectionStripTrack.appendChild(chip);
@@ -505,10 +700,16 @@ function buildHighlightedHtmlFragment(fragment) {
     const ch = chars[i];
     const cp = ch.codePointAt(0);
 
-    if (cp >= 0x10a0 && cp <= 0x10ff) {
-      const esc = escapeHtml(ch);
+    if (isGeorgianLetterCodePoint(cp)) {
+      const mkh = mkhedFromAnyGeorgianGlyph(ch);
+      const shown =
+        typeof toDisplayGeorgianGlyph === 'function'
+          ? toDisplayGeorgianGlyph(mkh, getGeorgianGlyphStyle())
+          : mkh;
+      const escShown = escapeHtml(shown);
+      const escMkh = escapeHtml(mkh);
       parts.push(
-        `<button type="button" class="transliteration__geo transliteration__geo--btn" data-letter="${escapeAttr(ch)}" aria-label="Воспроизвести ${esc}">${esc}</button>`
+        `<button type="button" class="transliteration__geo transliteration__geo--btn" data-letter="${escapeAttr(mkh)}" aria-label="Воспроизвести ${escMkh}" title="${escMkh}">${escShown}</button>`
       );
       i += 1;
       continue;
@@ -608,9 +809,10 @@ function collapseSourceDetailsAfterRandomizer() {
 function getGeorgianSoundChar(letter) {
   const ch = letter && [...letter.trim()][0];
   if (!ch) return null;
-  const cp = ch.codePointAt(0);
+  const mkh = mkhedFromAnyGeorgianGlyph(ch);
+  const cp = mkh.codePointAt(0);
   if (cp < 0x10a0 || cp > 0x10ff) return null;
-  return ch;
+  return mkh;
 }
 
 function clearGeorgianLetterPlayingState() {
@@ -688,8 +890,27 @@ function layoutAlphabetRuBlocks() {
 
     if (!geo || !toolbar) return;
 
+    const letterKey = card.dataset.letter || '';
+    geo.dataset.mkhedruli = letterKey;
+
     const text = ru.textContent.trim();
     ru.remove();
+
+    const cap =
+      letterKey && typeof getGeorgianLetterCaptionParts === 'function'
+        ? getGeorgianAlphabetCaptionMode()
+        : 'classic';
+    let mainText;
+    let parenText;
+    if (letterKey && typeof getGeorgianLetterCaptionParts === 'function') {
+      const pr = getGeorgianLetterCaptionParts(letterKey, cap);
+      mainText = pr.main;
+      parenText = pr.paren || '';
+    } else {
+      const m = text.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
+      mainText = m ? m[1].trim() : text;
+      parenText = m ? m[2].trim() : '';
+    }
 
     const block = document.createElement('div');
     block.className = 'alphabet__card-ru-block';
@@ -700,16 +921,18 @@ function layoutAlphabetRuBlocks() {
     const line1 = document.createElement('span');
     line1.className = 'alphabet__card-ru-line1';
 
-    const m = text.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
     const short = document.createElement('span');
     short.className = 'alphabet__card-ru-short';
-    short.textContent = m ? m[1].trim() : text;
+    short.textContent = mainText;
+    if (georgianAlphabetCaptionMainIsDense(mainText)) {
+      short.classList.add('alphabet__card-ru-short--dense');
+    }
 
     line1.appendChild(short);
-    if (m) {
+    if (parenText) {
       const paren = document.createElement('span');
       paren.className = 'alphabet__card-ru-paren';
-      paren.textContent = `(${m[2].trim()})`;
+      paren.textContent = `(${parenText})`;
       line1.appendChild(paren);
     }
     if (hint) {
@@ -1160,6 +1383,8 @@ optionsCheckboxInputs.forEach((input) => {
 });
 
 layoutAlphabetRuBlocks();
+initGeorgianAlphabetDisplayControls();
+applyGeorgianGlyphsEverywhere();
 initAlphabetCards();
 initAlphabetQuickLevels();
 restoreCheckboxSelection();

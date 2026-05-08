@@ -67,6 +67,7 @@
 }
 
 .transliteration__geo {
+  font-family: var(--font-georgian-glyph-active, inherit);
   font-weight: 600;
   color: inherit;
   font-size: 1em;

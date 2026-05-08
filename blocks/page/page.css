@@ -50,6 +50,18 @@
   --color-stat-badge-shadow: rgb(15 23 42 / 0.08);
 
   --content-shell-max-width: 100%;
+
+  /* Мхедрули / мтаврули: разные семейства усиливают визуальный контраст регистра Unicode. */
+  --font-georgian-mkhed:
+    'Noto Sans Georgian', 'DejaVu Sans', 'Sylfaen', system-ui, sans-serif;
+  --font-georgian-mtav:
+    'Noto Serif Georgian', 'Noto Sans Georgian', 'DejaVu Sans', 'Sylfaen',
+    serif;
+  --font-georgian-glyph-active: var(--font-georgian-mkhed);
+}
+
+:root[data-georgian-glyph='mtavruli'] {
+  --font-georgian-glyph-active: var(--font-georgian-mtav);
 }
 
 :root[data-theme="dark"] {

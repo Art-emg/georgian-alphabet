@@ -56,17 +56,34 @@
 
 .alphabet__characters-actions {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  align-content: flex-start;
+  flex-direction: column;
   gap: 8px;
   margin: 0 0 10px;
   width: 100%;
   max-width: 100%;
 }
 
-.alphabet__characters-actions > .alphabet__button {
+.alphabet__characters-actions-prefs {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 8px 14px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.alphabet__characters-actions-buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: flex-start;
+  gap: 8px;
+}
+
+.alphabet__characters-actions-buttons > .alphabet__button {
   flex: 0 0 auto;
   margin: 0;
 }

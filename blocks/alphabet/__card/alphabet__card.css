@@ -136,12 +136,17 @@
 .alphabet__card-geo {
   position: relative;
   z-index: 1;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-georgian-glyph-active, Arial), Arial, Helvetica,
+    sans-serif;
   font-weight: 700;
   font-size: clamp(2.05rem, 5vw, 2.68rem);
   line-height: 1;
   letter-spacing: 0.03em;
   color: var(--color-geo, #0a0a0a);
+}
+
+:root[data-georgian-glyph='mtavruli'] .alphabet__card-geo {
+  letter-spacing: 0.05em;
 }
 
 .alphabet__card-ru-block {
@@ -179,6 +184,18 @@
   font-weight: 600;
   color: var(--color-geo, #0a0a0a);
   line-height: 1;
+}
+
+.alphabet__card-ru-short--dense {
+  font-size: clamp(0.74rem, 2.1vw, 0.95rem);
+  font-weight: 500;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.alphabet__card-ru-line1:has(.alphabet__card-ru-short--dense) {
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .alphabet__card-ru-paren {
@@ -567,4 +584,16 @@
   color: #fecaca;
   background: rgb(127 29 29 / 0.45);
   border-color: rgb(239 68 68 / 0.5);
+}
+
+/* Режим «Название буквы кириллицей»: строка аккуратнее (чуть меньше и без «жира» основного режима). */
+:root[data-alphabet-caption-mode='cyrillic_names']
+  .alphabet__card-ru-short:not(.alphabet__card-ru-short--dense) {
+  font-size: clamp(0.92rem, 2.2vw, 1.12rem);
+  font-weight: 500;
+}
+
+:root[data-alphabet-caption-mode='cyrillic_names'] .alphabet__card-ru-short--dense {
+  font-size: clamp(0.69rem, 1.92vw, 0.87rem);
+  font-weight: 400;
 }

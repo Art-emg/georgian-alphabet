@@ -13,12 +13,39 @@
         } catch (_) {
           document.documentElement.setAttribute('data-theme', 'light');
         }
+        try {
+          const glyn = localStorage.getItem(
+            'georgian-alphabet-glyph-style'
+          );
+          if (glyn === 'mtavruli' || glyn === 'mkhedruli') {
+            document.documentElement.setAttribute(
+              'data-georgian-glyph',
+              glyn
+            );
+          } else {
+            document.documentElement.setAttribute(
+              'data-georgian-glyph',
+              'mkhedruli'
+            );
+          }
+        } catch (_) {
+          document.documentElement.setAttribute(
+            'data-georgian-glyph',
+            'mkhedruli'
+          );
+        }
       })();
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="./images/favicon.png" type="image/png" />
     <link rel="stylesheet" href="./styles/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600&family=Noto+Serif+Georgian:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <title class="title">Грузинский алфавит</title>
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
@@ -202,6 +229,71 @@
               </div>
 
               <div class="alphabet__characters-actions">
+                <div
+                  class="alphabet__characters-actions-prefs text"
+                  role="group"
+                  aria-label="Кириллица, латиница или МФА как подсказка к звуку"
+                >
+                  <span class="alphabet__display-inline">
+                    <label class="alphabet__display-label" for="alphabet-caption-mode"
+                      >Аналог звука</label
+                    >
+                    <select
+                      id="alphabet-caption-mode"
+                      class="alphabet__display-select"
+                      autocomplete="off"
+                      title="Как показывать соответствующий звук рядом с буквой"
+                    >
+                      <option value="classic">Кириллица</option>
+                      <option value="ipa">МФА (IPA)</option>
+                      <option value="latin_official">Латиница официальная</option>
+                      <option value="latin_unofficial">Латиница разговорная</option>
+                      <option value="cyrillic_names">
+                        Название буквы кириллицей
+                      </option>
+                    </select>
+                  </span>
+                  <span class="alphabet__display-inline alphabet__display-inline--glyph">
+                    <span
+                      class="alphabet__display-label"
+                      id="alphabet-glyph-label"
+                      >Чертание</span
+                    >
+                    <div
+                      id="alphabet-glyph-radiogroup"
+                      class="alphabet__glyph-segment"
+                      role="radiogroup"
+                      aria-labelledby="alphabet-glyph-label"
+                      title="მხედრული (мхедрули) — контур Noto Sans; მტავრული (мтаврули) — символы Unicode + засечки Noto Serif"
+                    >
+                      <input
+                        type="radio"
+                        name="alphabet-glyph-choice"
+                        value="mkhedruli"
+                        id="alphabet-glyph-mkhedruli"
+                        class="alphabet__glyph-input"
+                      />
+                      <label
+                        class="alphabet__glyph-option text"
+                        for="alphabet-glyph-mkhedruli"
+                        ><span class="alphabet__glyph-ge">მხედრული</span><span class="alphabet__glyph-meta"> (мхедрули)</span></label
+                      >
+                      <input
+                        type="radio"
+                        name="alphabet-glyph-choice"
+                        value="mtavruli"
+                        id="alphabet-glyph-mtavruli"
+                        class="alphabet__glyph-input"
+                      />
+                      <label
+                        class="alphabet__glyph-option text"
+                        for="alphabet-glyph-mtavruli"
+                        ><span class="alphabet__glyph-ge">მტავრული</span><span class="alphabet__glyph-meta"> (мтаврули)</span></label
+                      >
+                    </div>
+                  </span>
+                </div>
+                <div class="alphabet__characters-actions-buttons">
                 <button
                   type="button"
                   class="alphabet__button-check-all alphabet__button alphabet__button--compact button"
@@ -359,6 +451,7 @@
                 >
                   Запомнить
                 </button>
+                </div>
               </div>
 
               <div class="alphabet__card" data-letter="ა">
@@ -398,7 +491,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ა"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -443,7 +536,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ბ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -491,7 +584,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы გ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -535,7 +628,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы დ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -580,7 +673,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ე"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -625,7 +718,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ვ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -670,7 +763,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ზ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -718,7 +811,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы თ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -762,7 +855,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ი"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -810,7 +903,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы კ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -854,7 +947,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ლ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -899,7 +992,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы მ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -944,7 +1037,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ნ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -989,7 +1082,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ო"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1037,7 +1130,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы პ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1081,7 +1174,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ჟ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1126,7 +1219,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы რ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1171,7 +1264,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ს"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1219,7 +1312,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ტ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1263,7 +1356,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы უ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1311,7 +1404,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ფ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1358,7 +1451,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ქ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1405,7 +1498,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ღ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1452,7 +1545,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ყ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1496,7 +1589,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы შ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1544,7 +1637,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ჩ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1591,7 +1684,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ც"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1635,7 +1728,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ძ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1683,7 +1776,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы წ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1730,7 +1823,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ჭ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1777,7 +1870,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ხ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1824,7 +1917,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ჯ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -1871,7 +1964,7 @@
                       type="button"
                       class="alphabet__card-audio button"
                       aria-label="Прослушать произношение буквы ჰ"
-                      title="Аудио с geolang.ru"
+                      title="Прослушать произношение"
                     >
                       <svg class="alphabet__card-audio-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
@@ -2243,6 +2336,8 @@
       </div>
     </div>
     <script src="./georgianFacts.js"></script>
+    <script src="./geolangAlphabetData.js"></script>
+    <script src="./characterEquivalent.js"></script>
     <script src="./script.js"></script>
     <script src="./letter-quiz.js"></script>
   </body>
