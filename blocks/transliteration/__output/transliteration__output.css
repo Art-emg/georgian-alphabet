@@ -67,10 +67,10 @@
 }
 
 .transliteration__geo {
-  font-weight: 700;
-  color: var(--color-geo, #0a0a0a);
-  font-size: 1.08em;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  color: inherit;
+  font-size: 1em;
+  letter-spacing: inherit;
 }
 
 .transliteration__geo--btn {
@@ -79,11 +79,8 @@
   margin: 0;
   border: 0;
   background: transparent;
-  font: inherit;
-  font-weight: inherit;
-  font-size: inherit;
-  color: inherit;
-  letter-spacing: inherit;
+  /* Не font: inherit — не затираем типографику .transliteration__geo у кликабельных букв. */
+  font-family: inherit;
   line-height: inherit;
   vertical-align: baseline;
   text-align: inherit;
@@ -118,10 +115,9 @@
 }
 
 .transliteration__ru {
-  font-weight: 400;
-  color: var(--color-ru-left, #141414);
-  font-size: 0.94em;
-  opacity: 0.88;
+  font-weight: 300;
+  color: var(--color-text-muted, #5c6f80);
+  font-size: 0.9em;
 }
 
 .transliteration__source-details {
