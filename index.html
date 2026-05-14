@@ -2259,13 +2259,65 @@
                       class="letter-quiz__progress text"
                       id="letter-quiz-progress"
                     ></p>
-                    <button
-                      type="button"
-                      class="letter-quiz__reset button"
-                      id="letter-quiz-reset"
-                    >
-                      Сбросить тест
-                    </button>
+                    <div class="quiz-toolbar-actions">
+                      <button
+                        type="button"
+                        role="switch"
+                        id="letter-quiz-voice-switch"
+                        class="quiz-voice-switch"
+                        aria-checked="true"
+                        aria-label="Озвучка выбранного ответа"
+                        title="Включить или выключить озвучку при нажатии на ответ"
+                      >
+                        <span class="quiz-voice-switch__icon-wrap" aria-hidden="true">
+                          <svg
+                            class="quiz-voice-switch__icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M11 5 6 9H4v6h2l5 4V5z" />
+                            <path
+                              class="quiz-voice-switch__wv"
+                              d="M15.54 8.46a5 5 0 0 1 0 7.07"
+                            />
+                            <path
+                              class="quiz-voice-switch__wv"
+                              d="M17.72 6.28a9 9 0 0 1 0 11.44"
+                            />
+                            <path class="quiz-voice-switch__slash" d="M5 21L21 5" />
+                          </svg>
+                        </span>
+                        <span class="quiz-voice-switch__track" aria-hidden="true"
+                          ><span class="quiz-voice-switch__thumb"></span
+                        ></span>
+                      </button>
+                      <button
+                        type="button"
+                        id="letter-quiz-reset"
+                        class="quiz-menu-btn"
+                        title="Закрыть тест и открыть параметры"
+                      >
+                        <svg
+                          class="quiz-menu-btn__icon"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="m15 18-6-6 6-6" />
+                        </svg>
+                        Меню
+                      </button>
+                    </div>
                   </div>
                   <div class="letter-quiz__question">
                     <div class="letter-quiz__prompt">
@@ -2298,10 +2350,24 @@
                   <p class="text" id="letter-quiz-done-text"></p>
                   <button
                     type="button"
-                    class="letter-quiz__replay button"
                     id="letter-quiz-replay"
+                    class="quiz-menu-btn letter-quiz__replay"
+                    title="Закрыть результаты и открыть параметры"
                   >
-                    Назад к настройкам
+                    <svg
+                      class="quiz-menu-btn__icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="m15 18-6-6 6-6" />
+                    </svg>
+                    Меню
                   </button>
                 </div>
               </section>

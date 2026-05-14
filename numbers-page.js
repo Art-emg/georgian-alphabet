@@ -1,5 +1,9 @@
 const NUMBERS_QUIZ_FEEDBACK_MS = 1000;
 
+/** Верхний предел «Вопросов»; внутри умножитель на размер пула. */
+const NUMBERS_QUIZ_HARD_CAP = 500;
+const NUMBERS_QUIZ_POOL_LEN_MULTIPLIER = 30;
+
 const GEOLANG_VOCABULARY_MP3 = 'https://geolang.ru/audio/mp3/vocabulary/';
 
 /** Иконка динамика (раздел-пояснения и таблицы). */
@@ -14,8 +18,25 @@ let geolangVocabPlayingTarget = null;
 const THEME_STORAGE_KEY = 'georgian-alphabet-theme';
 const GEO_GLYPH_STORAGE_KEY = 'georgian-alphabet-glyph-style';
 const NUMBERS_READING_STORAGE_KEY = 'georgian-numbers-reading-mode';
+/** Раньше: отдельно «только текст в тесте»; перенесено в georgian-numbers-reading-mode как hide */
+const LEGACY_NUMBERS_QUIZ_HINT_KEY = 'georgian-numbers-quiz-phonetic-hints';
+const NUMBERS_QUIZ_SPEAK_ON_CHOICE_KEY = 'georgian-numbers-quiz-speak-choice';
 
-const READING_CAPTION_VALUES = ['classic', 'latin_official', 'latin_unofficial'];
+const READING_CAPTION_VALUES = ['hide', 'classic', 'latin_official', 'latin_unofficial'];
+
+function loadNumbersQuizSpeakOnChoicePref() {
+  try {
+    const raw = localStorage.getItem(NUMBERS_QUIZ_SPEAK_ON_CHOICE_KEY);
+    if (raw === '0' || raw === 'false') return false;
+  } catch (_) {}
+  return true;
+}
+
+function saveNumbersQuizSpeakOnChoicePref(on) {
+  try {
+    localStorage.setItem(NUMBERS_QUIZ_SPEAK_ON_CHOICE_KEY, on ? '1' : '0');
+  } catch (_) {}
+}
 
 function getGeorgianGlyphStyleForNumbers() {
   try {
@@ -44,7 +65,7 @@ function displayGeorgianNumberWord(word) {
   return [...word].map((ch) => fn(ch, style)).join('');
 }
 
-/** Режим буквы-к-букве (те же ключи что у режимов подписи буквы). */
+/** Режим подписи под словом: hide | classic | latin_* (как у букв алфавита). */
 function getNumbersReadingMode() {
   try {
     const raw = localStorage.getItem(NUMBERS_READING_STORAGE_KEY);
@@ -61,6 +82,16 @@ function setNumbersReadingMode(mode) {
     localStorage.setItem(NUMBERS_READING_STORAGE_KEY, v);
   } catch (_) {}
   return v;
+}
+
+function migrateLegacyQuizPhoneticHintKey() {
+  try {
+    const legacy = localStorage.getItem(LEGACY_NUMBERS_QUIZ_HINT_KEY);
+    if (!legacy) return;
+    localStorage.removeItem(LEGACY_NUMBERS_QUIZ_HINT_KEY);
+    if (legacy !== 'hide') return;
+    setNumbersReadingMode('hide');
+  } catch (_) {}
 }
 
 /**
@@ -86,8 +117,10 @@ function phoneticHintForMkhed(wordMkhed, captionMode) {
     typeof window.getGeorgianLetterCaptionParts === 'function'
       ? window.getGeorgianLetterCaptionParts
       : null;
+  const m =
+    captionMode !== undefined ? captionMode : getNumbersReadingMode();
+  if (m === 'hide') return '';
   if (!wordMkhed || !tbl || !getParts) return '';
-  const m = captionMode || getNumbersReadingMode();
   const parts = [];
   for (const ch of [...wordMkhed]) {
     if (!tbl[ch]) {
@@ -360,20 +393,63 @@ function shuffleInPlace(arr) {
   return arr;
 }
 
+/** Максимум вопросов для пула размера poolLen (не только до poolLen раз). */
+function maxQuizQuestionsForPool(poolLen) {
+  if (poolLen < 1) return 1;
+  return Math.min(
+    NUMBERS_QUIZ_HARD_CAP,
+    Math.max(poolLen, poolLen * NUMBERS_QUIZ_POOL_LEN_MULTIPLIER)
+  );
+}
+
+/**
+ * Случайный порядок, но каждое значение из pool появляется ⌊n/P⌋ или ⌈n/P⌋ раз —
+ * распределение близко к равномерному (при n ≥ |pool| хотя бы по разу каждое).
+ */
+function balancedQuizQuestionQueue(pool, n) {
+  const P = pool.length;
+  if (!P || n <= 0) return [];
+  const base = Math.floor(n / P);
+  const remainder = n % P;
+  const out = [];
+  for (let k = 0; k < base; k++) {
+    for (let i = 0; i < P; i++) out.push(pool[i]);
+  }
+  const extraPick = [...pool];
+  shuffleInPlace(extraPick);
+  for (let i = 0; i < remainder; i++) {
+    out.push(extraPick[i]);
+  }
+  shuffleInPlace(out);
+  return out;
+}
+
 function initNumbersQuiz() {
   const setup = document.getElementById('numbers-quiz-setup');
+  const toolbar = document.getElementById('numbers-quiz-session-toolbar');
   const play = document.getElementById('numbers-quiz-play');
   const done = document.getElementById('numbers-quiz-done');
   const inputCount = document.getElementById('numbers-quiz-count');
   const btnStart = document.getElementById('numbers-quiz-start');
-  const btnReplay = document.getElementById('numbers-quiz-replay');
+  const btnBackMenu = document.getElementById('numbers-quiz-back-menu');
+  const voiceSwitch = document.getElementById('numbers-quiz-voice-switch');
   const progressEl = document.getElementById('numbers-quiz-progress');
   const digitEl = document.getElementById('numbers-quiz-digit');
   const choicesEl = document.getElementById('numbers-quiz-choices');
   const doneText = document.getElementById('numbers-quiz-done-text');
   const statsEl = document.getElementById('numbers-quiz-stats');
 
-  if (!setup || !play || !btnStart || !choicesEl || !digitEl) return;
+  if (
+    !setup ||
+    !toolbar ||
+    !play ||
+    !done ||
+    !btnStart ||
+    !choicesEl ||
+    !digitEl
+  ) {
+    return;
+  }
 
   const rows = getNumberRows();
   const byValue = new Map(rows.map((r) => [r.value, r]));
@@ -407,24 +483,50 @@ function initNumbersQuiz() {
     });
   }
 
-  /** Ограничить поле «Вопросов» длиной пула после смены диапазона. */
+  /** Ограничить поле «Вопросов»: минимум 1, верхний предел больше |пула|. */
   function syncQuizCountLimits() {
     if (!inputCount) return;
     const poolLen = Math.max(
       1,
       valuesForQuizRange(getQuizRangeMode()).length
     );
-    inputCount.max = String(poolLen);
+    const maxQ = maxQuizQuestionsForPool(poolLen);
+    inputCount.max = String(maxQ);
     inputCount.min = '1';
     const curRaw = parseInt(String(inputCount.value || '1').trim(), 10);
     const cur = Number.isFinite(curRaw) ? curRaw : 1;
-    inputCount.value = String(Math.min(poolLen, Math.max(1, cur)));
+    inputCount.value = String(Math.min(maxQ, Math.max(1, cur)));
   }
 
   rangeRadios.forEach((radio) =>
     radio.addEventListener('change', syncQuizCountLimits)
   );
   syncQuizCountLimits();
+
+  if (voiceSwitch) {
+    voiceSwitch.classList.toggle(
+      'quiz-voice-switch--off',
+      !loadNumbersQuizSpeakOnChoicePref()
+    );
+    voiceSwitch.setAttribute(
+      'aria-checked',
+      loadNumbersQuizSpeakOnChoicePref() ? 'true' : 'false'
+    );
+    voiceSwitch.addEventListener('click', () => {
+      const cur = voiceSwitch.getAttribute('aria-checked') === 'true';
+      const next = !cur;
+      saveNumbersQuizSpeakOnChoicePref(next);
+      voiceSwitch.setAttribute('aria-checked', next ? 'true' : 'false');
+      voiceSwitch.classList.toggle('quiz-voice-switch--off', !next);
+    });
+  }
+
+  function quizSpeakChosenAnswer() {
+    if (voiceSwitch) {
+      return voiceSwitch.getAttribute('aria-checked') === 'true';
+    }
+    return loadNumbersQuizSpeakOnChoicePref();
+  }
 
   function clearFeedbackTimer() {
     if (feedbackTimer != null) {
@@ -436,9 +538,15 @@ function initNumbersQuiz() {
   function showSetup() {
     clearFeedbackTimer();
     setup.hidden = false;
+    toolbar.hidden = true;
     play.hidden = true;
     done.hidden = true;
     quizPoolValues = [];
+    queue = [];
+    qIndex = 0;
+    solved = false;
+    correctCount = 0;
+    wrongCount = 0;
     syncQuizCountLimits();
     if (statsEl) statsEl.textContent = '';
     if (doneText) doneText.textContent = '';
@@ -446,8 +554,15 @@ function initNumbersQuiz() {
 
   function showDone() {
     setup.hidden = true;
+    toolbar.hidden = false;
     play.hidden = true;
     done.hidden = false;
+    if (progressEl) {
+      progressEl.textContent =
+        queue.length > 0
+          ? `Тест завершён · ${queue.length} вопросов`
+          : 'Тест завершён';
+    }
     if (statsEl) {
       statsEl.textContent = [
         `Правильных ответов: ${correctCount}`,
@@ -494,10 +609,7 @@ function initNumbersQuiz() {
       btn.dataset.value = String(v);
 
       const geo = displayGeorgianNumberWord(r.wordMkhed);
-      const hint = phoneticHintForMkhed(
-        r.wordMkhed,
-        getNumbersReadingMode()
-      );
+      const hint = phoneticHintForMkhed(r.wordMkhed).trim();
 
       const geEl = document.createElement('span');
       geEl.className = 'numbers-quiz__choice-ge';
@@ -527,8 +639,13 @@ function initNumbersQuiz() {
   }
 
   function onChoice(btn, correctVal) {
-    if (solved) return;
     const v = parseInt(btn.dataset.value, 10);
+    const pickedRow = Number.isFinite(v) ? byValue.get(v) : null;
+    if (pickedRow?.wordMkhed && quizSpeakChosenAnswer()) {
+      playGeorgianVocabularySound(pickedRow.wordMkhed, { el: null });
+    }
+
+    if (solved) return;
     const isCorrect = v === correctVal;
 
     if (isCorrect) {
@@ -574,12 +691,11 @@ function initNumbersQuiz() {
 
     const rawN =
       parseInt(String(inputCount?.value || '1').trim(), 10) || 1;
-    const nQ = Math.max(1, Math.min(poolLen, rawN));
+    const maxQ = maxQuizQuestionsForPool(poolLen);
+    const nQ = Math.max(1, Math.min(maxQ, rawN));
     if (inputCount) inputCount.value = String(nQ);
 
-    const deck = [...quizPoolValues];
-    shuffleInPlace(deck);
-    queue = deck.slice(0, nQ);
+    queue = balancedQuizQuestionQueue(quizPoolValues, nQ);
     qIndex = 0;
     correctCount = 0;
     wrongCount = 0;
@@ -587,12 +703,13 @@ function initNumbersQuiz() {
     clearFeedbackTimer();
 
     setup.hidden = true;
+    toolbar.hidden = false;
     play.hidden = false;
     done.hidden = true;
     renderQuestion();
   });
 
-  btnReplay?.addEventListener('click', showSetup);
+  btnBackMenu?.addEventListener('click', showSetup);
   showSetup();
 }
 
@@ -631,6 +748,7 @@ function initThemeToggle() {
 }
 
 function initNumbersPage() {
+  migrateLegacyQuizPhoneticHintKey();
   setGeorgianGlyphStyleForNumbers(getGeorgianGlyphStyleForNumbers());
   initThemeToggle();
   initGlyphRadiogroup();

@@ -1,0 +1,194 @@
+/* Общие контролы тестов: озвучка (переключатель) и вход в меню */
+
+.quiz-voice-switch {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  padding: 6px 10px 6px 8px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 999px;
+  background: var(--color-surface);
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.05);
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.quiz-voice-switch:hover {
+  border-color: var(--color-text-muted);
+  background: var(--color-surface-muted);
+}
+
+.quiz-voice-switch:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.quiz-voice-switch__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-text);
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.quiz-voice-switch--off .quiz-voice-switch__icon-wrap {
+  background: rgb(148 163 184 / 0.22);
+  color: var(--color-text-muted);
+}
+
+.quiz-voice-switch__icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.quiz-voice-switch__wv {
+  opacity: 0.88;
+  transition: opacity 0.18s ease;
+}
+
+.quiz-voice-switch--off .quiz-voice-switch__wv {
+  opacity: 0;
+}
+
+.quiz-voice-switch__slash {
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.quiz-voice-switch--off .quiz-voice-switch__slash {
+  opacity: 1;
+}
+
+.quiz-voice-switch__track {
+  position: relative;
+  width: 40px;
+  height: 24px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: rgb(148 163 184 / 0.35);
+  transition:
+    background 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.quiz-voice-switch:not(.quiz-voice-switch--off) .quiz-voice-switch__track {
+  background: var(--color-accent-soft-hover);
+  box-shadow:
+    inset 0 0 0 1px rgb(59 130 246 / 0.35),
+    0 1px 2px rgb(37 99 235 / 0.12);
+}
+
+.quiz-voice-switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: 0 1px 4px rgb(15 23 42 / 0.2);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.quiz-voice-switch:not(.quiz-voice-switch--off) .quiz-voice-switch__thumb {
+  transform: translateX(16px);
+}
+
+:root[data-theme='dark'] .quiz-voice-switch__track {
+  background: rgb(71 85 105 / 0.42);
+}
+
+:root[data-theme='dark'] .quiz-voice-switch:not(.quiz-voice-switch--off) .quiz-voice-switch__track {
+  background: rgb(59 130 246 / 0.28);
+  box-shadow:
+    inset 0 0 0 1px rgb(96 165 250 / 0.35),
+    0 1px 3px rgb(0 0 0 / 0.25);
+}
+
+.quiz-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.quiz-menu-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 16px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 650;
+  font-size: clamp(13px, 3vw, 14px);
+  line-height: 1.25;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-subtle);
+  background: linear-gradient(
+    to bottom,
+    var(--color-surface) 0%,
+    var(--color-surface-muted) 100%
+  );
+  color: var(--color-text);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.55) inset,
+    0 1px 2px rgb(15 23 42 / 0.06);
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    transform 0.08s ease;
+}
+
+.quiz-menu-btn:hover {
+  border-color: var(--color-accent-border);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.65) inset,
+    0 2px 8px rgb(37 99 235 / 0.12);
+  color: var(--color-accent-text);
+}
+
+.quiz-menu-btn:active {
+  transform: scale(0.98);
+}
+
+.quiz-menu-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+:root[data-theme='dark'] .quiz-menu-btn {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.06) inset,
+    0 4px 12px rgb(0 0 0 / 0.18);
+}
+
+.quiz-menu-btn__icon {
+  display: block;
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-text-muted);
+}
+
+.quiz-menu-btn:hover .quiz-menu-btn__icon {
+  color: var(--color-accent);
+}

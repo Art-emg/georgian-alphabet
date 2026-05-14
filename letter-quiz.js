@@ -1,5 +1,22 @@
 const LETTER_QUIZ_FEEDBACK_MS = 1000;
 
+const LETTER_QUIZ_VOICE_KEY = 'georgian-letter-quiz-voice-enabled';
+
+/** Включено ли воспроизведение звука буквы при нажатии на вариант в тесте. */
+function loadLetterQuizVoicePref() {
+  try {
+    const raw = localStorage.getItem(LETTER_QUIZ_VOICE_KEY);
+    if (raw === '0' || raw === 'false') return false;
+  } catch (_) {}
+  return true;
+}
+
+function saveLetterQuizVoicePref(on) {
+  try {
+    localStorage.setItem(LETTER_QUIZ_VOICE_KEY, on ? '1' : '0');
+  } catch (_) {}
+}
+
 const QUIZ_LETTER_STATS_KEY = 'georgian-alphabet-quiz-letter-stats';
 const QUIZ_LETTER_STATS_WINDOW = 15;
 const QUIZ_BADGES_PIN_KEY = 'georgian-alphabet-quiz-badges-pinned';
@@ -322,6 +339,7 @@ function initLetterQuiz() {
   const btnStart = document.getElementById('letter-quiz-start');
   const btnReplay = document.getElementById('letter-quiz-replay');
   const btnReset = document.getElementById('letter-quiz-reset');
+  const voiceSwitch = document.getElementById('letter-quiz-voice-switch');
   const progressEl = document.getElementById('letter-quiz-progress');
   const geoEl = document.getElementById('letter-quiz-geo');
   const imgEl = document.getElementById('letter-quiz-img');
@@ -330,6 +348,27 @@ function initLetterQuiz() {
   const statsEl = document.getElementById('letter-quiz-stats');
 
   window.refreshLetterQuizIfActive = function refreshLetterQuizIfActiveNoop() {};
+
+  function applyLetterVoiceUi(on) {
+    if (!voiceSwitch) return;
+    voiceSwitch.setAttribute('aria-checked', on ? 'true' : 'false');
+    voiceSwitch.classList.toggle('quiz-voice-switch--off', !on);
+  }
+
+  function letterQuizVoiceEnabled() {
+    return voiceSwitch
+      ? voiceSwitch.getAttribute('aria-checked') === 'true'
+      : loadLetterQuizVoicePref();
+  }
+
+  if (voiceSwitch) {
+    applyLetterVoiceUi(loadLetterQuizVoicePref());
+    voiceSwitch.addEventListener('click', () => {
+      const next = !(voiceSwitch.getAttribute('aria-checked') === 'true');
+      saveLetterQuizVoicePref(next);
+      applyLetterVoiceUi(next);
+    });
+  }
 
   if (
     !setup ||
@@ -504,7 +543,10 @@ function initLetterQuiz() {
 
   function onChoice(btn, correctGeo) {
     const geo = btn.dataset.geo;
-    if (typeof playGeorgianLetterSound === 'function') {
+    if (
+      letterQuizVoiceEnabled() &&
+      typeof playGeorgianLetterSound === 'function'
+    ) {
       playGeorgianLetterSound(geo);
     }
     if (solved) return;

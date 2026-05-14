@@ -376,7 +376,7 @@
   letter-spacing: 0.04em;
 }
 
-/* Мини-квиз чисел */
+/* Тест чисел */
 
 .numbers-quiz {
   margin-top: 0;
@@ -391,6 +391,30 @@
   font-size: clamp(17px, 3.8vw, 1.28rem);
   font-weight: 700;
   color: var(--color-text);
+}
+
+.numbers-quiz__hint-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  margin: 0 0 clamp(12px, 2.4vw, 18px);
+  padding: 0 2px;
+}
+
+.numbers-quiz__hint-bar-label {
+  flex: 0 0 auto;
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(13px, 3vw, 14px);
+  color: var(--color-text-muted);
+}
+
+.numbers-quiz__hint-select {
+  flex: 0 1 auto;
+  min-width: min(320px, 100%);
+  max-width: 100%;
 }
 
 .numbers-quiz__setup {
@@ -526,10 +550,34 @@
   outline-offset: 2px;
 }
 
-.numbers-quiz__play-area {
+.numbers-quiz__session-toolbar.numbers-quiz__play-toolbar {
   margin: 8px 0 0;
   padding-top: 8px;
   border-top: 1px solid var(--color-border-subtle);
+}
+
+.numbers-quiz__play-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 14px;
+}
+
+.numbers-quiz__play-toolbar .numbers-quiz__progress {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: min(280px, 100%);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.numbers-quiz__play-area {
+  margin: 0;
+  padding: 14px 0 0;
+  border-top: none;
 }
 
 .numbers-quiz__prompt {
@@ -547,14 +595,6 @@
   font-weight: 800;
   line-height: 1;
   color: var(--color-accent-text);
-}
-
-.numbers-quiz__progress {
-  margin: 0 0 10px;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-muted);
 }
 
 .numbers-quiz__choices {
@@ -659,6 +699,13 @@
   cursor: default;
 }
 
+.numbers-quiz__done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .numbers-quiz__done-message {
   margin: 0 0 12px;
   text-align: center;
@@ -671,6 +718,12 @@
   font-size: 14px;
   color: var(--color-text-muted);
   white-space: pre-line;
+  text-align: left;
+}
+
+.numbers-quiz__done-stats,
+.numbers-quiz__done-message {
+  align-self: stretch;
 }
 
 @media screen and (max-width: 380px) {
