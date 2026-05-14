@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <script>
+      (function () {
+        try {
+          document.documentElement.setAttribute(
+            'data-theme',
+            localStorage.getItem('georgian-alphabet-theme') === 'dark'
+              ? 'dark'
+              : 'light'
+          );
+        } catch (_) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+        try {
+          const glyn = localStorage.getItem(
+            'georgian-alphabet-glyph-style'
+          );
+          if (glyn === 'mtavruli' || glyn === 'mkhedruli') {
+            document.documentElement.setAttribute(
+              'data-georgian-glyph',
+              glyn
+            );
+          } else {
+            document.documentElement.setAttribute(
+              'data-georgian-glyph',
+              'mkhedruli'
+            );
+          }
+        } catch (_) {
+          document.documentElement.setAttribute(
+            'data-georgian-glyph',
+            'mkhedruli'
+          );
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="./styles/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600&family=Noto+Serif+Georgian:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <title class="title">Числа 0–20 по-грузински</title>
+    <script type="text/javascript">
+      (function (m, e, t, r, i, k, a) {
+        m[i] =
+          m[i] ||
+          function () {
+            (m[i].a = m[i].a || []).push(arguments);
+          };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j++) {
+          if (document.scripts[j].src === r) {
+            return;
+          }
+        }
+        (k = e.createElement(t)),
+          (a = e.getElementsByTagName(t)[0]),
+          (k.async = 1),
+          (k.src = r),
+          a.parentNode.insertBefore(k, a);
+      })(
+        window,
+        document,
+        'script',
+        'https://mc.yandex.ru/metrika/tag.js',
+        'ym'
+      );
+
+      ym(92125198, 'init', {
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+      });
+    </script>
+    <noscript
+      ><div>
+        <img
+          src="https://mc.yandex.ru/watch/92125198"
+          style="position: absolute; left: -9999px"
+          alt=""
+        /></div
+    ></noscript>
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="page__container">
+        <main class="content">
+          <header class="site-header">
+            <nav class="site-nav" aria-label="Главное меню">
+              <ul class="site-nav__links">
+                <li><a href="./index.html" class="site-nav__link">Алфавит и звуки</a></li>
+                <li>
+                  <a
+                    href="./numbers.html"
+                    class="site-nav__link site-nav__link--current"
+                    aria-current="page"
+                    >Цифры</a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </header>
+
+          <section class="lead">
+            <div class="lead__head">
+              <h1 class="lead__title">Числа 0–20 по-грузински</h1>
+              <button
+                type="button"
+                class="theme-toggle"
+                id="theme-toggle"
+                aria-pressed="false"
+                aria-label="Включить тёмную тему"
+                title="Тёмная тема"
+              >
+                <span class="theme-toggle__icons" aria-hidden="true">
+                  <svg
+                    class="theme-toggle__icon theme-toggle__icon--moon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    fill="none"
+                  >
+                    <path
+                      d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <svg
+                    class="theme-toggle__icon theme-toggle__icon--sun"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    fill="none"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="4"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </button>
+              <script>
+                try {
+                  var _tb = document.getElementById('theme-toggle');
+                  if (
+                    _tb &&
+                    localStorage.getItem('georgian-alphabet-theme') === 'dark'
+                  ) {
+                    _tb.setAttribute('aria-pressed', 'true');
+                    _tb.setAttribute('aria-label', 'Включить светлую тему');
+                    _tb.title = 'Светлая тема';
+                  }
+                } catch (_) {}
+              </script>
+            </div>
+            <details class="lead__more">
+              <summary class="lead__more-summary text">
+                Подробнее
+              </summary>
+              <div class="lead__more-body">
+                <p class="lead__text">
+                  Счёт дальше, деньги, время:
+                  <a
+                    class="lead__text-link link"
+                    href="https://geolang.ru/lessons/8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >GeoLang — урок&nbsp;8</a
+                  >
+                </p>
+              </div>
+            </details>
+          </section>
+
+          <section class="numbers">
+            <h2 class="numbers__section-title">Как звучит и пишется</h2>
+            <div
+              class="numbers__settings numbers__settings--dual text"
+              role="group"
+              aria-label="Чертание и чтение по буквам"
+            >
+              <div class="numbers__settings-cluster">
+              <span class="numbers__settings-label" id="alphabet-glyph-label"
+                >Чертание</span
+              >
+              <div
+                id="alphabet-glyph-radiogroup"
+                class="alphabet__glyph-segment"
+                role="radiogroup"
+                aria-labelledby="alphabet-glyph-label"
+                title="მხედრული (мхедрули) — контур Noto Sans; მტავრული (мтаврули) — символы Unicode + засечки Noto Serif"
+              >
+                <input
+                  type="radio"
+                  name="alphabet-glyph-choice"
+                  value="mkhedruli"
+                  id="alphabet-glyph-mkhedruli"
+                  class="alphabet__glyph-input"
+                />
+                <label
+                  class="alphabet__glyph-option text"
+                  for="alphabet-glyph-mkhedruli"
+                  ><span class="alphabet__glyph-ge">მხედრული</span
+                  ><span class="alphabet__glyph-meta"> (мхедрули)</span></label
+                >
+                <input
+                  type="radio"
+                  name="alphabet-glyph-choice"
+                  value="mtavruli"
+                  id="alphabet-glyph-mtavruli"
+                  class="alphabet__glyph-input"
+                />
+                <label
+                  class="alphabet__glyph-option text"
+                  for="alphabet-glyph-mtavruli"
+                  ><span class="alphabet__glyph-ge">მტავრული</span
+                  ><span class="alphabet__glyph-meta"> (мтаврули)</span></label
+                >
+              </div>
+              </div>
+              <div class="numbers__settings-cluster">
+                <span class="numbers__settings-label" id="numbers-reading-label">
+                  Чтение буква к букве
+                </span>
+                <span class="numbers__reading-inline">
+                  <label class="numbers__reading-sr-only" for="numbers-reading-mode"
+                    >Чтение по буквам</label
+                  >
+                  <select
+                    id="numbers-reading-mode"
+                    class="alphabet__display-select numbers__reading-select"
+                    autocomplete="off"
+                    aria-labelledby="numbers-reading-label"
+                    title="Кириллица и латиница по буквам"
+                  >
+                    <option value="classic">Кириллица</option>
+                    <option value="latin_official">
+                      Латиница официальная
+                    </option>
+                    <option value="latin_unofficial">
+                      Латиница разговорная
+                    </option>
+                  </select>
+                </span>
+              </div>
+            </div>
+
+            <ul
+              id="numbers-grid"
+              class="numbers__grid"
+              aria-label="Числа 0–20"
+            ></ul>
+
+            <section class="numbers-guide text" aria-labelledby="numbers-guide-heading">
+              <h2 id="numbers-guide-heading" class="numbers-guide__title">
+                Как считают после двадцати и дальше
+              </h2>
+
+              <p class="numbers-guide__p">
+                Базис не «ровно десять до нового корня», а <strong>двадца́тка</strong>:
+                двадцать —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ოცი"
+                    >ოცი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ოცი"
+                    aria-label="ოცი"
+                  ></button></span
+                >.
+                После двадцати называют число как « двадцать და единицы », например 21 —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ოცდაერთი"
+                    >ოცდაერთი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ოცდაერთი"
+                    aria-label="ოცდაერთი"
+                  ></button></span
+                >,
+                22 —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ოცდაორი"
+                    >ოცდაორი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ოცდაორი"
+                    aria-label="ოცდაორი"
+                  ></button></span
+                >,
+                … 29 —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ოცდაცხრამეტი"
+                    >ოცდაცხრამეტი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ოცდაცხრამეტი"
+                    aria-label="ოცდაცხრამეტი"
+                  ></button></span
+                >; а форма « двадцать და десять » —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ოცდაათი"
+                    >ოცდაათი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ოცდაათი"
+                    aria-label="ოცდაათი"
+                  ></button></span
+                >.
+              </p>
+
+              <p class="numbers-guide__p">
+                Следующая ступень после 39&nbsp;— « два раза двадцать », то есть сорок —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ორმოცი"
+                    >ორმოცი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ორმოცი"
+                    aria-label="ორმოცი"
+                  ></button></span
+                >.
+                По тому же образцу добавляют единицы до 59, затем идёт « три раза двадцать »&nbsp;—
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="სამოცი"
+                    >სამოცი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="სამოცი"
+                    aria-label="სამოცი"
+                  ></button></span
+                >, затем&nbsp;—
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="სამოცდაათი"
+                    >სამოცდაათი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="სამოცდაათი"
+                    aria-label="სამოცდაათი"
+                  ></button></span
+                >,
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ოთხმოცი"
+                    >ოთხმოცი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ოთხმოცი"
+                    aria-label="ოთხმოცი"
+                  ></button></span
+                >
+                и снова единицы через союз
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="და"
+                    >და</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="და"
+                    aria-label="და"
+                  ></button></span
+                >.
+                Такие слова записывают <strong>слитно</strong>.
+              </p>
+
+              <p class="numbers-guide__p">
+                Числа 11–19 в грузинском устроены от «над десяти» — шаблон
+                <strong>თ‑…‑მეტი</strong> (похож на русские «‑на́дцать»): от
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ათი"
+                    >ათი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ათი"
+                    aria-label="ათი"
+                  ></button></span>
+                («десять») получаются формы наподобие «თ‑ერთ‑მეტი» для 11 устойчиво
+                слившимися произношениями (13 —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ცამეტი"
+                    >ცამეტი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ცამეტი"
+                    aria-label="ცამეტი"
+                  ></button></span
+                >
+                и т.д.).
+              </p>
+
+              <p class="numbers-guide__p">
+                Пример «27»: слово —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ოცდაშვიდი"
+                    >ოცდაშვიდი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ოცდაშვიდი"
+                    aria-label="ოცდაშვიდი"
+                  ></button></span
+                >.
+              </p>
+
+              <h3 class="numbers-guide__subtitle">Сотни и тысяча</h3>
+              <p class="numbers-guide__p">
+                Корень «ста» —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ასი"
+                    >ასი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ასი"
+                    aria-label="ასი"
+                  ></button></span
+                >.
+                Следующую часть того же числа обычно пишут <strong>через пробел</strong>, не слитно;
+                для 101 после слова «ста» идёт пробел и слово «один» —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ერთი"
+                    >ერთი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ერთი"
+                    aria-label="ერთი"
+                  ></button></span
+                >.
+                Двести —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ორასი"
+                    >ორასი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ორასი"
+                    aria-label="ორასი"
+                  ></button></span
+                >,
+                тысяча —
+                <span class="numbers__ge-inline"
+                  ><span
+                    class="numbers__ge-text numbers__table-ge"
+                    lang="ka"
+                    data-ge-word="ათასი"
+                    >ათასი</span
+                  ><button
+                    type="button"
+                    class="numbers__voice-btn"
+                    data-audio-mkhed="ათასი"
+                    aria-label="ათასი"
+                  ></button></span
+                >.
+              </p>
+
+              <div class="numbers__table-wrap numbers-guide__table-wrap">
+                <table class="numbers__table">
+                  <thead>
+                    <tr>
+                      <th>Число</th>
+                      <th>Словами по-грузински</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>513</td>
+                      <td>
+                        <span class="numbers__ge-cell-row">
+                          <span
+                            class="numbers__ge-text numbers__table-ge"
+                            lang="ka"
+                            data-ge-word="ხუთას ცამეტი"
+                            >ხუთას ცამეტი</span
+                          >
+                          <button
+                            type="button"
+                            class="numbers__voice-btn numbers__voice-btn--table"
+                            data-audio-mkhed="ხუთას ცამეტი"
+                            aria-label="ხუთას ცამეტი"
+                          ></button>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>687</td>
+                      <td>
+                        <span class="numbers__ge-cell-row">
+                          <span
+                            class="numbers__ge-text numbers__table-ge"
+                            lang="ka"
+                            data-ge-word="ექვსას ოთხმოცდაშვიდი"
+                            >ექვსას ოთხმოცდაშვიდი</span
+                          >
+                          <button
+                            type="button"
+                            class="numbers__voice-btn numbers__voice-btn--table"
+                            data-audio-mkhed="ექვსას ოთხმოცდაშვიდი"
+                            aria-label="ექვსას ოთხმოცდაშვიდი"
+                          ></button>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <h2 class="numbers__section-title numbers__section-title--quiz">
+              Мини-тест
+            </h2>
+            <section
+              id="numbers-quiz-root"
+              class="numbers-quiz"
+              aria-label="Мини-тест"
+            >
+              <div id="numbers-quiz-setup" class="numbers-quiz__setup">
+                <div class="numbers-quiz__setup-card">
+                  <p class="numbers-quiz__setup-head">
+                    Диапазон и число вопросов.
+                  </p>
+                  <div
+                    class="numbers-quiz__range-options text"
+                    role="radiogroup"
+                    aria-labelledby="numbers-quiz-range-label"
+                  >
+                    <span
+                      id="numbers-quiz-range-label"
+                      class="numbers-quiz__range-label"
+                      >Спрашивать числа</span
+                    >
+                    <span class="numbers-quiz__range-list">
+                      <label class="numbers-quiz__range-choice">
+                        <input
+                          type="radio"
+                          name="numbers-quiz-range"
+                          value="range0to10"
+                          class="numbers-quiz__range-input"
+                        /><span>0–10</span>
+                      </label>
+                      <label class="numbers-quiz__range-choice">
+                        <input
+                          type="radio"
+                          name="numbers-quiz-range"
+                          value="all"
+                          class="numbers-quiz__range-input"
+                          checked
+                        /><span>Все (0–20)</span>
+                      </label>
+                      <label class="numbers-quiz__range-choice">
+                        <input
+                          type="radio"
+                          name="numbers-quiz-range"
+                          value="elevenTwenty"
+                          class="numbers-quiz__range-input"
+                        /><span>11–20</span>
+                      </label>
+                    </span>
+                  </div>
+                  <div class="numbers-quiz__setup-row">
+                    <div class="numbers-quiz__field numbers-quiz__field--count">
+                      <label for="numbers-quiz-count">Вопросов</label>
+                      <input
+                        id="numbers-quiz-count"
+                        type="number"
+                        min="1"
+                        max="21"
+                        value="10"
+                        inputmode="numeric"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      id="numbers-quiz-start"
+                      class="numbers-quiz__start-btn button"
+                    >
+                      Начать тест
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div id="numbers-quiz-play" class="numbers-quiz__play-area" hidden>
+                <p
+                  id="numbers-quiz-progress"
+                  class="numbers-quiz__progress"
+                ></p>
+                <div class="numbers-quiz__prompt">
+                  <span
+                    id="numbers-quiz-digit"
+                    class="numbers-quiz__prompt-digit"
+                    role="status"
+                    aria-live="polite"
+                  ></span>
+                </div>
+                <div
+                  id="numbers-quiz-choices"
+                  class="numbers-quiz__choices"
+                  role="group"
+                  aria-label="Варианты слова"
+                ></div>
+              </div>
+              <div id="numbers-quiz-done" class="numbers-quiz__done" hidden>
+                <p class="numbers-quiz__done-stats" id="numbers-quiz-stats"></p>
+                <p class="numbers-quiz__done-message" id="numbers-quiz-done-text"></p>
+                <button
+                  type="button"
+                  class="button"
+                  id="numbers-quiz-replay"
+                >
+                  К настройкам
+                </button>
+              </div>
+            </section>
+          </section>
+
+          <section class="feedback">
+            <p class="feedback__text text">
+              Заметили ошибку или есть идея, как лучше сделать? Напишите в
+              <a
+                class="link"
+                href="https://github.com/Art-emg/georgian-alphabet/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+                >issues на GitHub</a
+              >.
+            </p>
+          </section>
+        </main>
+
+        <footer class="footer">
+          <p class="footer__copyright text">
+            Fork from
+            <a
+              class="link"
+              href="https://github.com/Sibusky/georgian-alphabet"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Sibusky</a
+            >
+            · current version and additions:
+            <a
+              class="link"
+              href="https://github.com/Art-emg/georgian-alphabet"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Art-emg</a
+            >
+          </p>
+        </footer>
+      </div>
+    </div>
+    <script src="./geolangAlphabetData.js"></script>
+    <script src="./georgianNumbersData.js"></script>
+    <script src="./numbers-page.js"></script>
+  </body>
+</html>

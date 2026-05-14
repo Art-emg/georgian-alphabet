@@ -1,0 +1,102 @@
+/* Верхний header страницы: полоса на всю ширину контейнера, текстовые пункты как у Preply. */
+
+:root {
+  --site-nav-active-underline: #e11d48;
+}
+
+:root[data-theme='dark'] {
+  --site-nav-active-underline: #fb7185;
+}
+
+.site-header {
+  box-sizing: border-box;
+  width: calc(100% + 2 * clamp(12px, 4vw, 28px));
+  max-width: none;
+  margin: 0 calc(-1 * clamp(12px, 4vw, 28px)) 22px;
+  padding: 0 clamp(12px, 4vw, 28px);
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+}
+
+.site-nav {
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  max-width: var(--content-shell-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.site-nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0 clamp(6px, 2.8vw, 28px);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.site-nav__links > li {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.site-nav__link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 17px clamp(10px, 2.2vw, 22px) 14px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-weight: 500;
+  font-size: clamp(14px, 3vw, 15px);
+  line-height: 1.35;
+  text-decoration: none;
+  letter-spacing: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.14s ease, border-color 0.14s ease;
+}
+
+.site-nav__link:hover {
+  color: var(--color-text);
+}
+
+.site-nav__link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.site-nav__link--current {
+  font-weight: 700;
+  color: var(--color-text);
+  border-bottom-color: var(--site-nav-active-underline);
+  pointer-events: none;
+}
+
+:root[data-theme='dark'] .site-header {
+  background: rgb(24 34 53 / 0.55);
+  border-top-color: var(--color-border-subtle);
+  border-bottom-color: var(--color-border-subtle);
+}
+
+@media screen and (max-width: 520px) {
+  .site-nav__link {
+    min-height: 48px;
+    white-space: normal;
+    text-align: center;
+  }
+}
