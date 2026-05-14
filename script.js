@@ -1285,7 +1285,7 @@ transliteration.addEventListener('submit', (e) => {
 
 if (buttonCopy) {
   buttonCopy.addEventListener('click', async (e) => {
-    e.preventDefault();
+  e.preventDefault();
     e.stopPropagation();
     const plain = textOutput.innerText || '';
     if (!plain) return;

@@ -570,86 +570,163 @@
               class="numbers-quiz"
               aria-label="Тест по числам"
             >
-              <div class="numbers-quiz__hint-bar text">
-                <label
-                  class="numbers-quiz__hint-bar-label"
-                  id="numbers-reading-caption-label"
-                  for="numbers-reading-mode"
-                  >Подпись под словом числа</label
-                >
-                <select
-                  id="numbers-reading-mode"
-                  class="alphabet__display-select numbers__reading-select numbers-quiz__hint-select"
-                  autocomplete="off"
-                  aria-labelledby="numbers-reading-caption-label"
-                >
-                  <option value="hide">
-                    Нет подписи (только грузинские буквы)
-                  </option>
-                  <option value="classic">Кириллица по буквам</option>
-                  <option value="latin_official">
-                    Латиница официальная
-                  </option>
-                  <option value="latin_unofficial">
-                    Латиница разговорная
-                  </option>
-                </select>
-              </div>
-              <div id="numbers-quiz-setup" class="numbers-quiz__setup">
-                <div class="numbers-quiz__setup-card">
-                  <p class="numbers-quiz__setup-head">
-                    Диапазон и число вопросов.
-                  </p>
+              <div class="numbers-quiz__control-bar">
+                <div id="numbers-quiz-setup" class="numbers-quiz__setup">
+                  <div class="numbers-quiz__field numbers-quiz__field--count">
+                    <label for="numbers-quiz-count">Вопросов</label>
+                    <input
+                      id="numbers-quiz-count"
+                      type="number"
+                      min="1"
+                      max="500"
+                      value="10"
+                      inputmode="numeric"
+                      title="Не больше чем нужно одинакового показа по числам при большом счёте: порядок случайный, частоты почти равные"
+                    />
+                  </div>
                   <div
-                    class="numbers-quiz__range-options text"
-                    role="radiogroup"
+                    class="numbers-quiz__range-panel text"
+                    role="group"
                     aria-labelledby="numbers-quiz-range-label"
                   >
                     <span
                       id="numbers-quiz-range-label"
                       class="numbers-quiz__range-label"
-                      >Спрашивать числа</span
+                      >Диапазон</span
                     >
-                    <span class="numbers-quiz__range-list">
-                      <label class="numbers-quiz__range-choice">
-                        <input
-                          type="radio"
-                          name="numbers-quiz-range"
-                          value="range0to10"
-                          class="numbers-quiz__range-input"
-                        /><span>0–10</span>
-                      </label>
-                      <label class="numbers-quiz__range-choice">
-                        <input
-                          type="radio"
-                          name="numbers-quiz-range"
-                          value="all"
-                          class="numbers-quiz__range-input"
-                          checked
-                        /><span>Все (0–20)</span>
-                      </label>
-                      <label class="numbers-quiz__range-choice">
-                        <input
-                          type="radio"
-                          name="numbers-quiz-range"
-                          value="elevenTwenty"
-                          class="numbers-quiz__range-input"
-                        /><span>11–20</span>
-                      </label>
+                    <span id="numbers-quiz-range-lo-caption" class="numbers__reading-sr-only">
+                      минимум диапазона
                     </span>
+                    <span id="numbers-quiz-range-hi-caption" class="numbers__reading-sr-only">
+                      максимум диапазона
+                    </span>
+                    <div class="numbers-quiz__range-dual-row">
+                      <div class="numbers-quiz__range-dual-end numbers-quiz__range-dual-end--lo">
+                        <span class="numbers-quiz__range-dual-end-label">От</span>
+                        <span id="numbers-quiz-range-lo-val" class="numbers-quiz__range-dual-end-num">
+                          0
+                        </span>
+                      </div>
+                      <div
+                        id="numbers-quiz-range-dual-stack"
+                        class="numbers-quiz__range-dual-stack"
+                      >
+                        <div
+                          class="numbers-quiz__range-dual-track"
+                          aria-hidden="true"
+                        >
+                          <div class="numbers-quiz__range-dual-track-rail"></div>
+                          <div class="numbers-quiz__range-dual-track-fill"></div>
+                        </div>
+                        <input
+                          type="range"
+                          id="numbers-quiz-range-lo"
+                          min="0"
+                          max="20"
+                          step="1"
+                          value="0"
+                          autocomplete="off"
+                          class="numbers-quiz__range-input-dual numbers-quiz__range-input-dual--lo"
+                          aria-labelledby="numbers-quiz-range-label numbers-quiz-range-lo-caption"
+                        />
+                        <input
+                          type="range"
+                          id="numbers-quiz-range-hi"
+                          min="0"
+                          max="20"
+                          step="1"
+                          value="20"
+                          autocomplete="off"
+                          class="numbers-quiz__range-input-dual numbers-quiz__range-input-dual--hi"
+                          aria-labelledby="numbers-quiz-range-label numbers-quiz-range-hi-caption"
+                        />
+                      </div>
+                      <div class="numbers-quiz__range-dual-end numbers-quiz__range-dual-end--hi">
+                        <span class="numbers-quiz__range-dual-end-label">До</span>
+                        <span id="numbers-quiz-range-hi-val" class="numbers-quiz__range-dual-end-num">
+                          20
+                        </span>
+                      </div>
+                    </div>
+                    <p
+                      id="numbers-quiz-range-summary"
+                      class="numbers-quiz__range-summary"
+                      aria-live="polite"
+                    >
+                      Выбрано: 0–20 (21 шт.)
+                    </p>
                   </div>
-                  <div class="numbers-quiz__setup-row">
-                    <div class="numbers-quiz__field numbers-quiz__field--count">
-                      <label for="numbers-quiz-count">Вопросов</label>
-                      <input
-                        id="numbers-quiz-count"
-                        type="number"
-                        min="1"
-                        max="500"
-                        value="10"
-                        inputmode="numeric"
-                        title="Не больше чем нужно одинакового показа по числам при большом счёте: порядок случайный, частоты почти равные"
-                      />
+                </div>
+                <div class="numbers-quiz__hint-bar text">
+                  <label
+                    class="numbers-quiz__hint-bar-label"
+                    id="numbers-reading-caption-label"
+                    for="numbers-reading-mode"
+                    >Подпись</label
+                  >
+                  <select
+                    id="numbers-reading-mode"
+                    class="alphabet__display-select numbers__reading-select numbers-quiz__hint-select"
+                    autocomplete="off"
+                    aria-labelledby="numbers-reading-caption-label"
+                  >
+                    <option value="hide">
+                      Нет подписи (только грузинские буквы)
+                    </option>
+                    <option value="classic">Кириллица по буквам</option>
+                    <option value="latin_official">
+                      Латиница официальная
+                    </option>
+                    <option value="latin_unofficial">
+                      Латиница разговорная
+                    </option>
+                  </select>
+                </div>
+                <div id="numbers-quiz-session-toolbar" class="numbers-quiz__session-toolbar numbers-quiz__play-toolbar">
+                  <p
+                    id="numbers-quiz-progress"
+                    class="numbers-quiz__progress"
+                    hidden
+                  ></p>
+                  <div class="quiz-toolbar-actions">
+                    <div class="numbers-quiz__voice-control">
+                      <span class="numbers-quiz__voice-label">Озвучка</span>
+                      <button
+                    type="button"
+                    role="switch"
+                    id="numbers-quiz-voice-switch"
+                    class="quiz-voice-switch"
+                    aria-checked="true"
+                    aria-label="Озвучка выбранного ответа"
+                    title="Включить или выключить озвучку при нажатии на ответ"
+                      >
+                        <span class="quiz-voice-switch__icon-wrap" aria-hidden="true">
+                          <svg
+                            class="quiz-voice-switch__icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M11 5 6 9H4v6h2l5 4V5z" />
+                            <path
+                              class="quiz-voice-switch__wv"
+                              d="M15.54 8.46a5 5 0 0 1 0 7.07"
+                            />
+                            <path
+                              class="quiz-voice-switch__wv"
+                              d="M17.72 6.28a9 9 0 0 1 0 11.44"
+                            />
+                            <path class="quiz-voice-switch__slash" d="M5 21L21 5" />
+                          </svg>
+                        </span>
+                        <span class="quiz-voice-switch__track" aria-hidden="true"
+                          ><span class="quiz-voice-switch__thumb"></span
+                        ></span>
+                      </button>
                     </div>
                     <button
                       type="button"
@@ -658,56 +735,12 @@
                     >
                       Начать тест
                     </button>
-                  </div>
-                </div>
-              </div>
-              <div id="numbers-quiz-session-toolbar" class="numbers-quiz__session-toolbar numbers-quiz__play-toolbar" hidden>
-                <p
-                  id="numbers-quiz-progress"
-                  class="numbers-quiz__progress"
-                ></p>
-                <div class="quiz-toolbar-actions">
-                  <button
-                    type="button"
-                    role="switch"
-                    id="numbers-quiz-voice-switch"
-                    class="quiz-voice-switch"
-                    aria-checked="true"
-                    aria-label="Озвучка выбранного ответа"
-                    title="Включить или выключить озвучку при нажатии на ответ"
-                  >
-                    <span class="quiz-voice-switch__icon-wrap" aria-hidden="true">
-                      <svg
-                        class="quiz-voice-switch__icon"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path d="M11 5 6 9H4v6h2l5 4V5z" />
-                        <path
-                          class="quiz-voice-switch__wv"
-                          d="M15.54 8.46a5 5 0 0 1 0 7.07"
-                        />
-                        <path
-                          class="quiz-voice-switch__wv"
-                          d="M17.72 6.28a9 9 0 0 1 0 11.44"
-                        />
-                        <path class="quiz-voice-switch__slash" d="M5 21L21 5" />
-                      </svg>
-                    </span>
-                    <span class="quiz-voice-switch__track" aria-hidden="true"
-                      ><span class="quiz-voice-switch__thumb"></span
-                    ></span>
-                  </button>
                   <button
                     type="button"
                     id="numbers-quiz-back-menu"
                     class="quiz-menu-btn"
                     title="Закрыть тест и открыть параметры"
+                    hidden
                   >
                     <svg
                       class="quiz-menu-btn__icon"
@@ -723,7 +756,8 @@
                       <path d="m15 18-6-6 6-6" />
                     </svg>
                     Меню
-                  </button>
+                    </button>
+                  </div>
                 </div>
               </div>
               <div id="numbers-quiz-play" class="numbers-quiz__play-area" hidden>

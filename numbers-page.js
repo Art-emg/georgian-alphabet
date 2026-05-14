@@ -21,6 +21,13 @@ const NUMBERS_READING_STORAGE_KEY = 'georgian-numbers-reading-mode';
 /** Раньше: отдельно «только текст в тесте»; перенесено в georgian-numbers-reading-mode как hide */
 const LEGACY_NUMBERS_QUIZ_HINT_KEY = 'georgian-numbers-quiz-phonetic-hints';
 const NUMBERS_QUIZ_SPEAK_ON_CHOICE_KEY = 'georgian-numbers-quiz-speak-choice';
+const NUMBERS_QUIZ_VALUE_RANGE_KEY = 'georgian-numbers-quiz-value-range';
+
+function clampIntQuiz(n, lo, hi) {
+  const x = Number(n);
+  if (!Number.isFinite(x)) return lo;
+  return Math.min(hi, Math.max(lo, Math.trunc(x)));
+}
 
 const READING_CAPTION_VALUES = ['hide', 'classic', 'latin_official', 'latin_unofficial'];
 
@@ -425,6 +432,7 @@ function balancedQuizQuestionQueue(pool, n) {
 }
 
 function initNumbersQuiz() {
+  const root = document.getElementById('numbers-quiz-root');
   const setup = document.getElementById('numbers-quiz-setup');
   const toolbar = document.getElementById('numbers-quiz-session-toolbar');
   const play = document.getElementById('numbers-quiz-play');
@@ -453,10 +461,19 @@ function initNumbersQuiz() {
 
   const rows = getNumberRows();
   const byValue = new Map(rows.map((r) => [r.value, r]));
+  const valueLoBound = rows.length
+    ? Math.min(...rows.map((r) => r.value))
+    : 0;
+  const valueHiBound = rows.length
+    ? Math.max(...rows.map((r) => r.value))
+    : 20;
 
-  const rangeRadios = [
-    ...setup.querySelectorAll('input[name="numbers-quiz-range"]'),
-  ].filter((el) => el instanceof HTMLInputElement);
+  const rangeLo = document.getElementById('numbers-quiz-range-lo');
+  const rangeHi = document.getElementById('numbers-quiz-range-hi');
+  const rangeLoVal = document.getElementById('numbers-quiz-range-lo-val');
+  const rangeHiVal = document.getElementById('numbers-quiz-range-hi-val');
+  const rangeSummary = document.getElementById('numbers-quiz-range-summary');
+  const rangeDualStack = document.getElementById('numbers-quiz-range-dual-stack');
 
   /** Значения, из которых сейчас берутся задачи и дистракторы. */
   let quizPoolValues = [];
@@ -468,28 +485,128 @@ function initNumbersQuiz() {
   let wrongCount = 0;
   let feedbackTimer = null;
 
-  function getQuizRangeMode() {
-    const v = rangeRadios.find((r) => r.checked)?.value;
-    if (v === 'range0to10' || v === 'elevenTwenty') return v;
-    return 'all';
+  /** Числовые значения из таблицы, попадающие в выбранный диапазон (края включительно). */
+  function valuesFromQuizRangeSliders() {
+    let lo =
+      rangeLo instanceof HTMLInputElement
+        ? parseInt(String(rangeLo.value), 10)
+        : valueLoBound;
+    let hi =
+      rangeHi instanceof HTMLInputElement
+        ? parseInt(String(rangeHi.value), 10)
+        : valueHiBound;
+    lo = clampIntQuiz(lo, valueLoBound, valueHiBound);
+    hi = clampIntQuiz(hi, valueLoBound, valueHiBound);
+    const from = Math.min(lo, hi);
+    const to = Math.max(lo, hi);
+    return rows.map((row) => row.value).filter((v) => v >= from && v <= to);
   }
 
-  /** Числовые значения строк в выбранном диапазоне для квиза. */
-  function valuesForQuizRange(mode) {
-    return rows.map((row) => row.value).filter((val) => {
-      if (mode === 'range0to10') return val >= 0 && val <= 10;
-      if (mode === 'elevenTwenty') return val >= 11 && val <= 20;
-      return true;
-    });
+  function loadPersistedQuizValueRange() {
+    try {
+      const raw = localStorage.getItem(NUMBERS_QUIZ_VALUE_RANGE_KEY);
+      if (!raw) return null;
+      const o = JSON.parse(raw);
+      if (typeof o !== 'object' || o === null) return null;
+      const lo = clampIntQuiz(o.lo, valueLoBound, valueHiBound);
+      const hi = clampIntQuiz(o.hi, valueLoBound, valueHiBound);
+      if (!Number.isFinite(lo) || !Number.isFinite(hi)) return null;
+      return { lo: Math.min(lo, hi), hi: Math.max(lo, hi) };
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function persistQuizValueRange(lo, hi) {
+    try {
+      const a = clampIntQuiz(lo, valueLoBound, valueHiBound);
+      const b = clampIntQuiz(hi, valueLoBound, valueHiBound);
+      const from = Math.min(a, b);
+      const to = Math.max(a, b);
+      localStorage.setItem(
+        NUMBERS_QUIZ_VALUE_RANGE_KEY,
+        JSON.stringify({ lo: from, hi: to })
+      );
+    } catch (_) {}
+  }
+
+  function quizDualPctForValue(val) {
+    const span = valueHiBound - valueLoBound;
+    if (!(span > 0)) return 0;
+    const c = clampIntQuiz(val, valueLoBound, valueHiBound);
+    return ((c - valueLoBound) / span) * 100;
+  }
+
+  function syncDualRangeTrack() {
+    if (
+      !(rangeDualStack instanceof HTMLElement) ||
+      !(rangeLo instanceof HTMLInputElement) ||
+      !(rangeHi instanceof HTMLInputElement)
+    ) {
+      return;
+    }
+    const loN = clampIntQuiz(parseInt(String(rangeLo.value), 10), valueLoBound, valueHiBound);
+    const hiN = clampIntQuiz(parseInt(String(rangeHi.value), 10), valueLoBound, valueHiBound);
+    const from = Math.min(loN, hiN);
+    const to = Math.max(loN, hiN);
+    rangeDualStack.style.setProperty(
+      '--dual-lo-pct',
+      `${quizDualPctForValue(from)}%`
+    );
+    rangeDualStack.style.setProperty(
+      '--dual-hi-pct',
+      `${quizDualPctForValue(to)}%`
+    );
+  }
+
+  function setQuizDualActiveThumb(side) {
+    if (!(rangeDualStack instanceof HTMLElement)) return;
+    rangeDualStack.dataset.activeThumb = side === 'hi' ? 'hi' : 'lo';
+  }
+
+  function updateQuizRangeSummary() {
+    if (
+      !(rangeLo instanceof HTMLInputElement) ||
+      !(rangeHi instanceof HTMLInputElement)
+    ) {
+      return;
+    }
+    let lo = clampIntQuiz(
+      parseInt(String(rangeLo.value), 10),
+      valueLoBound,
+      valueHiBound
+    );
+    let hi = clampIntQuiz(
+      parseInt(String(rangeHi.value), 10),
+      valueLoBound,
+      valueHiBound
+    );
+    if (lo > hi) {
+      const t = lo;
+      lo = hi;
+      hi = t;
+    }
+    const vals = rows
+      .map((row) => row.value)
+      .filter((v) => v >= lo && v <= hi);
+    const n = vals.length;
+    const summary = `Выбрано: ${lo}–${hi} (${n} шт.)`;
+    if (rangeLoVal) rangeLoVal.textContent = String(lo);
+    if (rangeHiVal) rangeHiVal.textContent = String(hi);
+    if (rangeLo instanceof HTMLInputElement) {
+      rangeLo.setAttribute('aria-valuetext', String(lo));
+    }
+    if (rangeHi instanceof HTMLInputElement) {
+      rangeHi.setAttribute('aria-valuetext', String(hi));
+    }
+    if (rangeSummary) rangeSummary.textContent = summary;
+    syncDualRangeTrack();
   }
 
   /** Ограничить поле «Вопросов»: минимум 1, верхний предел больше |пула|. */
   function syncQuizCountLimits() {
     if (!inputCount) return;
-    const poolLen = Math.max(
-      1,
-      valuesForQuizRange(getQuizRangeMode()).length
-    );
+    const poolLen = Math.max(1, valuesFromQuizRangeSliders().length);
     const maxQ = maxQuizQuestionsForPool(poolLen);
     inputCount.max = String(maxQ);
     inputCount.min = '1';
@@ -498,9 +615,71 @@ function initNumbersQuiz() {
     inputCount.value = String(Math.min(maxQ, Math.max(1, cur)));
   }
 
-  rangeRadios.forEach((radio) =>
-    radio.addEventListener('change', syncQuizCountLimits)
-  );
+  function onQuizRangeSliderInput(changedSide) {
+    if (
+      !(rangeLo instanceof HTMLInputElement) ||
+      !(rangeHi instanceof HTMLInputElement)
+    ) {
+      syncQuizCountLimits();
+      return;
+    }
+    let lo = clampIntQuiz(
+      parseInt(String(rangeLo.value), 10),
+      valueLoBound,
+      valueHiBound
+    );
+    let hi = clampIntQuiz(
+      parseInt(String(rangeHi.value), 10),
+      valueLoBound,
+      valueHiBound
+    );
+    if (changedSide === 'lo') {
+      if (lo > hi) {
+        rangeHi.value = String(lo);
+      }
+    } else if (hi < lo) {
+      rangeLo.value = String(hi);
+    }
+    updateQuizRangeSummary();
+    persistQuizValueRange(
+      parseInt(String(rangeLo.value), 10),
+      parseInt(String(rangeHi.value), 10)
+    );
+    syncQuizCountLimits();
+  }
+
+  if (rangeLo instanceof HTMLInputElement && rangeHi instanceof HTMLInputElement) {
+    rangeLo.min = rangeHi.min = String(valueLoBound);
+    rangeLo.max = rangeHi.max = String(valueHiBound);
+    rangeLo.step = rangeHi.step = '1';
+
+    let initLo = valueLoBound;
+    let initHi = valueHiBound;
+    const saved = loadPersistedQuizValueRange();
+    if (saved) {
+      initLo = saved.lo;
+      initHi = saved.hi;
+    }
+    rangeLo.value = String(initLo);
+    rangeHi.value = String(initHi);
+    updateQuizRangeSummary();
+
+    rangeLo.addEventListener('pointerdown', () =>
+      setQuizDualActiveThumb('lo')
+    );
+    rangeHi.addEventListener('pointerdown', () =>
+      setQuizDualActiveThumb('hi')
+    );
+    rangeLo.addEventListener('focus', () => setQuizDualActiveThumb('lo'));
+    rangeHi.addEventListener('focus', () => setQuizDualActiveThumb('hi'));
+
+    rangeLo.addEventListener('input', () =>
+      onQuizRangeSliderInput('lo')
+    );
+    rangeHi.addEventListener('input', () =>
+      onQuizRangeSliderInput('hi')
+    );
+  }
   syncQuizCountLimits();
 
   if (voiceSwitch) {
@@ -537,10 +716,17 @@ function initNumbersQuiz() {
 
   function showSetup() {
     clearFeedbackTimer();
+    root?.classList.remove('numbers-quiz--active');
     setup.hidden = false;
-    toolbar.hidden = true;
+    toolbar.hidden = false;
     play.hidden = true;
     done.hidden = true;
+    btnStart.hidden = false;
+    if (btnBackMenu) btnBackMenu.hidden = true;
+    if (progressEl) {
+      progressEl.hidden = true;
+      progressEl.textContent = '';
+    }
     quizPoolValues = [];
     queue = [];
     qIndex = 0;
@@ -553,11 +739,15 @@ function initNumbersQuiz() {
   }
 
   function showDone() {
+    root?.classList.add('numbers-quiz--active');
     setup.hidden = true;
     toolbar.hidden = false;
     play.hidden = true;
     done.hidden = false;
+    btnStart.hidden = true;
+    if (btnBackMenu) btnBackMenu.hidden = false;
     if (progressEl) {
+      progressEl.hidden = false;
       progressEl.textContent =
         queue.length > 0
           ? `Тест завершён · ${queue.length} вопросов`
@@ -685,7 +875,7 @@ function initNumbersQuiz() {
   };
 
   btnStart.addEventListener('click', () => {
-    quizPoolValues = valuesForQuizRange(getQuizRangeMode());
+    quizPoolValues = valuesFromQuizRangeSliders();
     const poolLen = quizPoolValues.length;
     if (!poolLen) return;
 
@@ -702,10 +892,14 @@ function initNumbersQuiz() {
     solved = false;
     clearFeedbackTimer();
 
+    root?.classList.add('numbers-quiz--active');
     setup.hidden = true;
     toolbar.hidden = false;
     play.hidden = false;
     done.hidden = true;
+    btnStart.hidden = true;
+    if (btnBackMenu) btnBackMenu.hidden = false;
+    if (progressEl) progressEl.hidden = false;
     renderQuestion();
   });
 
